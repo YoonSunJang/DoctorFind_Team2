@@ -3,16 +3,106 @@
 <head>
     <meta charset="UTF-8">
     {% load static %}
-    <script src="{% static 'js/includeHTML.js' %}"></script>  
+	<title>나는 지도를 만들거야</title>
+<head>
+	<meta charset="UTF-8">
+	<title>HTML Layouts</title>
+</head>   
 </head>
 <body>
-    
-    <div include-html="header.html"></div>
-    <h2>나는 지도를 만들거야</h2>
+    <h1>지도</h1>
+   
+    <div colspan="2" style="background-color:lightgrey">
+        <h2>123456</h2>
+    </div>
 
-    1
+    <div id="contain" style="margin: 0px auto; margin-bottom: 40px;width: 980px;min-width: 1180px;min-height: 745px;margin-top: 0px;">
+        <div style="background-color:lightgrey; color:graeen; text-align:center;margin-bottom: 0px;">
+            <a><div class="search-hospital">
+                <p style="color: #1970bb; font-size: 18px; font-weight: 700; margin-top: 0px; line-height: 1.6em;margin-bottom: 20px; text-align: center;">방문전 병원에 정보 확인 하신 후, 방문해 주시기 바랍니다!</p>
+                    <form method="post" action="#" id="searchForm">
+                    <div class="map-header common-box">
+                    <div class="map-body-filter">
+                        <div class="filter-area response-hide">
+                            <select name="sidoCode" id="sidoCode" title="시도 선택">
+                                
+                                    <option value="11" data-code="11">서울특별시</option>
+                                
+                                    <option value="26" data-code="26">부산광역시</option>
+                                
+                                    <option value="27" data-code="27">대구광역시</option>
+                                
+                                    <option value="28" data-code="28">인천광역시</option>
+                                
+                                    <option value="29" data-code="29">광주광역시</option>
+                                
+                                    <option value="30" data-code="30">대전광역시</option>
+                                
+                                    <option value="31" data-code="31">울산광역시</option>
+                                
+                                    <option value="36" data-code="36">세종특별자치시</option>
+                                
+                                    <option value="41" data-code="41">경기도</option>
+                                
+                                    <option value="42" data-code="42">강원도</option>
+                                
+                                    <option value="43" data-code="43">충청북도</option>
+                                
+                                    <option value="44" data-code="44">충청남도</option>
+                                
+                                    <option value="45" data-code="45">전라북도</option>
+                                
+                                    <option value="46" data-code="46">전라남도</option>
+                                
+                                    <option value="47" data-code="47">경상북도</option>
+                                
+                                    <option value="48" data-code="48">경상남도</option>
+                                
+                                    <option value="50" data-code="50">제주특별자치도</option>
+                                
+                            </select>
+                            <select name="gugunCode" id="gugunCode" title="구군 선택"></select>
+                            <select name="dongCode" id="dongCode" title="동 선택"></select>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </a>
+        </div>	
+            <div id="map" style="width:800px;height:600px;float:left;" >
+            </div>
+                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=63420363e3bb2acc6f2ab79aaf0aa176"></script>
+                <script>
+                    var container = document.getElementById('map');
+                    var options = {
+                        center: new kakao.maps.LatLng(33.450701, 126.570667),
+                        level: 3
+                    };
+                    var map = new kakao.maps.Map(container, options);
+                </script>
+            <div style="display: block;background-color:lightyellow; color:graeen;width:380px;height:600px;float:left;">
+                <ul style="display: block;
+                list-style-type: disc;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                padding-inline-start: 40px;">
+                    <li>병원 리스트1</li>
+                    <li>병원 리스트2</li>
+                    <li>병원 리스트3</li>
+                    <li>병원 리스트4</li>
+                    <li>병원 리스트5</li>
+                    <li>병원 리스트6</li>
+                    <li>병원 리스트7</li>
+                </ul>
+            </div>
+    </div>
 </body>
 <script>
     includeHTML();
 </script>
+
 </html>
