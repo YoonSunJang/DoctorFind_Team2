@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
+{% extends 'header.html' %}
+{% block contents %}
 <head>
-    <meta charset="UTF-8">
-    {% load static %}
-    <script src="{% static 'js/includeHTML.js' %}"></script>  
+    <style>
+        
+        #contents {width: 100%; height: 80px; background: #222; display: flex;}
+        #cont_cont {width: 80%; height: 500px; background: #666;margin:0 auto;}
+        #cont_tit {width: 80%; height: 100px; background: #444;margin:0 auto;text-align: center}
+
+    </style>
 </head>
 <body>
-    
-    <div include-html="header.html"></div>
-    <h2>나는 지도를 만들거야</h2>
+    <div id="cont_tit">
+        <h2>지도 검색</h2>
+    </div>
+    <div id="cont_cont">
+        <div class="container">
+        </div>
+    </div>
+
+{% endblock contents %}
 </body>
-<script>
-    includeHTML();
-</script>
-</html>
