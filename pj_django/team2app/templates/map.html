@@ -15,16 +15,17 @@
     <div colspan="2" style="background-color:lightgrey">
         <h2>123456</h2>
     </div>
-
+    <div> 
+        <p style="color: #1970bb; font-size: 16px; font-weight: 700; margin-top: 0px; line-height: 1.6em;margin-bottom: 20px; text-align: center;">방문전 병원에 정보 확인 하신 후, 방문해 주시기 바랍니다!</p>
+    </div>
     <div id="contain" style="margin: 0px auto; margin-bottom: 40px;width: 980px;min-width: 1180px;min-height: 745px;margin-top: 0px;">
-        <div style="background-color:lightgrey; color:graeen; text-align:center;margin-bottom: 0px;">
-            <a><div class="search-hospital">
-                <p style="color: #1970bb; font-size: 18px; font-weight: 700; margin-top: 0px; line-height: 1.6em;margin-bottom: 20px; text-align: center;">방문전 병원에 정보 확인 하신 후, 방문해 주시기 바랍니다!</p>
-                    <form method="post" action="#" id="searchForm">
+        <div style="background-color:lightgrey; color:graeen; text-align:center;margin-bottom: 0px;width: 99%;min-height: 10%;">
+            <a><div class="search-hospital" >   
+                <form method="post" action="#" id="searchForm">
                     <div class="map-header common-box">
                     <div class="map-body-filter">
-                        <div class="filter-area response-hide">
-                            <select name="sidoCode" id="sidoCode" title="시도 선택">
+                        <div class="filter-area response-hide" >
+                            <select name="sidoCode" id="sidoCode" title="시도 선택" style="float: left; width: 10%;padding:5px;" >
                                 
                                     <option value="11" data-code="11">서울특별시</option>
                                 
@@ -61,14 +62,15 @@
                                     <option value="50" data-code="50">제주특별자치도</option>
                                 
                             </select>
-                            <select name="gugunCode" id="gugunCode" title="구군 선택"></select>
-                            <select name="dongCode" id="dongCode" title="동 선택"></select>
+                            <select name="gugunCode" id="gugunCode" title="구군 선택" style="float: left; width: 10%;padding:5px;"></select>
+
+                            <input type="text" id="yadmNm" name="yadmNm" style="ime-mode: active;float: left; width: 35%;padding:5px;" value="병원명 또는 약국명을 입력하세요." title="병원명 또는 약국명 입력" class="input-text type2" onFocus="this.value=""/>
+                            <a href="#none" style="float: left; width: 10%;padding:5px;" class="inp_btn" onclick=""><span>검색</span></a>
+                            
+
                         </div>
                     </div>
                 </form>
-
-
-
             </a>
         </div>	
             <div id="map" style="width:800px;height:600px;float:left;" >
@@ -82,7 +84,7 @@
                     };
                     var map = new kakao.maps.Map(container, options);
                 </script>
-            <div style="display: block;background-color:lightyellow; color:graeen;width:380px;height:600px;float:left;">
+            <div style="display: block;background-color:lightyellow; color:graeen;width:350px;height:600px;float:left;">
                 <ul style="display: block;
                 list-style-type: disc;
                 margin-block-start: 1em;
