@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <script src="{% static 'js/includeHTML.js' %}"></script>  
+</head>
+<body>
+    
+    <div include-html="header.html"></div>
+    <h2>나는 지도를 만들거야</h2>
+</body>
+<script>
+    includeHTML();
+</script>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="KOSMO team2">
+    <title>Project5_team2</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/header.css">  
+</head>
+<body>
+    <div id="header">
+            <div class="container">
+                <div id="header">
+                    <div id="header-menu">
+                        <a href='login'> 로그인 </a>
+                        <a href='#'> 회원가입 </a>
+                    </div>
+                    <div id="header-title">
+                        <h1>닥터파인</h1>
+                    </div>
+                </div>
+            </div>
+    </div>
+        <div id="contents">
+            <div id="cont_nav">
+                <nav>
+                <div class="container">
+                    <ul>
+                    <li><a href="#">병원/약국<i class='fa fa-angle-down'></i></a>
+                        <ul>
+                            <li><a href="search">세부 조건별 찾기</a></li>
+                            <li><a href="map">지도에서 찾기</a></li>
+                        </ul>
+                    <li><a href="review">병원후기</a></li>
+                    <li> <a href="#">건강정보</a></li>
+                    <li> <a href="#">이벤트</a></li>
+                    <li> <a href="#">마이페이지</a></li>
+                    </ul>
+                </div>
+                </nav>
+            </div>
+        </div>
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        $('nav li').hover(
+            function() {
+                $('ul', this).stop().slideDown(200);
+            },
+            function() {
+                $('ul', this).stop().slideUp(200);
+            }
+        );
+    </script>
+</body>
