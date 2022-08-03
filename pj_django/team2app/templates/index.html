@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">  
     <link rel="stylesheet" href="../static/css/reset.css">
     <link rel="stylesheet" href="../static/css/style.css">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <!--CSS STYLE 
     <link rel="stylesheet" href="css/reset.css">
      -->
@@ -46,22 +46,90 @@
                 </div>
                 </nav>
             </div>
-            <div id="cont_tit">
-                <div class="container">cont_tit</div>
-            </div>
+            {% load static%}
             <div id="cont_ban">
-                <div class="container">cont_ban</div>
+                <div class="ban">
+                    <ul>
+                    {% comment %} <li class="ban_img1"><a href="#"><img src="/static/img/buttonl.png" alt="샘플 이미지1"></a></li> {% endcomment %}
+                    <li class="ban_img2"><img src="/static/img/sunsetcity.gif" alt="샘플 이미지2" style="width: 100%; height:400px;"></li>
+                    {% comment %} <li class="ban_img3"><a href="#"><img src="/static/img/buttonr.png" alt="샘플 이미지3"></a></li> {% endcomment %}
+                    </ul>
+                </div>
+            </div>
+            <div class="search_box">
+                <input id="search" type ="text">
+                <button>검색</button>
             </div>
             <div id="cont_cont">
-                <div class="container">cont_cont</div>
+                <div class="container">
+                    <div class="cont">
+                        <div class="column col1">
+                            <ul class="tabs">
+                                <li class="tab-link current" data-tab="tab-1">메뉴_하나</li>
+                                <li class="tab-link" data-tab="tab-2">메뉴_둘</li>
+                                <li class="tab-link" data-tab="tab-3">메뉴_셋</li>
+                                <li class="tab-link" data-tab="tab-4">메뉴_넷</li>
+                            </ul>
+                                <div id="tab-1" class="tab-content current">
+                                    <ul>
+                                        <div class="main-current">
+                                            <img src="/static/img/left3.png" style="width:10%; height:10%">
+                                            가장 처음 나올 큰 목록1.
+                                            
+                                        </div>
+                                        <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                    </ul>
+                                </div>
+                                <div id="tab-2" class="tab-content">
+                                    <ul>
+                                        <div class="main-current">
+                                            
+                                            <img src="/static/img/left3.png" style="width:10%; height:10%">
+                                            가장 처음 나올 큰 목록2.
+                                        </div>
+                                        <li>두 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>두 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>두 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                    </ul>
+                                </div>
+                                <div id="tab-3" class="tab-content">
+                                    <ul>
+                                        <div class="main-current">
+                                            <img src="/static/img/left3.png" style="width:10%; height:10%">
+                                            가장 처음 나올 큰 목록3.
+                                        </div>
+                                        <li>세 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>세 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>세 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                    </ul>
+                                </div>
+                                <div id="tab-4" class="tab-content">
+                                    <ul>
+                                        <div class="main-current">
+                                            <img src="/static/img/left3.png" style="width:10%; height:10%">
+                                            가장 처음 나올 큰 목록4.
+                                        </div>
+                                        <li>네 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>네 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <li>네 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                    </ul>
+                                </div>
+                        </div>
+                        <div class="column col2">
+                            <table border="1">
+                                <th width="200">고양이</th>
+                            <tr><td height="300"><img src="/static/img/left3.png"></td></tr>
+                            </table>
+                        </div>
+                    </div>
             </div>
         </div>
-
         <div id="footer">
-            <div class="container">footer푸터푸터수정</div>
+            <div class="container">footer</div>
         </div>
     </div>
-
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script>
         $('nav li').hover(
@@ -72,6 +140,21 @@
                 $('ul', this).stop().slideUp(200);
             }
         );
+    </script>
+    <script>
+        $(document).ready(function(){
+	
+            $('ul.tabs li').click(function(){
+                var tab_id = $(this).attr('data-tab');
+        
+                $('ul.tabs li').removeClass('current');
+                $('.tab-content').removeClass('current');
+        
+                $(this).addClass('current');
+                $("#"+tab_id).addClass('current');
+            })
+        
+        });
     </script>
 </body>
 </html>
