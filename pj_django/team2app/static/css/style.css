@@ -18,16 +18,21 @@ a {text-decoration: none;}
 .container {width: 100%; margin: 0 auto; height: inherit;}
 
 /* 헤더 */
-.header {position: fixed;}
+/* .header {position: fixed;}
 .header .header-menu {text-align: right;}
 .header .header-menu a {color: #fff; padding: 10px 0px 10px 13px; display: inline-block;}
 .header .header-menu a:hover {color: #666;}
-.header .header-title {text-align: center; display: inline-block;}
+.header .header-title {text-align: center; display: inline-block;} */
+
+.header {position: relative;}
+.header .header-menu {text-align: right;}
+.header .header-menu a {color: #fff; padding: 10px 0px 10px 13px; display: inline-block;}
+.header .header-menu a:hover {color: #666;}
+.header .header-title {text-align:center; position: relative; top:195px;}
+.header .header-title h1{background-color: #4aa8d4; font-size: 30px; padding: 5px 20px 6px 20px; display: inline-block; color: #fff; margin-top: 40px; font-weight: normal; text-transform: uppercase;}
 
 /*배너*/
-
 .ban {position:relative; padding: 20px 0 20px;}
-
 .ban ul {overflow: hidden;}
 .ban ul li {float: left; width:100%;}
 /* .ban ul li:last-child {text-align: right;}
@@ -36,7 +41,6 @@ a {text-decoration: none;}
 .ban ul li.ban_img2 {text-align: center;}
 /* .ban ul li.ban_img3 {text-align: right;} */
 .ban ul li img {border-color: #98bcdc;}
-
 
 /* 컨테이너 */
 .cont {overflow: hidden; padding-top: 30px;}
@@ -53,7 +57,6 @@ ul.tabs{
 	padding: 0px;
 	list-style: none;
 }
-
 ul.tabs li{
   display: inline-block;
 	background: #ffff;
@@ -62,20 +65,17 @@ ul.tabs li{
 	cursor: pointer;
     border-bottom: 1px solid #252525;
 }
-
 ul.tabs li.current{
 	background: #ffff;
 	color: #222;
     border: 1px solid #252525;
 }
-
 .tab-content{
   display: none;
 	background: #ffff;
     color: #222;
 	padding: 12px;
 }
-
 .tab-content.current{
 	display: inherit;
 }
@@ -83,6 +83,7 @@ ul.tabs li.current{
 	color: #252525;
     font-size:50px;
 }
+
 /* 검색창 */
 .search_box {
     width: 50%;
@@ -94,7 +95,6 @@ ul.tabs li.current{
     margin-right: auto;
     position:relative;
 }
-
 .search_box input {
     width: 90%;
     height: 46px;
@@ -103,9 +103,7 @@ ul.tabs li.current{
     border: none;
     outline: none;
     font-size: 18px;
-
 }
-
 .search_box button {
     width: 10%;
     height: 46px;
@@ -118,18 +116,15 @@ ul.tabs li.current{
 /* Navigation Styles */
 #cont_nav
 nav { text-align:center; background: #2ba0db; }
-
 nav ul {
     font-size: 0;
     margin: 0;
     padding: 0;
 }
-
 nav ul li {
     display: inline-block;
     position: relative;
 }
-
 nav ul li a {
     color: #fff;
     display: block;
@@ -137,30 +132,23 @@ nav ul li a {
     padding: 15px 50px;
     transition: 0.3s linear;
 }
-
 nav ul li:hover { background: #2ba0db; }
-
 nav ul li ul {
     border-bottom: 5px solid #2ba0db;
     display: none;
     position: absolute;
     width: 250px;
 }
-
 nav ul li ul li {
     border-top: 1px solid #444;
     display: block;
     z-index: 1;
 }
-
 nav ul li ul li:first-child { border-top: none; }
-
 nav ul li ul li a {
     background: #373737;
     display: block;
     padding: 10px 14px;
 }
-
 nav ul li ul li a:hover { background: #2ba0db; }
-
 nav .fa.fa-angle-down { margin-left: 6px; }
