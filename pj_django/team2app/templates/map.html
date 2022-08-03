@@ -2,24 +2,17 @@
 <html lang="ko">
     <meta charset="UTF-8">
     {% load static %}
-    <script src="{% static '/js/maps.js' %}"></script>
+    <script src="{% static '/js/mapHTML.js' %}">
+    </script>
+
+    {% comment %} 
     <SCRIPT LAUNGUAGE='JAVASCRIPT'>
         function test(){
             alert("검색하기 눌렀음");
-    
-        }
-        
-        function empty(){
-
-        }
-
-
-    </SCRIPT>
+        } 
+    </SCRIPT>{% endcomment %}
 <head>
-    
-    
-	<title>나는 지도를 만들거야</title>
-
+    <title>나는 지도를 만들거야</title>
 <head>
 	<meta charset="UTF-8">
 	<title>HTML Layouts</title>
@@ -29,8 +22,10 @@
     <h1>지도</h1>
    
     <div colspan="2" style="background-color:lightgrey">
-        <h2>123456</h2>
+        <select name="sido1" id="sido1"></select>
+        <select name="gugun1" id="gugun1"></select>
     </div>
+
     <div> 
         <p style="color: #1970bb; font-size: 16px; font-weight: 700; margin-top: 0px; line-height: 1.6em;margin-bottom: 20px; text-align: center;">방문전 병원에 정보 확인 하신 후, 방문해 주시기 바랍니다!</p>
     </div>
@@ -42,8 +37,7 @@
                     <div class="map-body-filter">
                         <div class="filter-area response-hide" >
 
-                            <select name="sido1" id="sido1"></select>
-                            <select name="gugun1" id="gugun1"></select>
+                      
     
                             <select name="sidoCode" id="sidoCode" title="시도 선택" style="float: left; width: 10%;padding:5px;" >
                                 
@@ -140,9 +134,7 @@
     </div>
     
 </body>
-<script>
-    includeHTML();
-</script>
+
 
 
 
