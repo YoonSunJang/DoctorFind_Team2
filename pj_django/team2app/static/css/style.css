@@ -44,7 +44,7 @@ a {text-decoration: none;}
 .ban ul li img {border-color: #98bcdc;}
 
 /* 컨테이너 */
-.cont {overflow: hidden; padding-top: 30px;}
+.cont {overflow: hidden;}
 .cont .column {position: relative; float: left;height: 363px; padding-right: 30px;}
 .cont .column.col1 {float:left; width:70%;}
 .cont .column.col2 {float:right;} 
