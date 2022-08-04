@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% extends 'header.html' %}
+{% block contents %}
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        #contents {width: 100%; height: 80px; background: #fff; display: flex;}
+        #cont_cont {width: 50%; height: 100%; background: #dceff7;margin:0 auto;}
+        #cont_tit {width: 80%; height: 100px; background: #444;margin:0 auto;text-align: center}
+
+		.vertical_tab {float:left; width: 10%; }
+		#cont_cont .container {width: 100%; margin: 0 auto; }
+		.cont {height : 100%;}
+    </style>
+</head>
+<body>
+<div class ="vertical_tab">
+	<ul class="nav nav-pills nav-stacked">
+		<h1><li class="nav-header">건강정보</li></h1>
+		<p class="eng_comment">Healthy information</p>
+		<li class="calender active" data-tab="tab-1"><a href="calender" data-toggle="pill" >건강캘린더</a></li>
+		<li class="site" data-tab="tab-2"><a href="site" data-toggle="pill">관련 사이트</a></li>
+	</ul>
+</div>
+<div id="cont_cont">
+	<div class="container">
+		<div class="cont">
+			<div id="tab-1" class="tab-content current">
+				<ul>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+				</ul>
+				<ul class="pagination">
+					<li class="disabled"><a href="#none">«</a></li>
+					<li class="active"><a href="#1">1</a></li>
+					<li><a href="#2">2</a></li>
+					<li><a href="#3">3</a></li>
+					<li><a href="#4">4</a></li>
+					<li><a href="#5">5</a></li>
+					<li><a href="#none">»</a></li>
+				</ul>
+			</div>
+			<div id="tab-2" class="tab-content">
+				<ul>
+					
+					<li>두 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>두 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+					<li>두 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+				</ul>
+			</div>
+</div>
+</div>
+</div>
+	<script>
+        $(document).ready(function(){
+            $('.vertical_tab ul li').click(function(){
+                var tab_id = $(this).attr('data-tab');
+        
+                $('.vertical_tab ul li').removeClass('active');
+                $('.tab-content').removeClass('current');
+        
+                $(this).addClass('active');
+                $("#"+tab_id).addClass('current');
+            })
+    
+        });
+    </script>
+{% endblock contents %}
+</body>

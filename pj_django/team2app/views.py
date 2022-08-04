@@ -2,6 +2,17 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
+from pymongo import mongo_client
+
+url = 'mongodb://localhost:27017/'
+mgClient = mongo_client.MongoClient(url)
+db = mgClient['test0725']
+col = db['HospitalList1']
+
+a = col.find()
+for x in a:
+    print("col: ", x)
+
 def index(request):
     return render(request,'index.html')
 
@@ -17,3 +28,5 @@ def map(request):
 def login(request):
     return render(request,'login.html')
 
+def healthinfo(request):
+    return render(request,'healthinfo.html')
