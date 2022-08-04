@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="KOSMO team2">
-    <title>Project5_team2</title>
+    <title>team2app</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">  
-    <link rel="stylesheet" href="../static/css/reset.css">
-    <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    {% load static %}
+    <!--<link rel="stylesheet" href="../static/css/reset.css">-->
+    <!--<link rel="stylesheet" href="../static/css/style.css">-->
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!--CSS STYLE 
     <link rel="stylesheet" href="css/reset.css">
      -->
@@ -23,6 +26,7 @@
                     </div>
                     <div class="header-title">
                         <h1>닥터파인</h1>
+
                     </div>
                 </div>
             </div>
@@ -75,6 +79,7 @@
                                         <div class="main-current">
                                             <img src="/static/img/left3.png" style="width:10%; height:10%">
                                             가장 처음 나올 큰 목록1.
+
                                         </div>
                                         <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
                                         <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
@@ -84,7 +89,7 @@
                                 <div id="tab-2" class="tab-content">
                                     <ul>
                                         <div class="main-current">
-                                            
+
                                             <img src="/static/img/left3.png" style="width:10%; height:10%">
                                             가장 처음 나올 큰 목록2.
                                         </div>
@@ -119,6 +124,7 @@
                         <div class="column col2">
                             <table border="1">
                                 <th width="200">고양이</th>
+
                             <tr>
                                 <td height="300"><div style="height:100%">
                                 <a href="#">
@@ -127,6 +133,8 @@
                             </div>
                         </td>
                     </tr>
+                            <tr><td height="300"><img src="/static/img/left3.png"></td></tr>
+
                             </table>
                         </div>
                     </div>
@@ -149,17 +157,17 @@
     </script>
     <script>
         $(document).ready(function(){
-	
+
+
             $('ul.tabs li').click(function(){
                 var tab_id = $(this).attr('data-tab');
-        
+
                 $('ul.tabs li').removeClass('current');
                 $('.tab-content').removeClass('current');
-        
+
                 $(this).addClass('current');
                 $("#"+tab_id).addClass('current');
             })
-        
         });
     </script>
 </body>
