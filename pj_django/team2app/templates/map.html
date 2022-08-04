@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
+{% extends 'header.html' %}
+{% block contents %}
+<head>
     <meta charset="UTF-8">
-    {% load static %}
-    <script src="{% static '/js/mapHTML.js' %}">
-    </script>
-
-    {% comment %} 
-    <SCRIPT LAUNGUAGE='JAVASCRIPT'>
-        function test(){
-            alert("검색하기 눌렀음");
-        } 
-    </SCRIPT>{% endcomment %}
-<head>
-    <title>나는 지도를 만들거야</title>
-<head>
-	<meta charset="UTF-8">
-	<title>HTML Layouts</title>
-</head>   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <style>
+        #contents {width: 100%; height: 80px; background: #222; display: flex;}
+        #cont_cont {width: 80%; height: 500px; background: #666;margin:0 auto;}
+        #cont_tit {width: 80%; height: 100px; background: #444;margin:0 auto;text-align: center}
+        h2{padding: 30px 0px 0px 0px;}
+    </style>
 </head>
 <body>
-    <h1>지도</h1>
+    <div id="cont_tit">
+        <h2>지도 검색</h2>
+    </div>
+    {% load static %}
+    {% comment %} <script src="{% static '/js/mapHTML.js' %}">
+    </script> {% endcomment %}
+
+   
+    
+
    
     <div colspan="2" style="background-color:lightgrey">
-        <select name="sido1" id="sido1"></select>
-        <select name="gugun1" id="gugun1"></select>
     </div>
 
     <div> 
@@ -35,6 +36,8 @@
                 <form method="post" action="#" id="searchForm">
                     <div class="map-header common-box">
                     <div class="map-body-filter">
+
+                        
                         <div class="filter-area response-hide" >
 
                       
@@ -77,12 +80,14 @@
                                 
                             </select>
                             <select name="gugunCode" id="gugunCode" title="구군 선택" style="float: left; width: 10%;padding:5px;"></select>
-
-                            <input type="text"  name="검색창" style="ime-mode: active;float: left; width: 35%;padding:5px;" value="병원명 또는 약국명을 입력하세요." title="병원명 또는 약국명 입력" class="input-text type2" onclick = 'value=""'>
-
-                            <button type="button" style="float: left; width: 10%;padding:3px;" onclick=test()>검색하기</button>
-
+                            <form name="f" action="map_ok/" method="post">
+                                {% csrf_token %}
+                                        
+                            <input type="text" name="number" id="num1" style="float: left; width: 35%;padding:5px;"  value="병원명 또는 약국명을 입력하세요." title="병원명 또는 약국명 입력" onclick = 'value=""'  />
+                            <button type="button" style="float: left; width: 10%;padding:3px;" onclick='finddoc()'>검색하기</button>
+                            </form> 
                         </div>
+                   
                     </div>
                 </form>
             </a>
@@ -132,12 +137,18 @@
                 </ul>
             </div>
     </div>
+    <SCRIPT type="text/javascript">
+        function finddoc(){
+            var num = document.getElementById('num1').value;
+            alert(num);
+        }
+
+    </SCRIPT>
     
+
+{% endblock contents %}
 </body>
 
 
-
-
-
-
 </html>
+
