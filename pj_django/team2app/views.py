@@ -9,8 +9,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
 
-mname = ""
-
 def index(request):
     return render(request,'index.html')
 
@@ -44,11 +42,12 @@ def map_ok(request):
     where = {"요양기관명":{"$regex":""+str(mname)+""}}
     mdocs = col.find(where)
     for doc in mdocs:  
+        #dox = mdocs.at[doc, '요양기관명']
         print(doc)
     context = {
         'doc': doc, 
     }
-    return HttpResponse({temlate}.render(context, request))
+    return HttpResponse(temlate.render(context, request))
 
 def login(request):
     return render(request,'login.html')

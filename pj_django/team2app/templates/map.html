@@ -134,9 +134,11 @@
                 margin-inline-start: 0px;
                 margin-inline-end: 0px;
                 padding-inline-start: 40px;">
-                {%for x in doc%}
-                    <li>{{x}}</li>
-                {% endfor %}
+               
+                {% comment %} {%for x in doc%} {% endcomment %}
+                    {% comment %} <p>{{x}}</p> {% endcomment %}
+                {% comment %} {% endfor %} {% endcomment %}
+                
                 </ul>
             </div>
     </div>
