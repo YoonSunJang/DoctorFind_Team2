@@ -6,95 +6,72 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <style>
-        #contents {width: 100%; height: 80px; background: #222; display: flex;}
-        #cont_cont {width: 80%; height: 500px; background: #666;margin:0 auto;}
-        #cont_tit {width: 80%; height: 100px; background: #444;margin:0 auto;text-align: center}
+        #contents {width: 100%; height: 80px; background: none; display: flex;}
+        #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
+        #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
+        #footer {width: 100%; height: 150px; background: #333;}
         h2{padding: 30px 0px 0px 0px;}
+        a:link, a:visited, a:hover, a:active {text-decoration: none;}
     </style>
 </head>
 <body>
     <div id="cont_tit">
         <h2>지도 검색</h2>
     </div>
-    {% load static %}
-    <script src="{% static '/js/maps.js' %}"></script>
-    <SCRIPT LAUNGUAGE='JAVASCRIPT'>
-        function test(){
-            alert("검색하기 눌렀음");
-    
-        }
-        
-        function empty(){
+    <div id="cont_cont">
+        <div class="container">
+        {% load static %}
+        <script src="{% static '/js/maps.js' %}"></script>
+        <SCRIPT LAUNGUAGE='JAVASCRIPT'>
+            function test(){
+                alert("검색하기 눌렀음");    
+            }    
+            function empty(){
+            }
+        </SCRIPT>
+        <div> 
+            <p style="color: #1970bb; font-size: 16px; font-weight: 700; margin-top: 0px; line-height: 1.6em;margin-bottom: 20px; text-align: center;">방문전 병원에 정보 확인 하신 후, 방문해 주시기 바랍니다!</p>
+        </div>
+        <div id="contain" style="margin: 0px auto; margin-bottom: 40px;width: 980px;min-width: 1180px;min-height: 745px;margin-top: 0px;">
+            <div style="background-color:lightgrey; color:graeen; text-align:center;margin-bottom: 0px;width: 99%;min-height: 10%;">
+                <a><div class="search-hospital" >   
+                    <form method="post" action="#" id="searchForm">
+                        <div class="map-header common-box">
+                            <div class="map-body-filter">
+                                <div class="filter-area response-hide" >
+                                    <select name="sido1" id="sido1"></select>
+                                    <select name="gugun1" id="gugun1"></select>
+                                    <select name="sidoCode" id="sidoCode" title="시도 선택" style="float: left; width: 10%;padding:5px;" >
+                                        <option value="11" data-code="11">서울특별시</option>  
+                                        <option value="26" data-code="26">부산광역시</option>    
+                                        <option value="27" data-code="27">대구광역시</option>                      
+                                        <option value="28" data-code="28">인천광역시</option>                       
+                                        <option value="29" data-code="29">광주광역시</option>                        
+                                        <option value="30" data-code="30">대전광역시</option>
+                                        <option value="31" data-code="31">울산광역시</option>                 
+                                        <option value="36" data-code="36">세종특별자치시</option>                          
+                                        <option value="41" data-code="41">경기도</option>                       
+                                        <option value="42" data-code="42">강원도</option>
+                                        <option value="43" data-code="43">충청북도</option>
+                                        <option value="44" data-code="44">충청남도</option>
+                                        <option value="45" data-code="45">전라북도</option>
+                                        <option value="46" data-code="46">전라남도</option>
+                                        <option value="47" data-code="47">경상북도</option>
+                                        <option value="48" data-code="48">경상남도</option>
+                                        <option value="50" data-code="50">제주특별자치도</option>
+                                    </select>
+                                    <select name="gugunCode" id="gugunCode" title="구군 선택" style="float: left; width: 10%;padding:5px;"></select>
+                                    <input type="text"  name="검색창" style="ime-mode: active;float: left; width: 35%;padding:5px;" value="병원명 또는 약국명을 입력하세요." title="병원명 또는 약국명 입력" class="input-text type2" onclick = 'value=""'>
+                                    <button type="button" style="float: left; width: 10%;padding:3px;" onclick=test()>검색하기</button>
 
-        }
-
-
-    </SCRIPT>
-    <div> 
-        <p style="color: #1970bb; font-size: 16px; font-weight: 700; margin-top: 0px; line-height: 1.6em;margin-bottom: 20px; text-align: center;">방문전 병원에 정보 확인 하신 후, 방문해 주시기 바랍니다!</p>
-    </div>
-    <div id="contain" style="margin: 0px auto; margin-bottom: 40px;width: 980px;min-width: 1180px;min-height: 745px;margin-top: 0px;">
-        <div style="background-color:lightgrey; color:graeen; text-align:center;margin-bottom: 0px;width: 99%;min-height: 10%;">
-            <a><div class="search-hospital" >   
-                <form method="post" action="#" id="searchForm">
-                    <div class="map-header common-box">
-                    <div class="map-body-filter">
-                        <div class="filter-area response-hide" >
-
-                            <select name="sido1" id="sido1"></select>
-                            <select name="gugun1" id="gugun1"></select>
-    
-                            <select name="sidoCode" id="sidoCode" title="시도 선택" style="float: left; width: 10%;padding:5px;" >
-                                
-                                    <option value="11" data-code="11">서울특별시</option>
-                                
-                                    <option value="26" data-code="26">부산광역시</option>
-                                
-                                    <option value="27" data-code="27">대구광역시</option>
-                                
-                                    <option value="28" data-code="28">인천광역시</option>
-                                
-                                    <option value="29" data-code="29">광주광역시</option>
-                                
-                                    <option value="30" data-code="30">대전광역시</option>
-                                
-                                    <option value="31" data-code="31">울산광역시</option>
-                                
-                                    <option value="36" data-code="36">세종특별자치시</option>
-                                
-                                    <option value="41" data-code="41">경기도</option>
-                                
-                                    <option value="42" data-code="42">강원도</option>
-                                
-                                    <option value="43" data-code="43">충청북도</option>
-                                
-                                    <option value="44" data-code="44">충청남도</option>
-                                
-                                    <option value="45" data-code="45">전라북도</option>
-                                
-                                    <option value="46" data-code="46">전라남도</option>
-                                
-                                    <option value="47" data-code="47">경상북도</option>
-                                
-                                    <option value="48" data-code="48">경상남도</option>
-                                
-                                    <option value="50" data-code="50">제주특별자치도</option>
-                                
-                            </select>
-                            <select name="gugunCode" id="gugunCode" title="구군 선택" style="float: left; width: 10%;padding:5px;"></select>
-
-                            <input type="text"  name="검색창" style="ime-mode: active;float: left; width: 35%;padding:5px;" value="병원명 또는 약국명을 입력하세요." title="병원명 또는 약국명 입력" class="input-text type2" onclick = 'value=""'>
-
-                            <button type="button" style="float: left; width: 10%;padding:3px;" onclick=test()>검색하기</button>
-
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </a>
-        </div>	
+                    </form>
+                </a>
+            </div>	
            <!-- 이미지 지도를 표시할 div 입니다 -->
             <div id="staticMap" style="width:800px;height:600px;float:left;"></div>    
-
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=63420363e3bb2acc6f2ab79aaf0aa176"></script>
             <script>    
             // 이미지 지도에 표시할 마커입니다
@@ -136,8 +113,12 @@
                     <li>병원 리스트7</li>
                 </ul>
             </div>
+        </div>
     </div>
-    
+    <div id="footer">
+        <div class="container">footer</div>
+    </div>
 
-{% endblock contents %}
 </body>
+{% endblock contents %}
+</html>

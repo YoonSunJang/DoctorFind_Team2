@@ -10,21 +10,25 @@ def search(request):
     input1=request.GET.get("input1")
     input2=request.GET.get("input2")
     input3=request.GET.get("input3")
-    print(input1)
-    print(input2)
-    print(input3)
+    name=request.GET.get("name")
+    print(1)
+    if(input1==input2==input3==name==None):pass
+    else:
+        print(input1)
+        print(input2)
+        print(input3)
+        print(name)
+    print(2)
     return render(request,'search.html')
 
 def search_ok(request):
-    # input1=request.POST['input1']
-    # input2=request.POST['input2']
-    # input3=request.POST['input3']
-    name=request.POST['inputname']
-    print(name)
     return HttpResponseRedirect(reverse('search'))
 
 def review(request):
     return render(request,'review.html')
+
+def rwrite(request):
+    return render(request,'rwrite.html')
 
 def map(request):
     return render(request,'map.html')
