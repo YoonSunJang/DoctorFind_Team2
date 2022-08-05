@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Fine doctor - client board</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <a href=''><h1>병원후기</h1></a> <!--href: index값 연동 안됨<a>는 가능-->
+                        <div class="card mb-4">
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <center>
+                                    <font size="6" color="green">
+                                    <a href=''>파인 병원은 잘 하겠습니다!</a>
+                                    </font>
+                                    </center>
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>문서번호</th>
+                                            <th>제목</th>
+                                            <th>작성자</th>
+                                            <th>작성일</th>
+                                            <th>조회수</th>
+                                            <th>기타</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>코로나 의심</td>
+                                            <td>재준엄마</td>
+                                            <td>2022-07-11</td>
+                                            <td>100</td>
+                                            <td>병원추천</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>코로나</td>
+                                            <td>안녕하이</td>
+                                            <td>2022-07-12</td>
+                                            <td>1000</td>
+                                            <td>코로나란</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>확진 의심</td>
+                                            <td>맘맘</td>
+                                            <td>2022-07-15</td>
+                                            <td>10</td>
+                                            <td>장난감</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>감기몸살</td>
+                                            <td>감기싫</td>
+                                            <td>2022-07-27</td>
+                                            <td>6</td>
+                                            <td>감기약</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>원숭이두창</td>
+                                            <td>호이맘</td>
+                                            <td>2022-07-30</td>
+                                            <td>30</td>
+                                            <td>병원근처 카페</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>코로나 확진</td>
+                                            <td>재재엄마</td>
+                                            <td>2022-08-1</td>
+                                            <td>10</td>
+                                            <td>병원맛집</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <center>
+                            <font size="6" color="red">
+                            <a href='reveiwwrite'>글쓰기</a>
+                            </font>
+                            </center>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+    </body>
+</html>

@@ -9,8 +9,14 @@
     {% load static %}
     <!--<link rel="stylesheet" href="../static/css/reset.css">-->
     <!--<link rel="stylesheet" href="../static/css/style.css">-->
+    <!--<link rel="stylesheet" href="{% static 'css/searchT.css' %}">-->
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <style>
+        a:link, a:visited, a:hover, a:active {text-decoration: none;}
+
+    </style>
 
     <!--CSS STYLE 
     <link rel="stylesheet" href="css/reset.css">
@@ -23,10 +29,10 @@
                 <div class="header">
                     <div class="header-menu">
                         <a href='login'> 로그인 </a>
-                        <a href='#'> 회원가입 </a>
+                        <a href='signup'> 회원가입 </a>
                     </div>
                     <div id="header-title">
-                        <center><h1>닥터파인</h1></center>
+                        <center><a href=""><h1>닥터파인</h1></a></center>
                     </div>
                 </div>
             </div>
@@ -37,15 +43,15 @@
                 <nav>
                 <div class="container">
                     <ul>
-                    <li><a href="#">병원/약국<i class='fa fa-angle-down'></i></a>
+                    <li><a href="">병원/약국<i class='fa fa-angle-down'></i></a>
                         <ul>
                             <li><a href="search">세부 조건별 찾기</a></li>
                             <li><a href="map">지도에서 찾기</a></li>
                         </ul>
                     <li><a href="review">병원후기</a></li>
-                    <li> <a href="#">건강정보</a></li>
-                    <li> <a href="#">이벤트</a></li>
-                    <li> <a href="#">마이페이지</a></li>
+                    <li> <a href="healthinfo">건강정보</a></li>
+                    <li> <a href="event">이벤트</a></li>
+                    <li> <a href="mypage">마이페이지</a></li>
                     </ul>
                 </div>
                 </nav>
