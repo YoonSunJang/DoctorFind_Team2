@@ -8,7 +8,7 @@ from re import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
-
+import pandas as pd
 def index(request):
     return render(request,'index.html')
 
@@ -16,21 +16,25 @@ def search(request):
     input1=request.GET.get("input1")
     input2=request.GET.get("input2")
     input3=request.GET.get("input3")
-    print(input1)
-    print(input2)
-    print(input3)
+    name=request.GET.get("name")
+    print(1)
+    if(input1==input2==input3==name==None):pass
+    else:
+        print(input1)
+        print(input2)
+        print(input3)
+        print(name)
+    print(2)
     return render(request,'search.html')
 
 def search_ok(request):
-    # input1=request.POST['input1']
-    # input2=request.POST['input2']
-    # input3=request.POST['input3']
-    name=request.POST['inputname']
-    print(name)
     return HttpResponseRedirect(reverse('search'))
 
 def review(request):
     return render(request,'review.html')
+
+def rwrite(request):
+    return render(request,'rwrite.html')
 
 def map(request):
     return render(request,'map.html')
@@ -41,11 +45,49 @@ def map_ok(request):
     temlate = loader.get_template('map.html')
     where = {"요양기관명":{"$regex":""+str(mname)+""}}
     mdocs = col.find(where)
-    for doc in mdocs:  
-        #dox = mdocs.at[doc, '요양기관명']
+    df = pd.DataFrame(list(mdocs))
+    df2 = df.dropna(subset=['y좌표','x좌표'])
+    mlist = df['요양기관명'].to_list()
+    for doc in mlist:  
         print(doc)
+        
+    df2[['요양기관명','y좌표','x좌표']]
+    lat = df2['x좌표'].mean()
+    long = df2['y좌표'].mean()
+    a=[]
+    b=[]
+    for i in df2.index:
+        sub_lat = df2.at[i, 'x좌표']
+        sub_long = df2.at[i, 'y좌표']
+        title = df2.at[i, '요양기관명']
+        
+        #print([sub_long, sub_lat],title)
+        a.append(sub_lat)
+        b.append(sub_long)
+    df2 =  df2[['요양기관명','y좌표','x좌표']]
+    
+    m1 =  df2['요양기관명']
+    m2 = df2['y좌표']
+    m3 = df2['x좌표']
+    num=len(df2)
+    
     context = {
-        'doc': doc, 
+        'mlist': mlist,
+        'sub_lat' : sub_lat,
+        'sub_long' : sub_long,
+        'title' : title,
+        'lat' : lat,
+        'long' : long,
+        'xy' : (sub_lat, sub_long),
+        'df2' : df2.to_dict('records'),
+        'a' : a,
+        'b' : b,
+        'm1' : m1,
+        'm2' : m2,
+        'm3' : m3,
+        'num':num,
+       
+        
     }
     return HttpResponse(temlate.render(context, request))
 
