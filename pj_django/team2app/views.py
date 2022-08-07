@@ -1,3 +1,4 @@
+from locale import resetlocale
 from multiprocessing import context
 from django.shortcuts import render
 from django.template import loader
@@ -60,17 +61,28 @@ def map_ok(request):
         sub_lat = df2.at[i, 'x좌표']
         sub_long = df2.at[i, 'y좌표']
         title = df2.at[i, '요양기관명']
-        
         #print([sub_long, sub_lat],title)
-        a.append(sub_lat)
-        b.append(sub_long)
+        # a.append(sub_long)
+        # a.append(sub_lat)
+        # b.append(sl)
     df2 =  df2[['요양기관명','y좌표','x좌표']]
+   # df2['latlng'] =df2[cols].apply(lambda row: ', '.join(row.values.astype(str)),axis=1)
+   
+    #df2['latlng'] = df2['y좌표'] + ", " + df2['x좌표']
     
+    #df2_2_3 = df2[['y좌표','x좌표']]
     m1 =  df2['요양기관명']
     m2 = df2['y좌표']
     m3 = df2['x좌표']
     num=len(df2)
-    
+    #df2_2 = df2[title: '요양기관명', latlng: new kakao.maps.LatLng('y좌표', 'x좌표')]
+    #{title: '카카오', latlng: new kakao.maps.LatLng(33.450705, 126.570677)}
+    #df2_2 = df2
+    #df2_2 = df2.rename(index = {'요양기관명':'title'}, inplace=True)
+    #df2 = (df2['y좌표'],str.cat(df2['x좌표'], sep=', '))
+    # df2_2 = df2[['y좌표','x좌표']]
+    # df2_3 = df2[['요양기관명']]
+    # df2_2_2 = ", ".join(df2_2)
     context = {
         'mlist': mlist,
         'sub_lat' : sub_lat,
@@ -86,9 +98,17 @@ def map_ok(request):
         'm2' : m2,
         'm3' : m3,
         'num':num,
+                # 'df2_2':df2_2,
+        # 'df2_3':df2_3,
+        # 'df2_2_2':df2_2_2,
+        # 'df2_2_3':df2_2_3,
+        
+        
        
         
     }
+    
+    print("df2.to_dict('records')",df2.to_dict('records'))
     return HttpResponse(temlate.render(context, request))
 
 def login(request):
