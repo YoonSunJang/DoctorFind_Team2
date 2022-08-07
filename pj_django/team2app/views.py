@@ -7,8 +7,8 @@ from pymongo import mongo_client
 
 url = 'mongodb://localhost:27017/'
 mgClient = mongo_client.MongoClient(url)
-db = mgClient['test0725']
-col = db['HospitalList1']
+db = mgClient['project5_team2']
+col = db['healthinfo']
 hsdb = col.find()
 df = pd.DataFrame(list(hsdb))
     
@@ -44,10 +44,14 @@ def login(request):
 
 def healthinfo(request):
     template = loader.get_template('healthinfo.html')
-    namehealth = df['요양기관명']
-    print(namehealth[0])
+    dr = df[['제목', '월']]
+    dt = dr[dr['월']==1]
+    dy = dt['제목'].to_list()
+    # subhealth = df['제목']
+    # contentshealth = df['내용']
+    print(dy)
     context = {
-        'namehealth' : namehealth,
+        'dy' : dy,
     }
     return HttpResponse(template.render(context, request))
 

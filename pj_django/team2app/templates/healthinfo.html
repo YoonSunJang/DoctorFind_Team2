@@ -10,7 +10,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css">
-	<link rel="stylesheet" href="main.css" />
     <style>
         #contents {width: 100%; height: 80px; background: #fff; display: flex;}
         #cont_cont {width: 53%; height: 100%; background: #dceff7;margin:0 auto;}
@@ -20,6 +19,20 @@
 		#cont_cont .container {width: 100%; margin: 0 auto; }
 		.cont {height : 100%;}
 		#tab-jan {width:100%; height:100%; margin:0px;}
+
+		.month-content{
+			display: none;
+			background: #ffff;
+			color: #222;
+			padding: 12px;
+			
+		}
+		.month-content.current{
+			display: inherit;	
+		}
+		.month-tab {
+			margin-bottom: 5%;
+		}
     </style>
 </head>
 <body>
@@ -38,27 +51,18 @@
 		<div class="cont">
 			<div id="tab-1" class="tab-content current">
 				<ul class="nav nav-pills">
-					<li class="jan active" data-tab="tab-jan"><a href="#jan" data-toggle="pill1">1월</a></li>
-					<li class="feb" data-tab="tab-feb"><a href="#feb" data-toggle="pill2" >2월</a></li>
-					<li class="mar" data-tab="tab-mar"><a href="#mar" data-toggle="pill3" >3월</a></li>
-					<li class="apr" data-tab="tab-apr"><a href="#apr" data-toggle="pill4" >4월</a></li>
-					<li class="may" data-tab="tab-may"><a href="#may" data-toggle="pill5" >5월</a></li>
-					<li class="jun" data-tab="tab-jun"><a href="#jun" data-toggle="pill6" >6월</a></li>
-					<li class="jul" data-tab="tab-jul"><a href="#jul" data-toggle="pill7" >7월</a></li>
-					<li class="aug" data-tab="tab-aug"><a href="#aug" data-toggle="pill8" >8월</a></li>
-					<li class="sep" data-tab="tab-sep"><a href="#sep" data-toggle="pill9" >9월</a></li>
-					<li class="oct" data-tab="tab-oct"><a href="#oct" data-toggle="pill10" >10월</a></li>
-					<li class="nov" data-tab="tab-nov"><a href="#nov" data-toggle="pill11" >11월</a></li>
-					<li class="dec" data-tab="tab-dec"><a href="#dec" data-toggle="pill12" >12월</a></li>
-				</ul>
-			</div>
-			<div id="tab-jan" class="tab-content current">
-				<ul>
-					<li>dd</li>
-					<li>dd</li>
-					<li>dd</li>
-					<li>dd</li>
-					<li>dd</li>
+					<li class="tab-month active" data-tab="tab-jan"><a href="#jan" data-toggle="pill">1월</a></li>
+					<li class="tab-month" data-tab="tab-feb"><a href="#feb" data-toggle="pill" >2월</a></li>
+					<li class="tab-month" data-tab="tab-mar"><a href="#mar" data-toggle="pill" >3월</a></li>
+					<li class="tab-month" data-tab="tab-apr"><a href="#apr" data-toggle="pill" >4월</a></li>
+					<li class="tab-month" data-tab="tab-may"><a href="#may" data-toggle="pill" >5월</a></li>
+					<li class="tab-month" data-tab="tab-jun"><a href="#jun" data-toggle="pill" >6월</a></li>
+					<li class="tab-month" data-tab="tab-jul"><a href="#jul" data-toggle="pill" >7월</a></li>
+					<li class="tab-month" data-tab="tab-aug"><a href="#aug" data-toggle="pill" >8월</a></li>
+					<li class="tab-month" data-tab="tab-sep"><a href="#sep" data-toggle="pill" >9월</a></li>
+					<li class="tab-month" data-tab="tab-oct"><a href="#oct" data-toggle="pill" >10월</a></li>
+					<li class="tab-month" data-tab="tab-nov"><a href="#nov" data-toggle="pill" >11월</a></li>
+					<li class="tab-month" data-tab="tab-dec"><a href="#dec" data-toggle="pill" >12월</a></li>
 				</ul>
 			</div>
 			<div id="tab-2" class="tab-content">
@@ -66,6 +70,106 @@
 				<li>내용2</li>
 				</ul>
 			</div>
+	</div>
+<div id="tab-1" class="month-tab">
+	<div id="tab-jan" class="month-content current">
+		<ul>
+			{% for subject in dy%}
+			<li>{{subject}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div id="tab-feb" class="month-content">
+		<ul>
+			<li>2</li>
+		</ul>
+	</div>
+	<div id="tab-mar" class="month-content">
+		<ul>
+			<li>3</li>
+		</ul>
+	</div>
+	<div id="tab-apr" class="month-content">
+		<ul>
+			<li>4</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-may" class="month-content">
+		<ul>
+			<li>5</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-jun" class="month-content">
+		<ul>
+			<li>6</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-jul" class="month-content">
+		<ul>
+			<li>7</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-aug" class="month-content">
+		<ul>
+			<li>8</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-sep" class="month-content">
+		<ul>
+			<li>9</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-oct" class="month-content">
+		<ul>
+			<li>10</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-nov" class="month-content">
+		<ul>
+			<li>11</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
+	<div id="tab-dec" class="month-content">
+		<ul>
+			<li>12</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+			<li>dd</li>
+		</ul>
+	</div>
 </div>
 </div>
 </div>
@@ -77,23 +181,23 @@
         
                 $('.vertical_tab ul li').removeClass('active');
                 $('.tab-content').removeClass('current');
+				$('.month-content').removeClass('current');
         
                 $(this).addClass('active');
                 $("#"+tab_id).addClass('current');
             })
         });
 		$(document).ready(function(){
-            $('.cont ul li').click(function(){
+            $('.cont #tab-1 ul li').click(function(){
                 var tab_id = $(this).attr('data-tab');
         
                 $('.cont ul li').removeClass('active');
-                $('.각 개월 콘텐츠').removeClass('current');
+                $('.month-content').removeClass('current');
         
                 $(this).addClass('active');
                 $("#"+tab_id).addClass('current');
             })
         });
-	
     </script>
 {% endblock contents %}
 
