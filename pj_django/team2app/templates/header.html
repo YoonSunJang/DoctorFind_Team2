@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
-    
- 
 </head>
 <body>
     <div id="header">
@@ -44,11 +42,8 @@
                 </nav>
             </div>
         </div>
-        {% block contents %}
-        
-        {% endblock contents %}
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script>
+        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script>
         $('nav li').hover(
             function() {
                 $('ul', this).stop().slideDown(200);
@@ -57,5 +52,7 @@
                 $('ul', this).stop().slideUp(200);
             }
         );
-    </script>
+        </script>
+        {% block contents %}
+        {% endblock contents %}
 </body>
