@@ -1,16 +1,19 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.template import loader
 
 from pymongo import mongo_client
 url = 'mongodb://localhost:27017/'
 mgClient = mongo_client.MongoClient(url)
 db = mgClient['project5_team2']
-col = db['test0805']
+col1 = db['hospital_list']
+col2 = db['healthinfo'] #재용
 
 import pandas as pd
-df=col.find({},{'_id':0})
+hsdb = col2.find() #재용
+df_hs = pd.DataFrame(list(hsdb)) #재용
+df=col1.find({},{'_id':0})
 df=pd.DataFrame(df)
 #진료종료시간(야간진료 18시이후 기준)
 endtime=df.copy()
@@ -63,7 +66,10 @@ df=df.rename(columns={'진료시간_금':'fri'})
 df=df.rename(columns={'진료시간_토':'sat'})
 df=df.rename(columns={'응급실 주간운영여부':'emgday'})
 df=df.rename(columns={'응급실 야간운영여부':'emgnight'})
-search_list=df[['hosname','address','telnumber','mon','tue','wed','thur','fri','sat','emgday','emgnight']]
+df=df.rename(columns={'병원홈페이지(URL)':'url'})
+df=df.rename(columns={'진료과목':'subject'})
+df=df.rename(columns={'총의사수':'doctors'})
+search_list=df[['hosname','address','telnumber','mon','tue','wed','thur','fri','sat','emgday','emgnight','url','subject','doctors']]
 search_lists=pd.DataFrame()  
 
 def index(request):
@@ -71,9 +77,9 @@ def index(request):
 
 from django.core.paginator import Paginator
 from datetime import datetime
+#검색
 def search(request):
     global search_list, search_lists
-    #검색
     input1=request.GET.get("input1") #지역권
     input2=request.GET.get("input2") #시/도
     input3=request.GET.get("input3") #시/군/구
@@ -83,16 +89,7 @@ def search(request):
     check3=request.GET.get("check3") #공휴일진료
     check4=request.GET.get("check4") #응급실주간
     check5=request.GET.get("check5") #응급실야간
-    # print("1")
-    # print(input1)
-    # print(input2)
-    # print(input3)
-    # print(name)
-    # print("check1",check1)
-    # print("check2",check2)
-    # print("check3",check3)
-    # print("check4",check4)
-    # print("check5",check5)
+
     whattoday = datetime.today().weekday()
     whattime = datetime.now()
     if(input1==input2==input3==name==check4==check5==None):pass
@@ -104,11 +101,11 @@ def search(request):
             if(input3!='시/군/구 선택'):
                 search_lists=search_lists[search_lists['address'].str.contains(input3)]
             search_lists=search_lists[search_lists['address'].str.contains(input2)]
-        if(check2=='true'): #야간진료
+        if(check2=='true'): #야간진료 > 확인필요
              search_lists=search_lists.loc[endtime.index,:]
-        if(check4=='true'):
+        if(check4=='true'): #응급실주간운영여부
             search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
-        if(check5=='true'):
+        if(check5=='true'): #응급실야간운영여부
             search_lists=search_lists[search_lists['emgnight'].str.contains('Y')]
         
     print('search_lists',search_lists)
@@ -126,23 +123,207 @@ def search(request):
 def search_ok(request):
     return HttpResponseRedirect(reverse('search'))
 
+from .models import Member1, Review1
+from django.utils import timezone
 def review(request):
-    return render(request,'review.html')
+    temlate = loader.get_template('review.html')
+    review =  Review1.objects.all().values()
+    context = {
+        'review': review, 
+    }
+    return HttpResponse(temlate.render(context, request))
 
 def rwrite(request):
-    return render(request,'rwrite.html')
+    temlate = loader.get_template('rwrite.html')
+    return HttpResponse(temlate.render({}, request))  
+
+def rwrite_ok(request):
+    subject = request.POST['subject']
+    writer = request.POST['writer']
+    content = request.POST['content']
+    hosname = request.POST['hosname']
+    # rating = request.POST['rating']
+    # views = request.POST['views']
+    nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+    review = Review1(writer=writer,email="bor@naver.com",subject=subject,content=content,hosname=hosname,rdate=nowDatetime,views='1')
+    review.save()
+    return HttpResponseRedirect(reverse('review'))
+
+def rcontent(request,id):
+    template = loader.get_template('rcontent.html')
+    review = Review1.objects.get(id=id)
+    context = {
+        'review' : review,
+    }
+    return HttpResponse(template.render(context,request))
+
+def rdelete(request,id):
+    review = Review1.objects.get(id=id)
+    review.delete()
+    return HttpResponseRedirect(reverse('review'))
+
+def rupdate(request,id):
+    template = loader.get_template('rupdate.html')
+    review = Review1.objects.get(id=id)
+    context = {
+        'review' : review,
+    }
+    return HttpResponse(template.render(context,request))
+
+def rupdate_ok(request,id):
+    template = loader.get_template('rupdate.html')
+    review = Review1.objects.get(id=id)
+    subject = request.POST['subject']
+    # hosname = request.POST['hosname']
+    # rating = request.POST['rating']
+    content = request.POST['content']
+    nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+    review.subject=subject
+    review.content=content
+    # review.hosname=hosname
+    # review.rating=rating
+    review.rdate=nowDatetime
+    review.save()
+    return HttpResponseRedirect(reverse('review'))
 
 def map(request):
     return render(request,'map.html')
+def map_ok(request):
+    mname=request.POST['inputname']
+    temlate = loader.get_template('map.html')
+    where = {"요양기관명":{"$regex":""+str(mname)+""}}
+    mdocs = col1.find(where)
+    df_m = pd.DataFrame(list(mdocs))
+    df_m2 = df_m.dropna(subset=['y좌표','x좌표'])
+    mlist = df_m['요양기관명'].to_list()
+    for doc in mlist:  
+        print(doc)
+        
+    df_m2[['요양기관명','y좌표','x좌표']]
+    lat = df_m2['x좌표'].mean()
+    long = df_m2['y좌표'].mean()
+    a=[]
+    b=[]
+    for i in df_m2.index:
+        sub_lat = df_m2.at[i, 'x좌표']
+        sub_long = df_m2.at[i, 'y좌표']
+        title = df_m2.at[i, '요양기관명']
+     # a.append(sub_long)
+        # a.append(sub_lat)
+        # b.append(sl)
+    df_m2 =  df_m2[['요양기관명','y좌표','x좌표']]
+   # df2['latlng'] =df2[cols].apply(lambda row: ', '.join(row.values.astype(str)),axis=1)
+
+    #df2['latlng'] = df2['y좌표'] + ", " + df2['x좌표']
+
+    #df2_2_3 = df2[['y좌표','x좌표']]
+    m1 = df_m2['요양기관명']
+    m2 = df_m2['y좌표']
+    m3 = df_m2['x좌표']
+    num=len(df_m2)
+    #df2_2 = df2[title: '요양기관명', latlng: new kakao.maps.LatLng('y좌표', 'x좌표')]
+    #{title: '카카오', latlng: new kakao.maps.LatLng(33.450705, 126.570677)}
+    #df2_2 = df2
+    #df2_2 = df2.rename(index = {'요양기관명':'title'}, inplace=True)
+    #df2 = (df2['y좌표'],str.cat(df2['x좌표'], sep=', '))
+    # df2_2 = df2[['y좌표','x좌표']]
+    # df2_3 = df2[['요양기관명']]
+    # df2_2_2 = ", ".join(df2_2)
+    context = {
+        'mlist': mlist,
+        'sub_lat' : sub_lat,
+        'sub_long' : sub_long,
+        'title' : title,
+        'lat' : lat,
+        'long' : long,
+        'xy' : (sub_lat, sub_long),
+        'df_m2' : df_m2.to_dict('records'),
+        'a' : a,
+        'b' : b,
+        'm1' : m1,
+        'm2' : m2,
+        'm3' : m3,
+        'num':num,
+        # 'df2_2':df2_2,
+        # 'df2_3':df2_3,
+        # 'df2_2_2':df2_2_2,
+        # 'df2_2_3':df2_2_3,
+    }
+    print("df_m2.to_dict('records')",df_m2.to_dict('records'))
+    return HttpResponse(temlate.render(context, request))
 
 def login(request):
     return render(request,'login.html')
 
+def login_ok(request):
+    email = request.POST.get('email', None)
+    pw = request.POST.get('pw', None)
+    try:
+        member=Member1.objects.get(email=email)
+    except Member1.DoesNotExist:
+        member = None
+    # print("member", member)
+    result = 0
+    if member != None:
+        print("해당 email회원 존재함")
+        if member.pw == pw:
+            print("비밀번호까지 일치")
+            result = 2
+            
+            print("member.email", member.email)
+            request.session['login_ok_user'] = member.email
+        else:
+            print("비밀번호 틀림")
+            result = 1
+    else:
+        print("해당 email회원 존재하지 않음") 
+        result = 0   
+			
+    template = loader.get_template("login_ok.html")
+    context = {
+        'result': result, 
+    }
+    return HttpResponse(template.render(context, request))
+
+def logout(request):
+    if request.session.get('login_ok_user'):
+        del request.session['login_ok_user']
+    return redirect("../")
+    
+
 def signup(request):
-    return render(request,'signup.html')
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phoneNum = request.POST['phoneNum']
+        pw = request.POST['pw']
+        addr = request.POST['addr']
+        # print("이름:", name, "아이디(email):", email, "전화번호", phone, "비번", pw, "주소", addr)
+        
+        member = Member1(
+            name=name,
+            email=email,
+            phoneNum=phoneNum,
+            pw=pw,
+            addr=addr
+        )
+        member.save()
+        return HttpResponseRedirect('../login')
+    else:
+        return render(request,'signup.html')
 
 def healthinfo(request):
-    return render(request,'healthinfo.html')
+    template = loader.get_template('healthinfo.html')
+    dr = df_hs[['제목', '월']]
+    dt = dr[dr['월']==1]
+    dy = dt['제목'].to_list()
+    # subhealth = df['제목']
+    # contentshealth = df['내용']
+    # print(dy)
+    context = {
+        'dy' : dy,
+    }
+    return HttpResponse(template.render(context, request))
 
 def event(request):
     return render(request,'event.html')
