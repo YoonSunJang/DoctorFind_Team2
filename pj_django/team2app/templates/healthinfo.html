@@ -33,36 +33,41 @@
 		.month-tab {
 			margin-bottom: 5%;
 		}
+
+		summary {
+			cursor: pointer;
+		  }
+		
+		 
+		
     </style>
 </head>
 <body>
 <div class ="vertical_tab">
 	<ul class="nav nav-pills nav-stacked">
-		<h1><li class="nav-header">건강정보</li></h1>
+		<h1><p class="nav-header">건강정보</p></h1>
 		<p class="eng_comment">Healthy information</p>
-		<li class="calender active" data-tab="tab-1"><a href="#calender" data-toggle="pill" >건강캘린더</a></li>
-		<li class="site" data-tab="tab-2"><a href="#site" data-toggle="pill">관련 사이트</a></li>
+		<li class="calender active" data-tab="tab-1"><a href="#calender">건강캘린더</a></li>
+		<li class="site" data-tab="tab-2"><a href="#site">관련 사이트</a></li>
 	</ul>
 </div>
-<form name="healthinfo" action="healthinfo" method="post">
-	{% csrf_token %}
 <div id="cont_cont">
 	<div class="container">
 		<div class="cont">
 			<div id="tab-1" class="tab-content current">
 				<ul class="nav nav-pills">
-					<li class="tab-month active" data-tab="tab-jan"><a href="#jan" data-toggle="pill">1월</a></li>
-					<li class="tab-month" data-tab="tab-feb"><a href="#feb" data-toggle="pill" >2월</a></li>
-					<li class="tab-month" data-tab="tab-mar"><a href="#mar" data-toggle="pill" >3월</a></li>
-					<li class="tab-month" data-tab="tab-apr"><a href="#apr" data-toggle="pill" >4월</a></li>
-					<li class="tab-month" data-tab="tab-may"><a href="#may" data-toggle="pill" >5월</a></li>
-					<li class="tab-month" data-tab="tab-jun"><a href="#jun" data-toggle="pill" >6월</a></li>
-					<li class="tab-month" data-tab="tab-jul"><a href="#jul" data-toggle="pill" >7월</a></li>
-					<li class="tab-month" data-tab="tab-aug"><a href="#aug" data-toggle="pill" >8월</a></li>
-					<li class="tab-month" data-tab="tab-sep"><a href="#sep" data-toggle="pill" >9월</a></li>
-					<li class="tab-month" data-tab="tab-oct"><a href="#oct" data-toggle="pill" >10월</a></li>
-					<li class="tab-month" data-tab="tab-nov"><a href="#nov" data-toggle="pill" >11월</a></li>
-					<li class="tab-month" data-tab="tab-dec"><a href="#dec" data-toggle="pill" >12월</a></li>
+					<li class="tab-month active" data-tab="tab-jan" value="1"><a href="#jan">1월</a></li>
+					<li class="tab-month" data-tab="tab-feb" value="2"><a href="#feb">2월</a></li>
+					<li class="tab-month" data-tab="tab-mar" value="3"><a href="#mar">3월</a></li>
+					<li class="tab-month" data-tab="tab-apr" value="4"><a href="#apr">4월</a></li>
+					<li class="tab-month" data-tab="tab-may" value="5"><a href="#may">5월</a></li>
+					<li class="tab-month" data-tab="tab-jun" value="6"><a href="#jun">6월</a></li>
+					<li class="tab-month" data-tab="tab-jul" value="7"><a href="#jul">7월</a></li>
+					<li class="tab-month" data-tab="tab-aug" value="8"><a href="#aug">8월</a></li>
+					<li class="tab-month" data-tab="tab-sep" value="9"><a href="#sep">9월</a></li>
+					<li class="tab-month" data-tab="tab-oct" value="10"><a href="#oct">10월</a></li>
+					<li class="tab-month" data-tab="tab-nov" value="11"><a href="#nov">11월</a></li>
+					<li class="tab-month" data-tab="tab-dec" value="12"><a href="#dec">12월</a></li>
 				</ul>
 			</div>
 			<div id="tab-2" class="tab-content">
@@ -71,109 +76,130 @@
 				</ul>
 			</div>
 	</div>
-<div id="tab-1" class="month-tab">
+<div id="tab-1" class="month-tab" style="white-space:pre-wrap;">
 	<div id="tab-jan" class="month-content current">
 		<ul>
-			{% for subject in dy%}
-			<li>{{subject}}</li>
+			{% for i in dt1 %}
+		<details>
+			<summary><li>{{i.제목}}</li></summary><br>
+			<li>{{i.내용}}</li><br>
+		</details><br><br>
 			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-feb" class="month-content">
 		<ul>
-			<li>2</li>
+			{% for i in dt2 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-mar" class="month-content">
 		<ul>
-			<li>3</li>
+			{% for i in dt3 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-apr" class="month-content">
 		<ul>
-			<li>4</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt4 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-may" class="month-content">
 		<ul>
-			<li>5</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt5 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-jun" class="month-content">
 		<ul>
-			<li>6</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt6 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-jul" class="month-content">
 		<ul>
-			<li>7</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt7 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-aug" class="month-content">
 		<ul>
-			<li>8</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt8 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-sep" class="month-content">
 		<ul>
-			<li>9</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt9 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-oct" class="month-content">
 		<ul>
-			<li>10</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt10 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-nov" class="month-content">
 		<ul>
-			<li>11</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt11 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 	<div id="tab-dec" class="month-content">
 		<ul>
-			<li>12</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
-			<li>dd</li>
+			{% for i in dt12 %}
+			<details>
+				<summary><li>{{i.제목}}</li></summary><br>
+				<li>{{i.내용}}</li><br>
+			</details><br><br>
+			{% endfor %}
 		</ul>
 	</div>
 </div>
 </div>
 </div>
-</form>
 	<script>
         $(document).ready(function(){
             $('.vertical_tab ul li').click(function(){
@@ -185,6 +211,8 @@
         
                 $(this).addClass('active');
                 $("#"+tab_id).addClass('current');
+				
+
             })
         });
 		$(document).ready(function(){
@@ -198,6 +226,16 @@
                 $("#"+tab_id).addClass('current');
             })
         });
+
+		$('.cont #tab-1 ul li').on('click', function(e) {
+			if($(this).parent('#tab-1').length > 0) {
+				console.log("상위 li");
+			} else {
+				var p = {value : $(this).val()};
+				$.get("/team2app/healthinfo/", p, function(data){});
+			}
+		})
+
     </script>
 {% endblock contents %}
 

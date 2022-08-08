@@ -12,4 +12,5 @@ urlpatterns = [
     path('healthinfo/', views.healthinfo, name='healthinfo'),
     path('event/', views.event, name='event'),
     path('mypage/', views.mypage, name='mypage'),
+    #path('healthinfo/healthinfo_ok/', views.healthinfo_ok, name='healthinfo_ok')
 ]
