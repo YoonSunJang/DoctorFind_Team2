@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% extends 'header.html' %}
+{% block contents %}
+{% load static %}
+<head>
+    <!--버튼-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/searchT.css' %}">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>       
+        #contents {width: 100%; height: 80px; background: none; display: flex;}
+        #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
+        #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
+        #footer {width: 100%; height: 150px; background: #333;}
+        h2{padding: 30px 0px 0px 0px;}
+        a:link, a:visited, a:hover, a:active {text-decoration: none;}  
+        .search {
+            position: relative;
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px 10px;
+            font-size: 14px;
+        }
+        img {
+            position : absolute;
+            width: 17px;
+            top: 12px;
+            right: 10px;
+            margin: 0;
+        }
+        .form-select{
+            width: 12%;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px 5px;
+            font-size: 12px;
+        }
+        a.opertime{
+            border-bottom: 1px dashed;
+            text-decoration: none
+        }
+        a.opertime:hover{
+            position: relative
+        }
+        a.opertime span{
+            display: none
+        }
+        a.opertime:hover span{
+            border: #c0c0c0 1px dotted;
+            padding: 5px 5px 5px 5px;
+            display: block;
+            z-index: 100;
+            left: 0px;
+            margin: 10px;
+            width: 130px;
+            position: absolute;
+            top: 10px;
+            text-decoration: none
+        }
+    </style>
+    
+        
+</head>
+<body>       
+        <div id="cont_tit">
+            <h2>세부 조건별 찾기</h2>
+        </div>
+        <div id="cont_cont">
+            <div class="container">
+                <select name="addressRegion" id="addressRegion1" onchange="selectitem(this)"></select>
+                <select name="addressDo" id="addressDo1" onchange="selectitem(this)"></select>
+                <select name="addressSiGunGu" id="addressSiGunGu1" onchange="selectitem(this)"></select>
+                <div class="search" style="display:inline-block">
+                    <form name="input" method="post" action="search_ok/">
+                        {% csrf_token %}
+                    <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요.">
+                    </form>
+                    <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">  
+                </div>
+                <button type="button" class="searchB" id="searchB" name="searchB">검색</button>
+                <div id="result"> </div>
+                <div class="detail_check">
+                <button type="button" class="btn btn-outline-primary">진료중</button>
+                <button type="button" class="btn btn-outline-primary">야간진료</button>
+                <button type="button" class="btn btn-outline-primary">공휴일진료</button>
+                <button type="button" class="btn btn-outline-primary">응급실여부</button>
+                </div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>병원명</th>
+                            <th>진료시간</th>
+                            <th>주소</th>
+                            <th>전화번호</th>
+                            <th>예약</th>
+                            <th>상세보기</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>성모내과의원</td>
+                            <td><a href="" class=opertime>오늘 09:00~18:00<span style="background-color:white">월 09:00~18:00<br>화 09:00~18:30<br>수 09:00~18:30<br>목 09:00~18:00<br>금 09:00~18:00<br>토 09:00~14:00</span></a></td>
+                            <td>서울특별시 강남구 개포로 615 4층 402-2호 (개포동, 석탑프라자)</td>
+                            <td>02-459-0105</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>세계로약국</td>
+                            <td>오늘 08:30~18:00</td>
+                            <td>서울특별시 강남구 논현로 52 남현빌딩 1층 (개포동)</td>
+                            <td>02-459-0105</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>연세치과의원</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>연세치과의원2</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>연세치과의원3</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>연세치과의원3</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>연세치과의원3</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>연세치과의원3</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>연세치과의원3</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>
+                        <tr>
+                            <td>연세치과의원3</td>
+                            <td>오늘 08:30~20:00</td>
+                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
+                            <td>02-571-2828</td>
+                            <td><a href="">예약</a></td>
+                            <td>보기</td>
+                        </tr>            
+                    </tbody>
+                </table>        
+            </div>
+        </div>
+        <div id="footer">
+            <div class="container">footer</div>
+        </div>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script language="javascript">
+            $(document).ready(function() {
+                $("#textfiled").keydown(function(key) {
+                    if (key.keyCode == 13) {
+                        $("#searchB").click();
+                    }
+                });
+            });
+            $("#searchB").click(function() {
+                var param = {input1:$("#addressRegion1").find(":selected").text(),input2:$("#addressDo1").find(":selected").text(),input3:$("#addressSiGunGu1").find(":selected").text(),name:$("#textfiled").val()};
+                $.get("/team2app/search", param, function(data) {
+                });
+            });
+            
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script language="javascript">
+        
+        $(function(){
+            areaSelectMaker("#addressRegion1", "#addressDo1", "#addressSiGunGu1");
+        });
+        
+        var areaSelectMaker = function(a1, a2, a3){
+            if(a1 == null || a2 == null || a3 == null){
+                console.warn("Unkwon Area Tag");
+                return;
+            }
+        
+            var area = {
+                "수도권" :{
+                    "서울특별시" : [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구" ],
+                    "경기도" : [ "수원시 장안구", "수원시 권선구", "수원시 팔달구", "수원시 영통구", "성남시 수정구", "성남시 중원구", "성남시 분당구", "의정부시", "안양시 만안구", "안양시 동안구", "부천시", "광명시", "평택시", "동두천시", "안산시 상록구", "안산시 단원구", "고양시 덕양구", "고양시 일산동구",
+                        "고양시 일산서구", "과천시", "구리시", "남양주시", "오산시", "시흥시", "군포시", "의왕시", "하남시", "용인시 처인구", "용인시 기흥구", "용인시 수지구", "파주시", "이천시", "안성시", "김포시", "화성시", "광주시", "양주시", "포천시", "여주시", "연천군", "가평군",
+                        "양평군" ],
+                    "인천광역시" : [ "계양구", "미추홀구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군" ]			
+                },
+                "강원권" :{
+                    "강원도" : [ "춘천시", "원주시", "강릉시", "동해시", "태백시", "속초시", "삼척시", "홍천군", "횡성군", "영월군", "평창군", "정선군", "철원군", "화천군", "양구군", "인제군", "고성군", "양양군" ]			
+                },
+                "충청권" :{
+                    "충청북도" : [ "청주시 상당구", "청주시 서원구", "청주시 흥덕구", "청주시 청원구", "충주시", "제천시", "보은군", "옥천군", "영동군", "증평군", "진천군", "괴산군", "음성군", "단양군" ],
+                    "충청남도" : [ "천안시 동남구", "천안시 서북구", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군" ],
+                    "대전광역시" : [ "대덕구", "동구", "서구", "유성구", "중구" ],
+                    "세종특별자치시" : [ "세종특별자치시" ]			
+                },
+                "전라권" :{
+                    "전라북도" : [ "전주시 완산구", "전주시 덕진구", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군" ],
+                    "전라남도" : [ "목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군" ],
+                    "광주광역시" : [ "광산구", "남구", "동구", "북구", "서구" ]			
+                },
+                "경상권" : {
+                    "경상북도" : [ "포항시 남구", "포항시 북구", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군" ],
+                    "경상남도" : [ "창원시 의창구", "창원시 성산구", "창원시 마산합포구", "창원시 마산회원구", "창원시 진해구", "진주시", "통영시", "사천시", "김해시", "밀양시", "거제시", "양산시", "의령군", "함안군", "창녕군", "고성군", "남해군", "하동군", "산청군", "함양군", "거창군", "합천군" ],
+                    "부산광역시" : [ "강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군" ],
+                    "대구광역시" : [ "남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군" ],
+                    "울산광역시" : [ "남구", "동구", "북구", "중구", "울주군" ]			
+                },
+                "제주권" : {
+                    "제주특별자치도" : [ "서귀포시", "제주시" ]			
+                }
+            };
+        
+            //초기화
+            init(true, true);
+        
+            //권역 기본 생성
+            var areaKeys1 = Object.keys(area);
+            areaKeys1.forEach(function(Region){
+                $(a1).append("<option value="+Region+">"+Region+"</option>");
+            });
+        
+            //변경 이벤트
+            $(document).on("change", a1, function(){
+                init(false, true);
+                var Region = $(this).val();
+                var keys = Object.keys(area[Region]);
+                keys.forEach(function(Do){
+                    $(a2).append("<option value="+Do+">"+Do+"</option>");    
+                });
+            }).on("change", a2, function(){
+                init();
+                var Region = $(a1).val();
+                var Do = $(this).val();
+                var keys = Object.keys(area[Region][Do]);
+                keys.forEach(function(SiGunGu){
+                    $(a3).append("<option value="+area[Region][Do][SiGunGu]+">"+area[Region][Do][SiGunGu]+"</option>");    
+                });
+            });
+        
+            function init(first, second){
+                first ? $(a1).empty().append("<option value=''>지역권 선택</option>") : "";
+                second ? $(a2).empty().append("<option value=''>시/도 선택</option>") : "";
+                $(a3).empty().append("<option value=''>시/군/구 선택</option>");
+            }
+        }
+    </script>
+
+{% endblock contents %}
+
+</body>
