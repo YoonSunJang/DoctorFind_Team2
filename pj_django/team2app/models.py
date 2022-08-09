@@ -1,20 +1,5 @@
 from django.db import models
 
-class Reviews(models.Model):
-    writer = models.CharField(max_length=200)
-    email = models.TextField(unique=True)
-    subject = models.TextField()
-    content = models.TextField()
-    rdate = models.DateTimeField()
-    views = models.TextField()
-    
-class Members(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.TextField(unique=True)
-    pw = models.TextField()
-    gender = models.CharField(max_length=200)
-    addr = models.TextField()
-
 class Review1(models.Model):
     writer = models.CharField(max_length=200)
     email = models.TextField(unique=True)

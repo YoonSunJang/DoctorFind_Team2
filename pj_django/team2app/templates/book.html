@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% extends 'header.html' %}
+{% block contents %}
+{% load static %}
+<head>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+   <script type="text/javascript" src="{% static '/js/timepicker/jquery.timepicker.min.js' %}"></script>
+   <link type="text/css" rel="stylesheet" href="{% static '/js/timepicker/jquery.timepicker.css'%}" media=""/>
+   <script type="text/javascript">
+    $(document).ready(function(){
+        $("#bookdate,#booktime").timepicker({
+            'minTime': '09:00am',
+            'maxTime': '20:00pm',
+            'timeFormat': 'H:i',
+            'step': 30
+        });
+        $(window).scroll(function(){
+            $(".ui-timepicker-wrapper").hide();
+        });
+    });
+</script>
+   <style>  
+      .write{
+         padding:1rem;
+         margin:0px auto;
+         margin-top:2rem;
+         margin-bottom:4rem;
+         border-left:8px solid #0dcaf0;
+      }
+      table{
+         border:1px solid #e6e6e6;
+      }
+      .table-striped > tbody > tr:nth-child(2n+1) > th,
+      .table-striped > tbody > tr:nth-child(2n+1) > td {
+         background-color: #f2f7f7;
+      }
+      a:link, a:visited, a:hover, a:active {text-decoration: none;}
+   </style>
+
+<body>
+   <div id="cont_cont">
+      <div class="container" role="main">
+			<div class="book"><h2><b>예약</b></h2></div>
+         <form class="f" name="f" action="book_ok/" method="post">
+            {% csrf_token %}
+            <div class="table table-responsive">
+               <table class="table table-striped table table-bordered">
+            <tr>
+                <td>병원명</td>
+                <td><input type="text"  class="form-control" name="hosname"></td>
+            </tr>
+            <tr>
+                <td>예약자 성함</td>
+                <td><input type="text"  class="form-control" name="name" placeholder="제목을 입력해 주세요"></td>
+            </tr>
+            <tr>
+                <td>연락처</td>
+                <td><input type="text"  class="form-control" name="phonenum" placeholder="병원명을 입력해 주세요"></td>
+            </tr>
+            
+            <tr>
+               <td>예약시간</td>
+               <td>
+                <input type="date" name="bookdate" id="bookdate" min="{{tomorrow}}">
+                <input type="time" name="booktime" id="booktime" min="09:00" max="18:00" step="1800" required>
+              </td>
+            </tr>
+            <tr>
+                <td>증상</td>
+                <td><input type="text"  class="form-control" name="symptom" placeholder="병원명을 입력해 주세요"></td>
+            </tr>
+            <tr>
+               <td>기타내용</td>
+               <td><textarea rows="10" cols="50" name="content" class="form-control"></textarea></td>
+            </tr>
+            </table>
+            <div class="btn">
+               <button type="button" class="btn btn-outline-info btn-lg" id="listButton" onclick="location.href='../review'">목록</button>	
+               <button type="submit" class="btn btn-info btn-lg" id="saveButton">저장</button>	
+            </div>
+         </form>
+		</div>
+   </div>
+   
+
+{% endblock contents %}
+</body>
+</html>
