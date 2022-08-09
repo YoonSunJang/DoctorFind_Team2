@@ -88,36 +88,36 @@
                     <h2 class="mb-3"><b>회원가입</b></h2>
                     <h6>DoctorFine과 함께 해보세요!</h6>
                 </div>
-                <form class="validation-form" novalidate id="signup-form">
+                <form class="validation-form" method="post" action="../signup/" novalidate id="signup-form">
                 {%csrf_token%}
-                <div class="row" >
+                <div class="row">
                     <div id="nameBox">
                         <label for="name">이름</label>
-                        <input type="text" class="form-control" name="name" value="name"placeholder="ex)홍길동" required>
+                        <input type="text" class="form-control" placeholder="ex)홍길동" name="name" value="name" required>
                         <div class="invalid-feedback">이름을 입력해주세요.</div>
                     </div>
                     <div id="idbox">
-                        <div class="id-box">
-                            <label for="nickname">ID (e-mail)</label>
-                            <input type="email" class="form-control" name="email_id" value="email_id" placeholder="ex) DoctorFine@example.com" required>
+                        <div class="idBox">
+                            <label for="email">ID (e-mail)</label>
+                            <input type="email" class="form-control" placeholder="ex) DoctorFine@example.com" name="email" value="email" required>
                         </div>
-                        <button type="button" class="btn btn-outline-info btn-sm" id="check">중복확인</button>
+                        <!--<button type="button" class="btn btn-outline-info btn-sm" id="check">중복확인</button>-->
                         <div class="invalid-feedback">ID(아이디)를 입력해주세요.</div>
                     </div>
                 </div>
                 <div id="phoneBox">휴대폰번호</label>
-                    <input type="text" class="form-control" name="phonenumber" value="phonenumber" placeholder="-는 제외해주세요. ex) 01012345678" required>
+                    <input type="text" class="form-control" placeholder="-는 제외해주세요. ex) 01012345678" name="phone" value="phone" required>
                     <div class="invalid-feedback">휴대폰번호를 입력해주세요.</div>
                 </div>
                 <div id="pwBox">
-                    <label for="password">비밀번호</label>
-                    <input type="password" class="form-control" name="password" value="password" required>
+                    <label for="pw">비밀번호</label>
+                    <input type="password" class="form-control" name="pw" value="pw" required>
                     <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
                 </div>
         
                 <div id="addrBox">
                     <label for="address">주소</label>
-                    <input type="text" class="form-control" name="address" value="address" placeholder="ex)서울특별시 금천구 가산동" required>
+                    <input type="text" class="form-control" placeholder="ex)서울특별시 금천구 가산동" name="address" value="address" required>
                     <div class="invalid-feedback">주소를 입력해주세요.</div>
                 </div>
                 <!--
@@ -133,7 +133,7 @@
                 </div>
                 -->
                 <div class="mb-4" id="signupBtn">
-                <button class="btn btn-info btn-lg btn-block text-white" type="submit">
+                <button class="btn btn-info btn-lg btn-block text-white" type="submit" formmethod="post">
                 회원가입</button>
                 </div>
                 </form>
@@ -142,7 +142,7 @@
     <footer class="footer bg-dark">
         <div id="footer_logo"><img src="assets\img\logo_g180.png"></div>
         <div class="text-white" id="footer_text">
-            <span class="copyright"><b></b>2022-08-22 | PROJECT Doctor Fine Made by Team2 </span><br/>
+               <span class="copyright"><b></b>2022-08-22 | PROJECT Doctor Fine Made by Team2 </span><br/>
             <span class="teamLeader"><b>조장</b> | 장윤선</span>
             <span class="teamLeader2"><b>부조장</b> | 이재용</span>
             <span class="teamMem"><b>조원</b> | 송찬호 박상익 김지수</span><br/>

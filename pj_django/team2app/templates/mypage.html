@@ -23,9 +23,12 @@
     
     <style>  
         /*추가 CSS*/
+        ul{
+            list-style:none;
+        }
         .mypage{
             width:90%;
-            padding: 0.5rem;
+            padding:0.5rem;
             border-left:8px solid #0dcaf0;
             margin:0px auto;
             margin-top:1rem;
@@ -33,6 +36,12 @@
         }
         .info{
             margin-bottom:3rem;
+        }
+        .info-box{
+            width:80%;
+            border:1px solid #17a2b8;
+            border-radius: 20px;
+            display:flex;
         }
         .row{
             margin:1rem;
@@ -61,6 +70,7 @@
         th{
             text-align:center;
         }
+        a:link, a:visited, a:hover, a:active {text-decoration: none;}
         /*
         기존 CSS
         #contents {width: 100%; height: 80px; background: none; display: flex;}
@@ -68,9 +78,25 @@
         #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
         #footer {width: 100%; height: 150px; background: #333;}
         h2{padding: 30px 0px 0px 0px;}
-        a:link, a:visited, a:hover, a:active {text-decoration: none;}
         */
     </style>
+
+    <script>
+        window.addEventListener('load', () => {
+        const forms = document.getElementsByClassName('validation-form');
+    
+        Array.prototype.filter.call(forms, (form) => {
+            form.addEventListener('submit', function (event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+    
+            form.classList.add('was-validated');
+            }, false);
+        });
+        }, false);
+    </script>
 </head>
 <body>
     <section>
@@ -84,12 +110,39 @@
                 <div class="info">
                     <div>
                         <!--이미지 삽입<div><img src=""></div>-->
-                        <span id="name"><h3><b>홍길동</b></h3></span>
-                        <span id="email"><h6>hgd@naver.com</h6></span>
+                        <span id="name"><h3><b>{{member.name}}</b></h3></span>
+                        <span id="email"><h6>{{member.email}}</h6></span>
                     </div>
-                    <div>
-                        <a href="#"><button type="button" class="btn btn-outline-info" id="infoModi">
-                           회원정보수정</button></a>
+                    <form name="f" action="update_ok/{{member.id}}" method="post">
+                        {% csrf_token %}
+                        <div>
+                            <button type="button" class="btn btn-info" type="submit" id="infoMButton" onclick='location.href="../mypage/"'>
+                            회원정보수정</button>
+                        </div>
+                        <div class="info-box">
+                            <ul>
+                                <li>
+                                    <div><b>이름</b></div>
+                                    <div><input type="text" class="form-control" value="{{member.name}}" name="name" required></div>
+                                    <div class="invalid-feedback">이름을 입력해주세요.</div>
+                                </li>
+                                <li>
+                                    <div><b>휴대폰번호</b></div>
+                                    <input type="text" class="form-control" value="{{member.phone}}" name="phone" required>
+                                    <div class="invalid-feedback">휴대폰번호를 입력해주세요.</div>
+                                </li>
+                                <li>
+                                    <div><b>비밀번호</b></div>
+                                    <input type="password" class="form-control" value="{{member.pw}}" name="pw" required>
+                                    <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+                                </li>
+                                <li>
+                                    <div><b>주소</b></div>
+                                    <input type="text" class="form-control" value="{{member.address}}" name="address" required>
+                                    <div class="invalid-feedback">주소를 입력해주세요.</div>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                     

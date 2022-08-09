@@ -3,30 +3,93 @@
 {% extends 'header.html' %}
 {% block contents %}
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  
-    <style>  
-        #contents {width: 100%; height: 80px; background: none; display: flex;}
-        #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
-        #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
-        #footer {width: 100%; height: 150px; background: #333;}
-        h2{padding: 30px 0px 0px 0px;}
-        a:link, a:visited, a:hover, a:active {text-decoration: none;} 
-    </style>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  
+   <style>  
+      .write{
+         padding:1rem;
+         margin:0px auto;
+         margin-top:2rem;
+         margin-bottom:4rem;
+         border-left:8px solid #0dcaf0;
+      }
+      table{
+         border:1px solid #e6e6e6;
+      }
+      .table-striped > tbody > tr:nth-child(2n+1) > th,
+      .table-striped > tbody > tr:nth-child(2n+1) > td {
+         background-color: #f2f7f7;
+      }
+
+      /*
+      기존 CSS
+      #contents {width: 100%; height: 80px; background: none; display: flex;}
+      #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
+      #ckont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
+      #footer {width: 100%; height: 150px; bacground: #333;}
+      h2{padding: 30px 0px 0px 0px;}
+      a:link, a:visited, a:hover, a:active {text-decoration: none;} 
+      */
+   </style>
+
+   <script language="javascript">
+	   function revsubmit()
+	   {
+	      f.submit();
+       }
+	</script>
 </head>
+
 <body>
-   <div id="cont_tit">
-      <h2>글쓰기</h2>
-   </div>
+   <!--<div id="cont_tit">
+   </div>-->
+   <!-- Section-->
+   <!-- Login Form -->
    <div id="cont_cont">
-      <div class="container">
-      내용물~~ 여기에 만드시면 돼요!
-
-
-      </div>
+      <div class="container" role="main">
+         <div class="write"><h2><b>게시물 작성</b></h2></div>
+         <form class="form-horizontal" name="f" action="rwrite_ok/" method="post">
+            {% csrf_token %}
+            <div class="table table-responsive">
+               <table class="table table-striped table table-bordered">
+            <tr>
+                <td>작성자</td>
+                <td><input type="text"  class="form-control" name="writer"></td>
+            </tr>
+            <tr>
+                <td>제목</td>
+                <td><input type="text"  class="form-control" name="subject"></td>
+            </tr>
+            <tr>
+                <td>병원명</td>
+                <td><input type="email"  class="form-control" name="hospital"></td>
+            </tr>
+            
+            <tr>
+                <td>평가</td>
+                <td>
+                  <select class="form-select form-select-sm" name="star">
+                     <option selected>별점 선택</option>
+                     <option value="5">★★★★★</option>
+                     <option value="4">★★★★☆</option>
+                     <option value="3">★★★☆☆</option>
+                     <option value="2">★★☆☆☆</option>
+                     <option value="1">★☆☆☆☆</option>
+                  </select>
+               </td>
+            </tr>
+            
+            <tr>
+                <td>글내용</td>
+                <td><textarea rows="10" cols="50" name="content" class="form-control"></textarea></td>
+            </tr>
+            </table>
+            <div class="btn">
+               <button type="submit" class="btn btn-outline-info btn-lg" id="listButton" type="submit">목록</button>	
+               <button type="submit" class="btn btn-info btn-lg" id="saveButton">저장</button>	
+            </div>
+         </form>
+		</div>
    </div>
-   <div id="footer">
-   <div class="container">footer</div>
-   </div>
-
 {% endblock contents %}
 </body>
+</html>
