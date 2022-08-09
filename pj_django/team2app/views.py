@@ -10,30 +10,89 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
 import pandas as pd
+
+from pymongo import mongo_client
+url = 'mongodb://localhost:27017/'
+mgClient = mongo_client.MongoClient(url)
+db = mgClient['project5_team2']
+col = db['test0805']
+
+import pandas as pd
+
+
+#오늘 요일/현재시간 구하기
+# from datetime import datetime
+# def whatday():
+#     whattoday = datetime.today().weekday()
+#     whattime = datetime.now()
+#     return whattoday,whattime
+
+#df 열이름 변경
+
+
 def index(request):
     return render(request,'index.html')
 
+from django.core.paginator import Paginator
+from datetime import datetime
 def search(request):
-    input1=request.GET.get("input1")
-    input2=request.GET.get("input2")
-    input3=request.GET.get("input3")
-    name=request.GET.get("name")
-    print(1)
-    if(input1==input2==input3==name==None):pass
+    global search_list, search_lists
+    #검색
+    input1=request.GET.get("input1") #지역권
+    input2=request.GET.get("input2") #시/도
+    input3=request.GET.get("input3") #시/군/구
+    name=request.GET.get("name") #병원이름
+    check1=request.GET.get("check1") #진료중
+    check2=request.GET.get("check2") #야간진료
+    check3=request.GET.get("check3") #공휴일진료
+    check4=request.GET.get("check4") #응급실주간
+    check5=request.GET.get("check5") #응급실야간
+    # print("1")
+    # print(input1)
+    # print(input2)
+    # print(input3)
+    # print(name)
+    # print("check1",check1)
+    # print("check2",check2)
+    # print("check3",check3)
+    # print("check4",check4)
+    # print("check5",check5)
+    whattoday = datetime.today().weekday()
+    whattime = datetime.now()
+    if(input1==input2==input3==name==check4==check5==None):pass
     else:
-        print(input1)
-        print(input2)
-        print(input3)
-        print(name)
-    print(2)
-    return render(request,'search.html')
+        search_lists=search_list
+        if(name!=None):
+            search_lists=search_lists[search_lists['hosname'].str.contains(name)]
+        if(input1!='지역권 선택' and input2!='시/도 선택'):
+            if(input3!='시/군/구 선택'):
+                search_lists=search_lists[search_lists['address'].str.contains(input3)]
+            search_lists=search_lists[search_lists['address'].str.contains(input2)]
+        if(check2=='true'): #야간진료
+             search_lists=search_lists.loc[endtime.index,:]
+        if(check4=='true'):
+            search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
+        if(check5=='true'):
+            search_lists=search_lists[search_lists['emgnight'].str.contains('Y')]
+        
+    print('search_lists',search_lists)
+    page=request.GET.get("page",1)
+    paginator=Paginator(search_lists.to_dict('records'),10) # 페이지 표시 수
+    page_obj = paginator.get_page(page)
+    context={
+        'search_list':search_lists.to_dict('records'),
+        'page_obj':page_obj,
+        'today':whattoday,
+    }
+
+    return render(request,'search.html',context=context)
 
 def search_ok(request):
     return HttpResponseRedirect(reverse('search'))
 
 def review(request):
     return render(request,'review.html')
-
+4
 def rwrite(request):
     return render(request,'rwrite.html')
 
@@ -55,57 +114,16 @@ def map_ok(request):
     df2[['요양기관명','y좌표','x좌표']]
     lat = df2['x좌표'].mean()
     long = df2['y좌표'].mean()
-    a=[]
-    b=[]
-    for i in df2.index:
-        sub_lat = df2.at[i, 'x좌표']
-        sub_long = df2.at[i, 'y좌표']
-        title = df2.at[i, '요양기관명']
-        #print([sub_long, sub_lat],title)
-        # a.append(sub_long)
-        # a.append(sub_lat)
-        # b.append(sl)
-    df2 =  df2[['요양기관명','y좌표','x좌표']]
-   # df2['latlng'] =df2[cols].apply(lambda row: ', '.join(row.values.astype(str)),axis=1)
-   
-    #df2['latlng'] = df2['y좌표'] + ", " + df2['x좌표']
     
-    #df2_2_3 = df2[['y좌표','x좌표']]
-    m1 =  df2['요양기관명']
-    m2 = df2['y좌표']
-    m3 = df2['x좌표']
+    df2 =  df2[['요양기관명','y좌표','x좌표']]
+   
     num=len(df2)
-    #df2_2 = df2[title: '요양기관명', latlng: new kakao.maps.LatLng('y좌표', 'x좌표')]
-    #{title: '카카오', latlng: new kakao.maps.LatLng(33.450705, 126.570677)}
-    #df2_2 = df2
-    #df2_2 = df2.rename(index = {'요양기관명':'title'}, inplace=True)
-    #df2 = (df2['y좌표'],str.cat(df2['x좌표'], sep=', '))
-    # df2_2 = df2[['y좌표','x좌표']]
-    # df2_3 = df2[['요양기관명']]
-    # df2_2_2 = ", ".join(df2_2)
     context = {
         'mlist': mlist,
-        'sub_lat' : sub_lat,
-        'sub_long' : sub_long,
-        'title' : title,
         'lat' : lat,
         'long' : long,
-        'xy' : (sub_lat, sub_long),
         'df2' : df2.to_dict('records'),
-        'a' : a,
-        'b' : b,
-        'm1' : m1,
-        'm2' : m2,
-        'm3' : m3,
         'num':num,
-                # 'df2_2':df2_2,
-        # 'df2_3':df2_3,
-        # 'df2_2_2':df2_2_2,
-        # 'df2_2_3':df2_2_3,
-        
-        
-       
-        
     }
     
     print("df2.to_dict('records')",df2.to_dict('records'))
@@ -134,16 +152,4 @@ url = 'mongodb://localhost:27017/'
 mgClient = mongo_client.MongoClient(url)
 db = mgClient['0804_team2']
 col = db['0804_HospitalList']
-# map_dics=[]
-# map_ds={}
-# map_ds['x좌표']=input  #######인서트
-# map_dics.append(map_ds)
-# col.insert_many(map_dics)
-
-
-
-
-# a= col.find()
-# for x in a:
-#     print("col: ",x)
 ############################################몽고db 1.병원정보서비스 2022.6.xlsx ################################# psi

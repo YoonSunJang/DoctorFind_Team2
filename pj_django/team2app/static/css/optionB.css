@@ -1,0 +1,17 @@
+@charset "utf-8";
+.option{
+    position: relative;
+    color: #5f6368;
+    border: solid 1px #5f6368;
+    border-radius: 1vw;
+    display: inline-block;
+    padding: 6px 8px 6px 8px; 
+    /*padding: top right bottom left*/
+    cursor: pointer;
+}
+
+.clicked{
+    color: ;border-color: #4285f4;
+    color: #4285f4;
+    background: #e9f1fe;
+}

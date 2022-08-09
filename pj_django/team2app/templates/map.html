@@ -69,7 +69,7 @@
 </head>
 <body>
     <div id="cont_tit">
-        <h2>지도 찾기 {{lat}} {{long}} </h2>
+        <h2>지도 찾기 </h2>
     </div>
     <div id="cont_cont">
         <div class="container">
@@ -83,89 +83,57 @@
                         </form>
                         <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
                     </div>
-
-                	
+                
+                
            <!-- 이미지 지도를 표시할 div 입니다 -->
             <div id="map" style="width:700px;height:600px;float:left;"></div>  
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=63420363e3bb2acc6f2ab79aaf0aa176"></script>
-           
+              
             <script>
                 var List=[
                 {% for x in df2 %}
                 {
                 'name':"{{x.요양기관명}}",
-                'y':{{x.y좌표}},
-                'x':{{x.x좌표}}
+                'y':"{{x.y좌표}}",
+                'x':"{{x.x좌표}}"
                 },
                 {% endfor %}
                 ]
-                var arr = List.y;
-                var arr2 = List.x;
-                var x_avg = (List[0].x+List[1].x+List[2].x)/3
-                var y_avg = (List[0].y+List[1].y+List[2].y)/3
 
-                console.log("x_avg"+x_avg+"y_avg"+y_avg)
-                var result1= arr.reduce(function add(sum,currValue){
-                    return sum + currValue;
-                }, 0)
-                var yav = result1 / arr.length;
+                $(document).ready(function(){
+                    var mapContainer = document.getElementById('map'), mapOption = {center: new kakao.maps.LatLng(37.57861,126.97722),level:4};
+                    var map = new kakao.maps.Map(mapContainer, mapOption);
+                });
+                $(document).ready(function(){
+                    var mapContainer = '';
+                    var mapOption = {};
+                    var map = "";
+                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+                        mapOption = { 
+                            center: new kakao.maps.LatLng(List[0].y, List[0].x), // 지도의 중심좌표
+                            level:4 // 지도의 확대 레벨
+                        };                
+                        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-                var result2= arr2.reduce(function add(sum,currValue){
-                    return sum + currValue;
-                }, 0)
-                var xav = result2 / arr2.length;
-            
-                
-                var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-                    mapOption = { 
-                        center: new kakao.maps.LatLng(y_avg, x_avg), // 지도의 중심좌표
-                        level:10 // 지도의 확대 레벨
-                    };
-                
-                var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-               
-                {% comment %} var posi = [
-                {    title: "", 
-                    latlng: new kakao.maps.LatLng({{b}}[inum],{{a}}[inum]) 
-                }
-                ]; {% endcomment %}
-
-                {% comment %} var positions =[
-                     for (var inum = 0; inum < {{num}}; inum++){
-                        title: "", 
-                        latlng: new kakao.maps.LatLng({{b}}[inum],{{a}}[inum]) 
-                   
-                }
-                ]; {% endcomment %}
-
-
-                {% comment %} var position = [];
-                for (var i = 0; i < {{num}}; i ++){
-                    positions.append(" title:"{{m1}}" ") = [
-               { title:"", latlng: new kakao.maps.LatLng()}
-                ];
-                } {% endcomment %}
-               
-                
-                // 마커 이미지의 이미지 주소입니다
-                var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+                        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
                     
-                for (var i = 0; i < List.length; i ++) {
-                    
-                    // 마커 이미지의 이미지 크기 입니다
-                    var imageSize = new kakao.maps.Size(24, 35); 
-                    
-                    // 마커 이미지를 생성합니다    
-                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-                    
-                    // 마커를 생성합니다
-                    var marker = new kakao.maps.Marker({
-                        map: map, // 마커를 표시할 지도
-                        position: new kakao.maps.LatLng(List[i].y, List[i].x), // 마커를 표시할 위치
-                        title : List[i].name + "  추가 내용 넣을것" , // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                        image : markerImage // 마커 이미지 
-                    });
-                }
+                    for (var i = 0; i < List.length; i ++) {
+                        
+                        // 마커 이미지의 이미지 크기 입니다
+                        var imageSize = new kakao.maps.Size(24, 35); 
+                        
+                        // 마커 이미지를 생성합니다    
+                        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+                        
+                        // 마커를 생성합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: new kakao.maps.LatLng(List[i].y, List[i].x), // 마커를 표시할 위치
+                            title : List[i].name + "  추가 내용 넣을것" , // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                            image : markerImage // 마커 이미지 
+                        });
+                    }
+                });
                 </script>
 
 
@@ -178,9 +146,8 @@
                 margin-inline-end: 0px;
                 padding-inline-start: 40px;">
                {%for x in mlist %} 
-                 <li>x {{x}}</li> 
+                 <li>{{x}}</li> 
                 {% endfor %}
-                
                 
                 </ul>
             </div>
@@ -198,7 +165,6 @@
         $(function(){
             areaSelectMaker("#addressRegion1", "#addressDo1", "#addressSiGunGu1");
         });
-        
         var areaSelectMaker = function(a1, a2, a3){
             if(a1 == null || a2 == null || a3 == null){
                 console.warn("Unkwon Area Tag");
@@ -271,6 +237,13 @@
                 second ? $(a2).empty().append("<option value=''>시/도 선택</option>") : "";
                 $(a3).empty().append("<option value=''>시/군/구 선택</option>");
             }
+            function dis(){
+                if($('#dis').css('display') == 'none'){
+                $('#dis').show();
+            }else{
+                $('#dis').hide();
+            }
+            }
         }
         
     </script>
@@ -283,9 +256,3 @@
 
 {% endblock contents %}
 </html>
-
-[
-{title: '카카오',latlng: new kakao.maps.LatLng(33.450705, 126.570677)},
-{title: '카카오',latlng: new kakao.maps.LatLng(33.450705, 126.570677)},
-{title: '카카오',latlng: new kakao.maps.LatLng(33.450705, 126.570677)},
-]

@@ -4,15 +4,20 @@
 {% block contents %}
 {% load static %}
 <head>
+    <!--전체글꼴-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  
     <!--버튼-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/searchT.css' %}">
+    <script src="{% static 'js/optionB.js' %}" async></script>
+    <link rel="stylesheet" href="{% static 'css/optionB.css' %}">  
+    <!--테이블-->  
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/searchT.css' %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <style>       
         #contents {width: 100%; height: 80px; background: none; display: flex;}
-        #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
+        #cont_cont {width: 70%; height: 1000px; background: #d0e2f7;margin:0 auto;}
         #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
         #footer {width: 100%; height: 150px; background: #333;}
         h2{padding: 30px 0px 0px 0px;}
@@ -65,152 +70,110 @@
             text-decoration: none
         }
     </style>
-    
-        
 </head>
 <body>       
-        <div id="cont_tit">
-            <h2>세부 조건별 찾기</h2>
-        </div>
-        <div id="cont_cont">
-            <div class="container">
-                <select name="addressRegion" id="addressRegion1" onchange="selectitem(this)"></select>
-                <select name="addressDo" id="addressDo1" onchange="selectitem(this)"></select>
-                <select name="addressSiGunGu" id="addressSiGunGu1" onchange="selectitem(this)"></select>
-                <div class="search" style="display:inline-block">
-                    <form name="input" method="post" action="search_ok/">
-                        {% csrf_token %}
-                    <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요.">
-                    </form>
-                    <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">  
-                </div>
-                <button type="button" class="searchB" id="searchB" name="searchB">검색</button>
-                <div id="result"> </div>
-                <div class="detail_check">
-                <button type="button" class="btn btn-outline-primary">진료중</button>
-                <button type="button" class="btn btn-outline-primary">야간진료</button>
-                <button type="button" class="btn btn-outline-primary">공휴일진료</button>
-                <button type="button" class="btn btn-outline-primary">응급실여부</button>
-                </div>
-                <table class="styled-table">
-                    <thead>
-                        <tr>
-                            <th>병원명</th>
-                            <th>진료시간</th>
-                            <th>주소</th>
-                            <th>전화번호</th>
-                            <th>예약</th>
-                            <th>상세보기</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>성모내과의원</td>
-                            <td><a href="" class=opertime>오늘 09:00~18:00<span style="background-color:white">월 09:00~18:00<br>화 09:00~18:30<br>수 09:00~18:30<br>목 09:00~18:00<br>금 09:00~18:00<br>토 09:00~14:00</span></a></td>
-                            <td>서울특별시 강남구 개포로 615 4층 402-2호 (개포동, 석탑프라자)</td>
-                            <td>02-459-0105</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>세계로약국</td>
-                            <td>오늘 08:30~18:00</td>
-                            <td>서울특별시 강남구 논현로 52 남현빌딩 1층 (개포동)</td>
-                            <td>02-459-0105</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                            
-                        </tr>
-                        <tr>
-                            <td>연세치과의원</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>연세치과의원2</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>연세치과의원3</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>연세치과의원3</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>연세치과의원3</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>연세치과의원3</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>연세치과의원3</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>
-                        <tr>
-                            <td>연세치과의원3</td>
-                            <td>오늘 08:30~20:00</td>
-                            <td>서울특별시 강남구 선릉로 30 (개포동, 개포빌딩 2층2호)</td>
-                            <td>02-571-2828</td>
-                            <td><a href="">예약</a></td>
-                            <td>보기</td>
-                        </tr>            
-                    </tbody>
-                </table>        
+    <div id="cont_tit">
+        <h2>세부 조건별 찾기</h2>
+    </div>
+    <div id="cont_cont">
+        <div class="container">
+            <select name="addressRegion" id="addressRegion1" onchange="selectitem(this)"></select>
+            <select name="addressDo" id="addressDo1" onchange="selectitem(this)"></select>
+            <select name="addressSiGunGu" id="addressSiGunGu1" onchange="selectitem(this)"></select>
+            <div class="search" style="display:inline-block">
+                <form name="input" method="post" action="search_ok/">
+                    {% csrf_token %}
+                <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요.">
+                </form>
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">  
             </div>
+            <button type="button" class="searchB" id="searchB" name="searchB">검색</button>
+            <div class="detail_check">
+                <div class="option" id="option1">진료중</div>
+                <div class="option" id="option2">야간진료</div>
+                <div class="option" id="option3">공휴일진료</div>
+                <div class="option" id="option4">응급실주간</div>
+                <div class="option" id="option5">응급실야간</div>
+            </div>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>병원명</th>
+                        <th>진료시간</th>
+                        <th>주소</th>
+                        <th>전화번호</th>
+                        <th>예약</th>
+                        <th>상세보기</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in page_obj %}
+                    <tr>
+                        <td>{{x.hosname}}</td>
+                        {%if today == 0%}
+                        <td><a href="" class=opertime>{{x.mon}}
+                            <span style="background-color:white">{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</span></a></td>
+                        {%elif today == 1%}
+                        <td><a href="" class=opertime>{{x.tue}}
+                            <span style="background-color:white">{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</span></a></td>
+                        {%elif today == 2%}
+                        <td><a href="" class=opertime>{{x.wed}}
+                            <span style="background-color:white">{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</span></a></td>
+                        {%elif today == 3%}
+                        <td><a href="" class=opertime>{{x.thur}}
+                            <span style="background-color:white">{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</span></a></td>
+                        {%elif today == 4%}
+                        <td><a href="" class=opertime>{{x.fri}}
+                        <span style="background-color:white">{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</span></a></td>
+                        {%elif today == 5%}
+                        <td><a href="" class=opertime>{{x.sat}}
+                        <span style="background-color:white">{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</span></a></td>   
+                        {%elif today == 6%}
+                        <td><a href="" class=opertime>일요일휴진
+                            <span style="background-color:white">{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</span></a></td>   
+                        {%endif%}
+                        <td>{{x.address}}</td>
+                        <td>{{x.telnumber}}</td>
+                        <td><a href="">예약</a></td>
+                        <td>보기</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% for page in page_obj.paginator.page_range %}
+            {% if page == page_obj.number%}
+                <a href="?page={{page}}">{{page}}</a>
+            {% else %}
+                <a href="?page={{page}}">{{page}}</a>
+            {% endif %}
+            {% endfor %}
+                       
         </div>
-        <div id="footer">
-            <div class="container">footer</div>
-        </div>
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-        <script language="javascript">
-            $(document).ready(function() {
-                $("#textfiled").keydown(function(key) {
-                    if (key.keyCode == 13) {
-                        $("#searchB").click();
-                    }
-                });
+    </div>
+    <div id="footer">
+        <div class="container">footer</div>
+    </div>
+    <!--검색 처리-->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script language="javascript">
+        $(document).ready(function() {
+            $("#textfiled").keydown(function(key) {
+                if (key.keyCode == 13) {
+                    $("#searchB").click();
+                }
             });
-            $("#searchB").click(function() {
-                var param = {input1:$("#addressRegion1").find(":selected").text(),input2:$("#addressDo1").find(":selected").text(),input3:$("#addressSiGunGu1").find(":selected").text(),name:$("#textfiled").val()};
-                $.get("/team2app/search", param, function(data) {
-                });
-            });
+        });
+        $("#searchB").click(function() {
+            var param = {input1:$("#addressRegion1").find(":selected").text(),input2:$("#addressDo1").find(":selected").text(),input3:$("#addressSiGunGu1").find(":selected").text(),name:$("#textfiled").val(),check1:check1,check2:check2,check3:check3,check4:check4,check5:check5};
+            $.get("/team2app/search", param, function(data) {
+            });         
+        });
             
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script language="javascript">
-        
+    </script>
+    <!--지역 select box-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script language="javascript">   
         $(function(){
             areaSelectMaker("#addressRegion1", "#addressDo1", "#addressSiGunGu1");
         });
@@ -289,7 +252,7 @@
             }
         }
     </script>
-
 {% endblock contents %}
 
 </body>
+</html>
