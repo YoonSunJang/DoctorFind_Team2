@@ -13,20 +13,41 @@
         a:link, a:visited, a:hover, a:active {text-decoration: none;} 
     </style>
 </head>
+
 <body>
    <div id="cont_tit">
-      <h2>글쓰기</h2>
+      <h1>글쓰기</h1>
    </div>
+   
    <div id="cont_cont">
-      <div class="container">
-      내용물~~ 여기에 만드시면 돼요!
-
-
-      </div>
-   </div>
-   <div id="footer">
-   <div class="container">footer</div>
+      <div class="container" role="main">
+			<h2>게시판 글쓰기</h2>
+         <form name="f" action="rwrite_ok/" method="post">
+            {% csrf_token %}
+            
+				<div class="mb-3">
+					<label for="title">제목</label>
+					<input type="text" class="form-control" name="subject" id="subject" placeholder="제목을 입력해 주세요">
+				</div>
+				<div class="mb-3">
+					<label for="title">['users']</label>
+					<input type="text" class="form-control" name="users" id="users " placeholder=" 이름 입력해 주세요">
+				</div>
+				<div class="mb-3">
+					<label for="title">['content']</label>
+					<input type="text" class="form-control" name="content" id="content " placeholder="조회수 입력해 주세요">
+				</div>
+				<div class="mb-3">
+					<label for="content">['inquiry']</label>
+					<textarea class="form-control" rows="5" name="inquiry" id="inquiry" placeholder="내용을 입력해 주세요" ></textarea>
+				</div>
+      
+				<button type="summit" onclick="location.href='../review'" class="btn btn-sm btn-primary" id="btnSave">저장</button>	
+         </form>
+		</div>
    </div>
 
 {% endblock contents %}
 </body>
+</html>
+

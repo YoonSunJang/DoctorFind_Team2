@@ -1,0 +1,85 @@
+class Event(models.Model):
+    hospital_name = models.CharField(max_length=200)
+    event_name= models.TextField()
+    rdate = models.DateTimeField()
+    img_address = models.TextField()
+    content = models.TextField()
+
+
+한누리병원  여드름치료  sysdate  link  30%할인!
+한누리병원  흉터치료  sysdate  link  20%할인!
+한누리병원  건성치료  sysdate  link  10%할인!
+
+
+from team2app.models import Event
+from django.utils import timezone
+nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+
+event20 = Event( hospital_name='제모전문의원', event_name='턱수염제모', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMTA3MjhfODYg/MDAxNjI3NDY0MzI4MjE2.QXZ5eClVqahgI5GaPtP-kNsDPsHA4U49y-1NBthz_pEg.eyWY4ixUcl4Cg8_hw4SQ2TlvQbkhnKEvB8i1lTNQvtQg.PNG.cyhanidg/%EC%97%AC%EB%A6%84%EC%9D%B4%EB%B2%A4%ED%8A%B8-001.png?type=w966', content='제모, 어디까지 해봤니?')
+
+event19 = Event( hospital_name='피부종합의원', event_name='휴가대비', rdate=nowDatetime, img_address='https://cafeptthumb-phinf.pstatic.net/MjAxOTA4MDlfMjU4/MDAxNTY1MzM4Nzc4MjM5.ZusY6-sRTMhYF1kQ0OgjcOkA-1eEk7XII_2FyXI_v1sg.GhYZUleQNoUWnZIfjaBu-B3d9VcBR12vothIPd26hAMg.PNG/20190807114651.png?type=w800', content='리프팅과 얼굴미백을 동시에')
+
+event18 = Event( hospital_name='아그네스', event_name='모공/흉터', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMDA3MDVfMTIg/MDAxNTkzOTQ4Mjc1OTU1.1NvhkhW3QwkDFId0zfy80pGAUGiJ-efYA_faGRZi7Kcg.4NHbhKYqBstQRsTFTZugtEtxbFY-xMcEw0sLBcI-E7Qg.JPEG.phdclinic/54445.jpg?type=w966', content='뜨거운 햇빛 걱정NO!, 마스크에 지친 피부 걱정 NO!')
+
+event17 = Event( hospital_name='SUMMER병원', event_name='다이아몬드필', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/20160812_159/dlwlsgml3434_1470983160058GeNUB_JPEG/1.jpg?type=w966', content='여드름 SUMMER 이벤트 진행')
+
+event16 = Event( hospital_name='GM&ME', event_name='정액제 이벤트', rdate=nowDatetime, img_address='https://k.kakaocdn.net/dn/E99Jy/btqxbuJ8IZ2/YLrJjKmc4OyGtuWVbV4cb0/img_l.jpg', content='개원 4주년 이벤트 정액제 이벤트 진행중, 응모 이벤트 참여하세요!')
+
+event15 = Event( hospital_name='서울하나로의원', event_name='신데렐라 수액', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMjA3MDVfMjY4/MDAxNjU3MDA5NjUzNDYw.fxrkaH2pI-M7Pc0LiO9ybL9ICQ6qPgUPewxqBuSbS-kg.2rfh9Rvg8FK_g7CMrTIjIdSWjCE0xSU0W-UIG0E0gLcg.JPEG.ydphospital0013/220705_%EC%98%81%EB%93%B1%ED%8F%AC%EB%B3%91%EC%9B%90_%EC%9B%90%EB%82%B4%EA%B2%8C%EC%8B%9C%EB%AC%BC_%EC%97%AC%EB%A6%84%EC%9D%B4%EB%B2%A4%ED%8A%B8_10001000.jpg?type=w966', content='여름특가 스킨케어 스케일링1+1')
+
+event14 = Event( hospital_name='강남 리더스미', event_name='제모 할인', rdate=nowDatetime, img_address='https://cafeptthumb-phinf.pstatic.net/MjAxOTA4MTRfMTEy/MDAxNTY1NzY5NTIwODg3.sbfI4JIuZmwpSuGt249XA8N4szKwECy3ELsJj_xQ-Lwg.uFeCE6O77ZE7xOFHp5HygqfYKO1tuYYGSQOch4-WWS8g.PNG/20190523115730.png?type=w800', content='강남 리더스미 아이스 제모 가격(여성제모 가격')
+
+event13 = Event( hospital_name='에스준', event_name='슈링크리프팅', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMDA4MjFfMTIx/MDAxNTk3OTM3NzkyNTc4.38EYFFdQ8dqixlGtcMMtEj_Cp6ummcXM7DEGsE0m1Bsg.-Wsy-KaY3kC5dJgxZHYm1ALXW0ti9P89OuWDpfABWY4g.JPEG.caliagrunge75/IMG_8353.jpg?type=w773', content='에스준 8월 이벤트 진행(사각턱보톡스, 종아리/승모근보톡스, 프락셀+재생관리, 이마/볼 필러')
+
+event12 = Event( hospital_name='서울하나로의원', event_name='8월 이벤트', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMTA2MjhfMTA2/MDAxNjI0ODQ1MTcwODU4.4jQ0qJ0vvat9yJ2KXTS4gSszbvJpVukg411NDwnenSQg.hZlCgWY570yQ4RZDVs9Fhjzb-VAzhgMRDJmNjNRaBEMg.JPEG.coolphys/%EC%9D%B4%EB%B2%B502.jpg?type=w966', content='비만실 이벤트 많은 참여 바랍니다.')
+
+event11 = Event( hospital_name='헤브론피부과의원', event_name='여드름치료', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAxNzA4MDVfMjAw/MDAxNTAxODYyNDUwNzU2.FpsJ-OYoJlL_uN28GqqR3WWDzyoRSKGwKmxVJPN2b2og.aaNwFrVbVc-GtkJWKTv5uF_ZKdhghutpR50-bwsTV9Ug.JPEG.ipkishanaro/event_pop3.jpg?type=w2', content='여드름 색소침착 걱정은 이제 멈춰!!')
+
+event10 = Event( hospital_name='관리해병원', event_name='여름이벤트', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/20160726_132/767aroma_1469529574968YFOPG_JPEG/%C7%D8%BF%EE%B4%EB%BC%AD%BF%EF_%BF%A9%B8%A7%C0%CC%BA%A5%C6%AE_%C3%D6%C1%BE.jpg?type=w1', content='관리 55만원 티켓팅 55,000원에 누려보세요.')
+
+event9 = Event( hospital_name='S-ONE피부과', event_name='미백관리', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/20130803_201/pssone68_1375506613621rtNxl_PNG/%B1%E2%B9%CC%C0%E2%C6%BC%C1%A6%B0%C502.png?type=w2', content='sends-One medical group에서 피부과 오픈기념 이벤트를 실시합니다.')
+
+event8 = Event( hospital_name='파인피부', event_name='엑셀브이레이저', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAxODA4MjRfMjc5/MDAxNTM1MDk3NTI2ODc2.eQTKC-_w8i0u-AoTWbNzmfpYdPzeyqEa3TRc3T6nDdcg.46Yu4K5sihf7IZ9KHcayk1tj7Kgk2vXEgs8TqRNbyeUg.JPEG.tman2000/7%EC%9B%94%EC%9D%B4%EB%B2%A4%ED%8A%B8_03_A4.jpg?type=w966', content='ipl/색소레이저 2회/비타민 치료+ 토닝레이저 3회/비타민치료+피코토닝 레이저 3회')
+
+event7 = Event( hospital_name='항노의료원', event_name='색소치료', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAxODAzMTJfMjI5/MDAxNTIwODE3MjAzMTcz.FD-d4gkoehwAvRrmmNnqUe1NWJRdZOSePWWzIHqOQAAg.cpyVAk0dF2t949xyORChC7ositUcE6oi2s6X4l9rFv8g.JPEG.cchoiped/%EC%88%98%EC%A0%95_2018%EB%85%843%EC%9B%94%ED%8C%9D%EC%97%85_%EB%A7%91%EC%9D%80%EB%AC%B8%ED%94%BC%EB%B6%80%EA%B3%BC.jpg?type=w966', content='우리모두 색소 치료를 통해 아름답게 밝게 자신있게!!')
+
+event6 = Event( hospital_name='서울s피부과', event_name='젤틱치료', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMjA2MDNfNyAg/MDAxNjU0MjIwMTgxNDI2.bjlxc8Z7KdH9e2CedAKJaoiEXOfs2ovdCeAdywZ-S14g.bqSP5vHib9N-2H9vqhczNMsc03rTcqbx5xPHquhPqucg.JPEG.coolphys/%EC%84%9C%EC%9A%B8%EC%97%90%EC%8A%A4%ED%94%BC%EB%B6%80%EA%B3%BC%EC%9D%B4%EB%B2%A4%ED%8A%B86-8.jpg?type=w966', content='겨드랑이 뽀송뽀송 다같이 뽀송하세요~~')
+
+event5 = Event( hospital_name='캐번병원', event_name='캐번리프팅', rdate=nowDatetime, img_address='https://cafeptthumb-phinf.pstatic.net/MjAxOTA4MTBfMjEw/MDAxNTY1NDI0NzY4NDc2.jWBN8Wtgbv-BM3djHAEkJDt2hAVubVTNYEqBE3L_VZUg.Y4D2Pyi_jTto1NFiZZv-7LkgCu-tHVzBzkjpTF_VE2cg.JPEG/silasil.jpg?type=w800', content='첫번째 체험단 모집중!! 빨리 신청하세요')
+
+event4 = Event( hospital_name='흉터병원', event_name='모공시술', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMjA3MzFfMjYg/MDAxNjU5MjQ2NDkxNzE5.P0byMfpQeCN4SK1vXH-F7yNew21MCRLfWoCvJYYTq74g.GJTIYaG281RSJf9cmuieJy0-f6QknJ-ICOGG7FJK2Ckg.JPEG.seoulsderma/1.%EC%9D%B8%EC%8A%A4%ED%83%80-05.jpg?type=w966', content='프리미엄 흉터모공 16주 관리프로그램으로 흉터치료를!!')
+
+event3 = Event( hospital_name='피부얌병원', event_name='피부관리', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMjAzMDJfNDUg/MDAxNjQ2MTgzOTA4MDgw.YrgJcHVOVmUovLOz4DsrpJKBHulhTp_4nIE1tAX6jZMg.lKOjl2a-Ydo-K0QSaAm4343bXvyl9y4wXto6UD6kljgg.JPEG.seoulsun-dh/%EC%9A%B4%EC%A0%95%ED%94%BC%EB%B6%80%EA%B3%BC_3%EC%9B%94%EC%9D%B4%EB%B2%A4%ED%8A%B82.jpg?type=w966', content='독일에서 특수제작된 핑크빛 피부장벽관리 Pfirsich 복숭아 관리')
+
+event2 = Event( hospital_name='하얀피부과', event_name='리프팅 할인', rdate=nowDatetime, img_address='https://postfiles.pstatic.net/MjAyMjA3MjZfNiAg/MDAxNjU4ODAzNTAyMTMy.kBhRVt2M7zq1iBqisPTGVtslJQtLIgvbxPIkacxe6scg.ZDdMiVo4gx-orBZZxJwjsELg2n12ioSXVEuhC_weF8Eg.JPEG.seoulsun-dh/8%EC%9B%94%EC%9D%B4%EB%B2%A4%ED%8A%B8.jpg?type=w966', content='여름엔 차갑게 아이스토닝 피코슈어토닝 3회 +냉동미백관리 3회+저온PHA필링1회')
+
+event1=Event(hospital_name='여름이병원',event_name='여름대비 이벤트', rdate=nowDatetime,img_address='https://postfiles.pstatic.net/MjAyMTA2MjhfMTA2/MDAxNjI0ODQ1MTcwODU4.4jQ0qJ0vvat9yJ2KXTS4gSszbvJpVukg411NDwnenSQg.hZlCgWY570yQ4RZDVs9Fhjzb-VAzhgMRDJmNjNRaBEMg.JPEG.coolphys/%EC%9D%B4%EB%B2%B502.jpg?type=w966',content='겨드랑이 관리,피부 수분충전LDM, 피부탄력관리 패키지,군살을 탄탄하게')
+
+
+event_list = [event,event1,event2]
+for x in event_list: x.save()
+
+Event.objects.all().values()   
+
+
+value값에따라 페이지가 달라지려면 urls에 있는 값에id 값을 달아주고 
+해당 html의 for문안에 해당 값에도 id값을 넣어줘야함!!
+ex)
+1.  path('econtent/<int:id>', views.econtent, name='econtent'),
+2. <td><a href="../econtent/{{ev.id}}">{{ev.content}}</a></td>
+
+
+class Review(models.Model):
+    subject = models.CharField(max_length=200)
+    users = models.TextField()
+    rdate = models.DateTimeField()
+    inquiry = models.TextField()
+    content = models.TextField()
+
+
+class Event(models.Model):
+    hospital_name = models.CharField(max_length=200)
+    event_name= models.TextField()
+    rdate = models.DateTimeField()
+    img_address = models.TextField()
+    content = models.TextField()

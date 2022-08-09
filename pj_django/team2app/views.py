@@ -126,12 +126,6 @@ def search(request):
 def search_ok(request):
     return HttpResponseRedirect(reverse('search'))
 
-def review(request):
-    return render(request,'review.html')
-
-def rwrite(request):
-    return render(request,'rwrite.html')
-
 def map(request):
     return render(request,'map.html')
 
@@ -149,3 +143,63 @@ def event(request):
 
 def mypage(request):
     return render(request,'mypage.html')
+
+
+from django.urls import reverse 
+from django.utils import timezone
+from .models import Review,Event
+
+def review(request):
+    temlate = loader.get_template('review.html')
+    address =  Review.objects.all().values()
+    context = {
+        'address': address
+    }
+    return HttpResponse(temlate.render(context, request))
+
+
+def rwrite(request):
+    temlate = loader.get_template('rwrite.html')
+    return HttpResponse(temlate.render({}, request))   
+
+def rwrite(request):
+    temlate = loader.get_template('rwrite.html')
+    return HttpResponse(temlate.render({}, request))   
+
+def rwrite_ok(request):
+    title = request.POST['subject']
+    writer = request.POST['users']
+    content = request.POST['content']
+    inquiry = request.POST['inquiry']
+    nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+    address = Review(subject=title, users=writer ,content=content, rdate=nowDatetime ,inquiry=inquiry)
+    print(address)
+    address.save()
+    return HttpResponseRedirect(reverse('review'))
+
+# def event(request, id):
+#     hospitalname = request.POST['title']
+#     eventname = request.POST['writer']
+#     nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+#     img_address = request.POST['']
+#     content = request.POST['content']
+#     address = Event(subject=hospitalname, users=eventname, rdate=nowDatetime,img=img_address,con=content)
+#     address.save()
+#     return HttpResponseRedirect(reverse('event')) #입력글쓰기 필요 X
+
+
+def event(request):
+    temlate = loader.get_template('event.html')
+    event = Event.objects.all().values()
+    context={
+        'event':event
+    }
+    return HttpResponse(temlate.render(context, request))   
+
+def econtent(request,id):
+    template = loader.get_template('econtent.html')
+    event = Event.objects.get(id=id)
+    context = {
+        'event' : event,
+    }
+    return HttpResponse(template.render(context,request))
