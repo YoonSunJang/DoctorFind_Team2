@@ -190,7 +190,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for x in page_obj %}
+                    {% for x in page_obj %} 
                     <tr class="tr_visible">
                         <td>{{x.hosname}}</td>
                         {%if today == 0%}
@@ -217,8 +217,9 @@
                         {%endif%}
                         <td>{{x.address}}</td>
                         <td>{{x.telnumber}}</td>
-                        <td><a href="../book">예약</a></td>
-                        <td><a href="" class="look" id="look">보기</a><a href="" class="fold" id="fold" style="display:none">접기</a></td>
+                        <td><a href="../book/{{x.num}}">예약</a></td>
+                        <td><a href="" class="look" id="look">보기</a><a href="" class="fold" id="fold" style="display:none">접기</a></td>    
+                        
                     </tr>
                     <tr class="detail" id="detail" style="display:none">
                         <td></td>

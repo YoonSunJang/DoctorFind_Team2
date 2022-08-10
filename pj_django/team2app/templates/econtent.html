@@ -35,7 +35,7 @@
             <a><img id="a" src="{{event.img_address}}"></a>
             <!--<a><img src="{{event.img_address}}"></a>-->
             <br><br><br>
-            <button type="button" onclick="alert('마이페이지에서 확인하세요!')">😘찜하기!💘</button>
+            <a href="dibs/{{event.id}}"><button type="button" onclick="alert('마이페이지에서 확인하세요!')">😘찜하기!💘</button></a>
             <a href="../event">
                 <br>
                 <style type="text/css">
@@ -65,12 +65,3 @@
 {% endblock contents %}
 </body>
 </html>
-    <!--
-    #db에 저장된 db 변경하기
-    from team2app.models import Event
-    from django.utils import timezone
-    nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
-    a=Event.objects.get(id=12)
-    a.content='비만실 이벤트 많은 참여 바랍니다.'
-    a.save()
-    -->
