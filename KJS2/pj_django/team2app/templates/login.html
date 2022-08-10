@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% extends 'header.html' %}
+{% block contents %}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  
+    <style>
+        /*추가 CSS*/
+        .section {
+            margin:2rem;
+        }
+        .login {
+            width:80%;
+            padding:1rem;
+            margin:0px auto;
+            margin-top:2rem;
+            margin-bottom:4rem;
+            border-left:8px solid #0dcaf0;
+        }
+        #login-form{
+            width:70%;
+            background-color:#f5f5f5;
+            padding:3rem;
+            margin:0px auto;
+            margin-bottom:5rem;
+        }
+        #login-box{
+            padding-bottom:1rem;
+        }
+        div.container{
+            margin-bottom:4rem;
+        }
+        a:link {
+            text-decoration-line:none;
+            color:#0dcaf0;
+        }
+        a:visited{
+            text-decoration-line:none;
+            color:#0dcaf0;
+        }
+        .footer.container {
+            padding-top:3rem;
+            padding-bottom:7rem;
+        }
+
+        /*
+        기존 CSS
+        #contents {width: 100%; height: 80px; background: none; display: flex;}
+        #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
+        #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
+        #footer {width: 100%; height: 150px; background: #333;}
+        h2{padding: 30px 0px 0px 0px;}
+        a:link, a:visited, a:hover, a:active {text-decoration: none;}
+        */
+    </style>
+</head>
+<body>
+    <!-- Section-->
+    <!-- Login Form -->
+    <section>
+        <div class="container">
+            <div class="login">
+                <h2><b>로그인</b></h2>
+                <h6>DoctorFine에 오신것을 환영합니다!</h6>
+            </div>
+            <section class="login-form">
+                <form action="validation-form" method="post" novalidate > <!--validation-form 연결중 login.jsp-->
+                    <div class="col-md-6 mb-3" id="login-form">
+                        <div id="login-box">
+                            <label for="id">ID(E-Mail)</label> 
+                            <input type="text" class="form-control" id="id" placeholder="ex)DoctorFine@example.com"/>
+                            <div class="invalid-feedback">ID를 입력해주세요.</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pwd">비밀번호</label> 
+                            <input type="password" class="form-control" name="pwd" id="pwd" />
+                            <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+                        </div>
+                        <div id="in" align="right">
+                            <a href="#" id="connect-siginup">
+                                <h6>아직 회원이 아니신가요?</h6></a>
+                            <button class="btn btn-outline-info btn-lg" type="submit">로그인</button>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </section>
+    <div id="footer">
+        <div class="container">footer</div>
+    </div>
+
+{% endblock contents %}
+</body>

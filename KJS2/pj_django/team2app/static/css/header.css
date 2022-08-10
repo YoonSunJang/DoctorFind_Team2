@@ -1,0 +1,63 @@
+@charset "utf-8";
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,500);
+/*레이아웃*/
+#wrap {width: 100%;}
+#header {width: 100%; height: 130px; background: #b8daeb;}
+#contents {width: 100%; height: 800px;} /*background: #222;}*/
+
+/* 헤더 */
+.header {position: fixed;}
+.header .header-menu {text-align: right;}
+.header .header-menu a {color: #fff; padding: 10px 0px 10px 13px; display: inline-block;}
+.header .header-menu a:hover {color: #666;}
+.header .header-title {text-align: center;}
+
+a {text-decoration: none;}
+/* Navigation Styles */
+#cont_nav
+nav { text-align:center; background: #2ba0db; }
+
+nav ul {
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    position: relative;
+}
+
+nav ul li a {
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    padding: 15px 50px;
+    transition: 0.3s linear;
+}
+
+nav ul li:hover { background: #2ba0db; }
+
+nav ul li ul {
+    border-bottom: 5px solid #2ba0db;
+    display: none;
+    position: absolute;
+    width: 250px;
+}
+
+nav ul li ul li {
+    border-top: 1px solid #444;
+    display: block;
+}
+
+nav ul li ul li:first-child { border-top: none; }
+
+nav ul li ul li a {
+    background: #373737;
+    display: block;
+    padding: 10px 14px;
+}
+
+nav ul li ul li a:hover { background: #2ba0db; }
+
+nav .fa.fa-angle-down { margin-left: 6px; }
