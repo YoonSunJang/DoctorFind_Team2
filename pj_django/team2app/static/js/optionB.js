@@ -3,12 +3,14 @@ var option2 = document.querySelector('#option2');
 var option3 = document.querySelector('#option3');
 var option4 = document.querySelector('#option4');
 var option5 = document.querySelector('#option5');
+var option6 = document.querySelector('#option6');
 
 var check1 = false;
 var check2 = false;
 var check3 = false;
 var check4 = false;
 var check5 = false;
+var check6 = false;
 
 const CLICKED_CLASS="clicked"
 
@@ -57,10 +59,20 @@ function handleClick5(){
     option5.classList.toggle(CLICKED_CLASS);
     console.log("응급실야간"+check5);
 }
+function handleClick6(){
+    if(check6==false){
+        check6=true;
+    }else{
+        check6=false;
+    }
+    option6.classList.toggle(CLICKED_CLASS);
+    console.log("24시"+check6);
+}
 
 option1.addEventListener("click",handleClick1);
 option2.addEventListener("click",handleClick2);
 option3.addEventListener("click",handleClick3);
 option4.addEventListener("click",handleClick4);
 option5.addEventListener("click",handleClick5);
+option6.addEventListener("click",handleClick6);
 

@@ -40,7 +40,7 @@
 {% endif %}
     <div id="cont_cont">
         <div class="container" role="main">
-           <div class="write"><h2><b>게시물 작성</b></h2></div>
+           <div class="write"><h2><b>게시물 수정</b></h2></div>
            <form class="form-horizontal" name="f" action="rupdate_ok/{{review.id}}" method="post">
               {% csrf_token %}
               <div class="table table-responsive">
@@ -72,14 +72,12 @@
             </tr>
             <tr>
                 <td>글내용</td>
-                <td><textarea rows="10" cols="50" name="content" class="form-control"></textarea></td>
+                <td><input type="text" name="content" class="form-control" value="{{review.content}}"></td>
             </tr>
             </table>
             <div class="btn">
-               <button type="submit" class="btn btn-outline-info btn-lg" id="listButton" type="submit">목록</button>	
-               <button type="submit" class="btn btn-info btn-lg" id="updateButton" type="submit">수정</button>	
-               <button type="submit" class="btn btn-info btn-lg" id="updateButton" type="submit">삭제</button>	
-
+               <button type="submit" class="btn btn-outline-info btn-lg" id="listButton">목록</button>	
+               <button type="submit" class="btn btn-info btn-lg" id="updateButton">저장</button>	
             </div>
          </form>
 		</div>

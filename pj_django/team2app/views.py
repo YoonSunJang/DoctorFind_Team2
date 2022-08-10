@@ -45,8 +45,15 @@ for x in df.index:
         df2.loc[x,'진료시간_{}'.format(y)]=str(y)+" "+str(df.loc[x,'진료시작시간_{}'.format(y)])+"~"+str(df.loc[x,'진료종료시간_{}'.format(y)])
         if '-~-' in df2.loc[x,'진료시간_{}'.format(y)]:
             df2.loc[x,'진료시간_{}'.format(y)]=df2.loc[x,'진료시간_{}'.format(y)].replace('-~-','-')
+        elif '-~' in df2.loc[x,'진료시간_{}'.format(y)]:
+            df2.loc[x,'진료시간_{}'.format(y)]=df2.loc[x,'진료시간_{}'.format(y)].replace('-~','~')
 df=df.drop(df.columns[row],axis=1)
 df=pd.concat([df,df2],axis=1)
+# 데이터정제
+df['진료과목']=df['진료과목'].str.replace('과', '과/',regex=False)
+df['진료과목']=df['진료과목'].str.rstrip("/")
+df[['진료과목','전화번호','총의사수','병원홈페이지(URL)','일요일 휴진안내','공휴일 휴진안내']]=df[['진료과목','전화번호','총의사수','병원홈페이지(URL)','일요일 휴진안내','공휴일 휴진안내']].fillna('-')
+
 #오늘 요일/현재시간 구하기
 # from datetime import datetime
 # def whatday():
@@ -69,17 +76,46 @@ df=df.rename(columns={'응급실 야간운영여부':'emgnight'})
 df=df.rename(columns={'병원홈페이지(URL)':'url'})
 df=df.rename(columns={'진료과목':'subject'})
 df=df.rename(columns={'총의사수':'doctors'})
-search_list=df[['hosname','address','telnumber','mon','tue','wed','thur','fri','sat','emgday','emgnight','url','subject','doctors']]
+df=df.rename(columns={'일요일 휴진안내':'sunDoff'})
+df=df.rename(columns={'공휴일 휴진안내':'holyoff'})
+search_list=df[['hosname','address','telnumber','mon','tue','wed','thur','fri','sat','emgday','emgnight','url','subject','doctors','sunDoff','holyoff']]
 search_lists=pd.DataFrame()  
 
 def index(request):
+    template = loader.get_template('index.html')
     now = datetime.now()
-    print(now.month)
-    print(type(now.month))
-    return render(request,'index.html')
+    thismonth = now.month
+    dr = df_hs[['제목', '월', '내용']]
+    dr = dr[dr['월']==thismonth]
+    indt = dr.to_dict('records')
+    indtdt = indt[1:4]
+    indtdict = indt[0]
+    infoheadline = indtdict['제목']
+    #infoheadline = ""+str(thismonth)+"월의 건강정보"
+    print(infoheadline)
+    review =  Review.objects.all().order_by('-id').values('subject')
+    reviewheadline = review[0]['subject']
+    print(reviewheadline)
+    review1 = review[1]['subject']
+    review2 = review[2]['subject']
+    review3 = review[3]['subject']
+    event = Event.objects.all().order_by('-id').values('content')
+    eventheadline = event[0]['content']
+    event1 = event[1]['content']
+    event2 = event[2]['content']
+    event3 = event[3]['content']
+    eventbanner = Event.objects.filter(content=eventheadline).values('img_address').get()
+    eventbanner = eventbanner['img_address']
+    context = {
+        'indtdt':indtdt, 'infoheadline' : infoheadline, 'reviewheadline':reviewheadline,
+        'review1':review1, 'review2' : review2, 'review3': review3,
+        'eventheadline' : eventheadline, 'event1':event1, 'event2':event2, 'event3':event3,
+        'eventbanner' : eventbanner,
+    }
+    return HttpResponse(template.render(context, request))
 
 from django.core.paginator import Paginator
-from datetime import datetime
+from datetime import datetime,timedelta
 #검색
 def search(request):
     global search_list, search_lists
@@ -93,8 +129,18 @@ def search(request):
     check4=request.GET.get("check4") #응급실주간
     check5=request.GET.get("check5") #응급실야간
 
+    print("1")
+    print("input1",input1)
+    print("input2",input2)
+    print("input3",input3)
+    print("name",name)
+    print("c1",check1)
+    print("c2",check2)
+    print("c3",check3)
+    
     whattoday = datetime.today().weekday()
-    whattime = datetime.now()
+    
+    
     if(input1==input2==input3==name==check4==check5==None):pass
     else:
         search_lists=search_list
@@ -110,28 +156,54 @@ def search(request):
             search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
         if(check5=='true'): #응급실야간운영여부
             search_lists=search_lists[search_lists['emgnight'].str.contains('Y')]
-        
+    # if(input1==input2==input3==check4==check5==None):
+    #     print('모두 none!! 처음 search에 접속시')
+    # elif(input1=='지역권 선택' or input2=='시/도 선택' or input3=='시/군/구 선택'): #지역일부검색 또는 X
+    #     print('지역선택안함, 이름 또는 옵션선택 또는 전체')
+    #     search_lists=search_list
+    #     if(name!=None):
+    #         search_lists=search_lists[search_lists['hosname'].str.contains(name)]
+    #     if(input1!='지역권 선택' and input2!='시/도 선택'):
+    #         if(input3!='시/군/구 선택'):
+    #             search_lists=search_lists[search_lists['address'].str.contains(input3)]
+    #         search_lists=search_lists[search_lists['address'].str.contains(input2)]
+    # elif(input1!=None and input2!=None and input3!=None): #지역검색O
+    #     search_lists=search_list
+    #     if(name!=None):
+    #         search_lists=search_lists[search_lists['hosname'].str.contains(name)]
+    #     if(input1!='지역권 선택' and input2!='시/도 선택'):
+    #         if(input3!='시/군/구 선택'):
+    #             search_lists=search_lists[search_lists['address'].str.contains(input3)]
+    #         search_lists=search_lists[search_lists['address'].str.contains(input2)]
+    #     if(check2=='true'): #야간진료 > 확인필요
+    #          search_lists=search_lists.loc[endtime.index,:]
+    #     if(check4=='true'): #응급실주간운영여부
+    #         search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
+    #     if(check5=='true'): #응급실야간운영여부
+    #         search_lists=search_lists[search_lists['emgnight'].str.contains('Y')]
+    
     print('search_lists',search_lists)
     page=request.GET.get("page",1)
     paginator=Paginator(search_lists.to_dict('records'),10) # 페이지 표시 수
+    pagelist=paginator.get_elided_page_range(page,on_each_side=2,on_ends=0)
     page_obj = paginator.get_page(page)
     context={
         'search_list':search_lists.to_dict('records'),
         'page_obj':page_obj,
         'today':whattoday,
+        'pagelist':pagelist
     }
-
     return render(request,'search.html',context=context)
 
 def search_ok(request):
     return HttpResponseRedirect(reverse('search'))
 
-from .models import Member1, Review1
+from .models import Member, Review, Event
 from django.utils import timezone
 def review(request):
     global viewplus
     temlate = loader.get_template('review.html')
-    review =  Review1.objects.all().values()
+    review =  Review.objects.all().values()
     viewplus = request.GET.get("value")
     print(viewplus)    
     context = {
@@ -143,7 +215,7 @@ def rwrite(request):
     global rating
     temlate = loader.get_template('rwrite.html')
     user_email = request.session.get('login_ok_user')
-    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    user_name = Member.objects.filter(email=user_email).values('name').get()
     login_name = user_name['name']
     rating = request.GET.get("value")
     print(rating)
@@ -154,7 +226,7 @@ def rwrite(request):
 
 def rwrite_ok(request):
     user_email = request.session.get('login_ok_user')
-    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    user_name = Member.objects.filter(email=user_email).values('name').get()
     login_name = user_name['name']
     subject = request.POST['subject']
     content = request.POST['content']
@@ -163,13 +235,13 @@ def rwrite_ok(request):
     # views = request.POST['views']
     user_email = request.session.get('login_ok_user')
     nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
-    review = Review1(writer=login_name,email=user_email,subject=subject,content=content,hosname=hosname,rdate=nowDatetime,views='1', rating=rating)
+    review = Review(writer=login_name,email=user_email,subject=subject,content=content,hosname=hosname,rdate=nowDatetime,views='1', rating=rating)
     review.save()
     return HttpResponseRedirect(reverse('review'))
 
 def rcontent(request,id):
     template = loader.get_template('rcontent.html')
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     user_email = request.session.get('login_ok_user')
     if viewplus is not None:
         review.views = review.views+1
@@ -182,16 +254,16 @@ def rcontent(request,id):
     return HttpResponse(template.render(context,request))
 
 def rdelete(request,id):
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     review.delete()
     return HttpResponseRedirect(reverse('review'))
 
 def rupdate(request,id):
     global ratingup
     template = loader.get_template('rupdate.html')
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     user_email = request.session.get('login_ok_user')
-    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    user_name = Member.objects.filter(email=user_email).values('name').get()
     login_name = user_name['name']
     ratingup = request.GET.get("value")
     print(ratingup)
@@ -202,7 +274,7 @@ def rupdate(request,id):
 
 def rupdate_ok(request,id):
     template = loader.get_template('rupdate.html')
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     subject = request.POST['subject']
     # hosname = request.POST['hosname']
     # rating = request.POST['rating']
@@ -290,8 +362,8 @@ def login_ok(request):
     email = request.POST.get('email', None)
     pw = request.POST.get('pw', None)
     try:
-        member=Member1.objects.get(email=email)
-    except Member1.DoesNotExist:
+        member=Member.objects.get(email=email)
+    except Member.DoesNotExist:
         member = None
     # print("member", member)
     result = 0
@@ -330,7 +402,7 @@ def signup(request):
         pw = request.POST['pw']
         addr = request.POST['addr']
         # print("이름:", name, "아이디(email):", email, "전화번호", phone, "비번", pw, "주소", addr)
-        member = Member1(
+        member = Member(
             name=name,
             email=email,
             phoneNum=phoneNum,
@@ -375,14 +447,64 @@ def healthinfo(request):
     return HttpResponse(template.render(context, request))
 
 def event(request):
-    return render(request,'event.html')
+    temlate = loader.get_template('event.html')
+    event = Event.objects.all().values()
+    context={
+        'event':event
+    }
+    return HttpResponse(temlate.render(context, request))   
+
+from .models import Myevent
+def econtent(request,id):
+    template = loader.get_template('econtent.html')
+    event = Event.objects.get(id=id)
+    context = {
+        'event' : event,
+    }
+    return HttpResponse(template.render(context,request)) 
 
 def mypage(request):
     template = loader.get_template('mypage.html')
     user_email = request.session.get('login_ok_user')
-    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    user_name = Member.objects.filter(email=user_email).values('name').get()
     login_name = user_name['name']
+    idcount = 1
+    try:
+        dibsedevent = Myevent.objects.filter(email=user_email).values()    
+    except:
+        dibsedevent = Myevent.objects.all().values()
+        print(user_email)
+        print(dibsedevent)
+        print("딥스가 없는데요")
     context={
-        'user_email' : user_email, 'login_name':login_name,
+        'user_email' : user_email, 'login_name':login_name, 'dibsedevent':dibsedevent,
+        'idcount':idcount,
+    }
+    return HttpResponse(template.render(context,request)) 
+
+def book(request):
+    template = loader.get_template('book.html')
+    today = datetime.today() + timedelta(1) #내일부터예약가능
+    tomorrow=today.strftime("%Y-%m-%d")
+    context={
+        'tomorrow':tomorrow,
     }
     return HttpResponse(template.render(context, request))
+
+def dibs(request, id):
+    user_email = request.session.get('login_ok_user')
+    eventhosname = Event.objects.filter(id=id).values('hospital_name').get()
+    eventhosname = eventhosname['hospital_name']
+    print(eventhosname)
+    eventname = Event.objects.filter(id=id).values('event_name').get()
+    eventname = eventname['event_name']
+    print(eventname)
+    myevent = Myevent(email=user_email, title=eventname, hosname=eventhosname)
+    myevent.save()
+    return HttpResponseRedirect(reverse('event'))
+
+def dibsdelete(request,title):
+    myevent = Myevent.objects.filter(title=title).all()
+    print("마이이벤트",myevent)
+    myevent.delete()
+    return HttpResponseRedirect(reverse('mypage'))

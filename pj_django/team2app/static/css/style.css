@@ -81,6 +81,7 @@ ul.tabs li.current{
 .tab-content.current{
 	display: inherit;
 }
+
 .main-current{
 	color: #252525;
     font-size:50px;
