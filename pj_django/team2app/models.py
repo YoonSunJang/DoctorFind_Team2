@@ -17,7 +17,7 @@ class Members(models.Model):
 
 class Review1(models.Model):
     writer = models.CharField(max_length=200)
-    email = models.TextField(unique=True)
+    email = models.TextField()
     subject = models.TextField()
     content = models.TextField()
     rdate = models.DateTimeField()
@@ -32,3 +32,8 @@ class Member1(models.Model):
     gender = models.CharField(max_length=200)
     addr = models.TextField()
     phoneNum = models.TextField()
+    
+class Myevent(models.Model):
+    email = models.TextField()
+    title = models.TextField()
+    hosname = models.TextField()

@@ -73,6 +73,9 @@ search_list=df[['hosname','address','telnumber','mon','tue','wed','thur','fri','
 search_lists=pd.DataFrame()  
 
 def index(request):
+    now = datetime.now()
+    print(now.month)
+    print(type(now.month))
     return render(request,'index.html')
 
 from django.core.paginator import Paginator
