@@ -14,7 +14,7 @@ urlpatterns = [
     path('mypage/', views.mypage, name='mypage'),
     path('rwrite/', views.rwrite, name='rwrite'),
     path('rwrite/rwrite_ok/', views.rwrite_ok, name='rwrite_ok'),
-    path('event/event', views.event, name='event'),
+    path('event/', views.event, name='event'),
     path('econtent/<int:id>', views.econtent, name='econtent'),
 
 ]
