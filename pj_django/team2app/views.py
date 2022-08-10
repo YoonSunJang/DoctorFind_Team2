@@ -168,11 +168,11 @@ def search(request):
 def search_ok(request):
     return HttpResponseRedirect(reverse('search'))
 
-from .models import Member1, Review1
+from .models import Member, Review, Event
 from django.utils import timezone
 def review(request):
     temlate = loader.get_template('review.html')
-    review =  Review1.objects.all().values()
+    review =  Review.objects.all().values()
     context = {
         'review': review, 
     }
@@ -190,26 +190,26 @@ def rwrite_ok(request):
     # rating = request.POST['rating']
     # views = request.POST['views']
     nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
-    review = Review1(writer=writer,email='23@12',subject=subject,content=content,hosname=hosname,rdate=nowDatetime,views='1')
+    review = Review(writer=writer,email='23@12',subject=subject,content=content,hosname=hosname,rdate=nowDatetime,views='1')
     review.save()
     return HttpResponseRedirect(reverse('review'))
 
 def rcontent(request,id):
     template = loader.get_template('rcontent.html')
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     context = {
         'review' : review,
     }
     return HttpResponse(template.render(context,request))
 
 def rdelete(request,id):
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     review.delete()
     return HttpResponseRedirect(reverse('review'))
 
 def rupdate(request,id):
     template = loader.get_template('rupdate.html')
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     context = {
         'review' : review,
     }
@@ -217,7 +217,7 @@ def rupdate(request,id):
 
 def rupdate_ok(request,id):
     template = loader.get_template('rupdate.html')
-    review = Review1.objects.get(id=id)
+    review = Review.objects.get(id=id)
     subject = request.POST['subject']
     # hosname = request.POST['hosname']
     # rating = request.POST['rating']
@@ -304,8 +304,8 @@ def login_ok(request):
     email = request.POST.get('email', None)
     pw = request.POST.get('pw', None)
     try:
-        member=Member1.objects.get(email=email)
-    except Member1.DoesNotExist:
+        member=Member.objects.get(email=email)
+    except Member.DoesNotExist:
         member = None
     # print("member", member)
     result = 0
@@ -345,7 +345,7 @@ def signup(request):
         addr = request.POST['addr']
         # print("이름:", name, "아이디(email):", email, "전화번호", phone, "비번", pw, "주소", addr)
         
-        member = Member1(
+        member = Member(
             name=name,
             email=email,
             phoneNum=phoneNum,
@@ -371,7 +371,20 @@ def healthinfo(request):
     return HttpResponse(template.render(context, request))
 
 def event(request):
-    return render(request,'event.html')
+    temlate = loader.get_template('event.html')
+    event = Event.objects.all().values()
+    context={
+        'event':event
+    }
+    return HttpResponse(temlate.render(context, request))   
+
+def econtent(request,id):
+    template = loader.get_template('econtent.html')
+    event = Event.objects.get(id=id)
+    context = {
+        'event' : event,
+    }
+    return HttpResponse(template.render(context,request)) 
 
 def mypage(request):
     return render(request,'mypage.html')
