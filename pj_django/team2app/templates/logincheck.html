@@ -1,0 +1,8 @@
+{% if not request.session.login_ok_user %}
+	<script language ="javascript">
+		alert("로그인되지 않았습니다, 회원 전용입니다")
+		//console.log("서비스 이용 불가!! at template7_logincheck.html")
+		//location.href="../" {#새로운 요청이기 때문에 이전 폼이 날아감#}
+		history.back(); {#캐시 메모리로 저장된 직전 페이지로 이동하기 때문에 입력한 폼(정보)들이 남아있다#}
+	</script>
+{% endif %}

@@ -24,14 +24,28 @@
 			background: #ffff;
 			color: #222;
 			padding: 12px;
-
 		}
 		.month-content.current{
 			display: inherit;	
 		}
 		.month-tab {
-			margin-bottom: 5%;
+            margin-top : 2%;
+			margin-bottom: 2%;
 		}
+
+		summary {
+			cursor: pointer;
+		  }
+		
+        #tab-2 img{
+        vertical-align:top;
+        }
+        
+        p{
+        display:inline-block;
+        }
+		 
+		
     </style>
 </head>
 <body>
@@ -66,112 +80,157 @@
                 </div>
                 <div id="tab-2" class="tab-content">
                     <ul>
-                        <li>내용2</li>
+                        <li><a href="https://www.mfds.go.kr/index.do"><img src="https://www.g-health.kr/images/common/symbol02.gif"></a>
+                        <p>
+                        <a href="https://www.mfds.go.kr/index.do">식품 의약품 안전처</a><br><br>
+                            소비자를 위한 의약품 정보<br>
+                            일상 생활에서 약을 복용할 때 주의해야 할 사항과 함께 연령별 / 질환별 의약품 사용정보가 제공됩니다.</p>
+                        </li><br>
+                        <li><a href="https://www.nhis.or.kr/nhis/index.do"><img src="https://www.g-health.kr/images/common/symbol03.gif"></a>
+                        <p><a href="https://www.nhis.or.kr/nhis/index.do">건강in</a><br><br>
+                                의약품 정보 검색<br>
+                        의약품검색, 제품식별검색, 상호작용 등 개별 약물에 대한 상세 정보를 검색할 수 있습니다.</p>
+                        </li><br>
+                        <li><a href="http://www.foodsafetykorea.go.kr/"><img src="https://www.g-health.kr/images/common/symbol04.gif"></a>
+                        <p><a href="http://www.foodsafetykorea.go.kr/">식품나라</a><br><br>
+                            (1)식생활 정보<br>
+                            임신부, 영유아, 어린이, 청소년, 성인, 노인 등에 대한 맞춤형 식생활정보와 식품안전에 대한 정보가 제공됩니다.<br><br>
+                            (2)건강기능식품<br>
+                            건강기능식품의 섭취량, 섭취방법, 섭취 시 주의사항, 국내외제품에 대한 검색 등 건강기능식품에 대한 정보를 제공합니다.
+                        </p>
+                        </li><br>
+                        <li><a href="http://www.nrc.go.kr/nrc/main.do"><img src="https://www.g-health.kr/images/common/symbol05.gif"></a>
+                        <p><a href="http://www.nrc.go.kr/nrc/main.do">국립재활원</a><br><br>
+                            장애인 재활정보<br>
+                            장애인 복지제도, 교육·취업, 재활의학정보, 전국 재활병원 안내 대한 정보를 제공합니다.</p>
+                        </li><br>
                     </ul>
                 </div>
 	        </div>
-            <div id="tab-1" class="month-tab">
-                <div id="tab-jan" class="month-content current">
-                    <ul>
-                        {% for subject in dy%}
-                        <li>{{subject}}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div id="tab-feb" class="month-content">
-                    <ul>
-                        <li>2</li>
-                    </ul>
-                </div>
-                <div id="tab-mar" class="month-content">
-                    <ul>
-                        <li>3</li>
-                    </ul>
-                </div>
-                <div id="tab-apr" class="month-content">
-                    <ul>
-                        <li>4</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                    </ul>
-                </div>
-                <div id="tab-may" class="month-content">
-                    <ul>
-                        <li>5</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                    </ul>
-                </div>
-                <div id="tab-jun" class="month-content">
-                    <ul>
-                        <li>6</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                    </ul>
-                </div>
-                <div id="tab-jul" class="month-content">
-                    <ul>
-                        <li>7</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                    </ul>
-                </div>
-                <div id="tab-aug" class="month-content">
-                    <ul>
-                        <li>8</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                    </ul>
-                </div>
-                <div id="tab-sep" class="month-content">
-                    <ul>
-                        <li>9</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                        <li>dd</li>
-                    </ul>
-                </div>
-                    <div id="tab-oct" class="month-content">
-                        <ul>
-                            <li>10</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                        </ul>
-                    </div>
-                    <div id="tab-nov" class="month-content">
-                        <ul>
-                            <li>11</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                        </ul>
-                        </div>
-                    <div id="tab-dec" class="month-content">
-                        <ul>
-                            <li>12</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                            <li>dd</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div id="tab-1" class="month-tab">
+    <div id="tab-jan" class="month-content current" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt1 %}
+        <details>
+            <summary><li>{{i.제목}}</li></summary><br>
+            <li>{{i.내용}}</li><br>
+        </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-feb" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt2 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-mar" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt3 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-apr" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt4 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-may" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt5 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-jun" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt6 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-jul" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt7 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-aug" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt8 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-sep" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt9 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-oct" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt10 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-nov" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt11 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="tab-dec" class="month-content" style="white-space:pre-line;">
+        <ul>
+            {% for i in dt12 %}
+            <details>
+                <summary><li>{{i.제목}}</li></summary><br>
+                <li>{{i.내용}}</li><br>
+            </details><br><br>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</div>
+</div>
     </form>
     <script>
         $(document).ready(function(){
@@ -197,7 +256,15 @@
                 $("#"+tab_id).addClass('current');
             })
         });
-
+        {% comment %} $('.cont #tab-1 ul li').on('click', function(e) {
+			if($(this).parent('#tab-1').length > 0) {
+				console.log("상위 li");
+			} else {
+				var p = {value : $(this).val()};
+				$.get("/team2app/healthinfo/", p, function(data){});
+			}
+		}) {% endcomment %}
+        
     </script>
 {% endblock contents %}
 </body>

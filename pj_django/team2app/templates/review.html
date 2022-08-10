@@ -2,6 +2,7 @@
 <html lang="ko">
 {% extends 'header.html' %}
 {% block contents %}
+{% include "logincheck.html" %}
 {%load static%}
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  
@@ -57,14 +58,12 @@
                                                 {% for rev in review %}
                                                 <tr>
                                                 <td>{{rev.id}}</td>
-                                                <td><a href="../rcontent/{{rev.id}}">{{rev.subject}}</a></td>
+                                                <td><a href="../rcontent/{{rev.id}}" onclick='views()'>{{rev.subject}}</a></td>
                                                 <td>{{rev.writer}}</td>
                                                 <td>{{rev.rdate}}</td>
                                                 <td>{{rev.views}}</td>
                                                 </tr>
                                                 {% endfor %}
-
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -83,7 +82,13 @@
     <div id="footer">
         <div class="container">footer</div>
     </div>
-
+<script>
+    function views()  {
+        alert('조회수')
+        const viewplus = {value : 1};
+		$.get("/team2app/review/", viewplus, function(data){});
+      }
+</script>
 {% endblock contents %}
 </body>
 </html> 

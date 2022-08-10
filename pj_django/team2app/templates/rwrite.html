@@ -32,7 +32,7 @@
                <table class="table table-striped table table-bordered">
             <tr>
                 <td>작성자</td>
-                <td><input type="text"  class="form-control" name="writer"></td>
+                <td>{{login_name}}</td>
             </tr>
             <tr>
                 <td>제목</td>
@@ -45,17 +45,17 @@
             
             <tr>
                <td>평가</td>
-               <td><input type="text" name = "rating">
-                 {% comment %} <select class="form-select form-select-sm" name="rating">
-                    <option selected>별점 선택</option>
+               <td>
+                  <select name="star" id="star">
+                    <option selected value="0">별점 선택</option>
                     <option value="5">★★★★★</option>
                     <option value="4">★★★★☆</option>
                     <option value="3">★★★☆☆</option>
                     <option value="2">★★☆☆☆</option>
                     <option value="1">★☆☆☆☆</option>
-                 </select> {% endcomment %}
+                 </select>
               </td>
-            </tr>
+           </tr>
             <tr>
                <td>글내용</td>
                <td><textarea rows="10" cols="50" name="content" class="form-control"></textarea></td>
@@ -68,7 +68,27 @@
          </form>
 		</div>
    </div>
-
+<scripts>
+   {% comment %} $('.cont #tab-1 ul li').on('click', function(e) {
+      if($(this).parent('#tab-1').length > 0) {
+         console.log("상위 li");
+      } else {
+         var p = {value : $(this).val()};
+         $.get("/team2app/healthinfo/", p, function(data){});
+      }
+   }) {% endcomment %}
+</scripts>
+<script>
+   $("#star").on("change", function(){
+      console.log($(this).val())
+      var p = {value : $(this).val()}
+      $.get("/team2app/rwrite/", p, function(data){});
+      /*$("option:selected", this).attr("value");
+      $("option:selected", this);
+      $("option:selected", this).text();
+      $(this).find("option:selected").text();*/
+  });
+</script>
 {% endblock contents %}
 </body>
 </html>

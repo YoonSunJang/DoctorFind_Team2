@@ -2,6 +2,7 @@
 <html lang="ko">
 {% extends 'header.html' %}
 {% block contents %}
+{% include "logincheck.html" %}
 <head>
     <!--*****BootStrap content*****-->
     <meta charset="utf-8" />
@@ -85,8 +86,8 @@
                 <div class="info">
                     <div>
                         <!--이미지 삽입<div><img src=""></div>-->
-                        <span id="name"><h3><b>홍길동</b></h3></span>
-                        <span id="email"><h6>hgd@naver.com</h6></span>
+                        <span id="name"><h3><b>{{login_name}}</b></h3></span>
+                        <span id="email"><h6>{{user_email}}</h6></span>
                     </div>
                     <div>
                         <a href="#"><button type="button" class="btn btn-outline-info" id="infoModi">

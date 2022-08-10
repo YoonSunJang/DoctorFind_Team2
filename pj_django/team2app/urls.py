@@ -20,5 +20,5 @@ urlpatterns = [
     path('rcontent/<int:id>', views.rcontent, name='rcontent'),
     path('rdelete/<int:id>', views.rdelete, name='rdelete'),
     path('rupdate/<int:id>', views.rupdate, name='rupdate'),
-    path('rupdate/rupdate_ok/<int:id>', views.rupdate_ok, name='rupdate_ok'),   
+    path('rupdate/rupdate_ok/<int:id>', views.rupdate_ok, name='rupdate_ok'),
 ]

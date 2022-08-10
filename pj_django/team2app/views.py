@@ -126,34 +126,55 @@ def search_ok(request):
 from .models import Member1, Review1
 from django.utils import timezone
 def review(request):
+    global viewplus
     temlate = loader.get_template('review.html')
     review =  Review1.objects.all().values()
+    viewplus = request.GET.get("value")
+    print(viewplus)    
     context = {
         'review': review, 
     }
     return HttpResponse(temlate.render(context, request))
 
 def rwrite(request):
+    global rating
     temlate = loader.get_template('rwrite.html')
-    return HttpResponse(temlate.render({}, request))  
+    user_email = request.session.get('login_ok_user')
+    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    login_name = user_name['name']
+    rating = request.GET.get("value")
+    print(rating)
+    context={
+        'login_name':login_name,
+    }
+    return HttpResponse(temlate.render(context, request))  
 
 def rwrite_ok(request):
+    user_email = request.session.get('login_ok_user')
+    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    login_name = user_name['name']
     subject = request.POST['subject']
-    writer = request.POST['writer']
     content = request.POST['content']
     hosname = request.POST['hosname']
-    # rating = request.POST['rating']
+    #rating = request.POST['rating']
     # views = request.POST['views']
+    user_email = request.session.get('login_ok_user')
     nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
-    review = Review1(writer=writer,email="bor@naver.com",subject=subject,content=content,hosname=hosname,rdate=nowDatetime,views='1')
+    review = Review1(writer=login_name,email=user_email,subject=subject,content=content,hosname=hosname,rdate=nowDatetime,views='1', rating=rating)
     review.save()
     return HttpResponseRedirect(reverse('review'))
 
 def rcontent(request,id):
     template = loader.get_template('rcontent.html')
     review = Review1.objects.get(id=id)
+    user_email = request.session.get('login_ok_user')
+    if viewplus is not None:
+        review.views = review.views+1
+        review.save()
+    else:
+        pass
     context = {
-        'review' : review,
+        'review' : review, 'user_email': user_email,
     }
     return HttpResponse(template.render(context,request))
 
@@ -163,10 +184,16 @@ def rdelete(request,id):
     return HttpResponseRedirect(reverse('review'))
 
 def rupdate(request,id):
+    global ratingup
     template = loader.get_template('rupdate.html')
     review = Review1.objects.get(id=id)
+    user_email = request.session.get('login_ok_user')
+    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    login_name = user_name['name']
+    ratingup = request.GET.get("value")
+    print(ratingup)
     context = {
-        'review' : review,
+        'review' : review, 'user_email' : user_email,
     }
     return HttpResponse(template.render(context,request))
 
@@ -183,6 +210,7 @@ def rupdate_ok(request,id):
     # review.hosname=hosname
     # review.rating=rating
     review.rdate=nowDatetime
+    review.rating = ratingup
     review.save()
     return HttpResponseRedirect(reverse('review'))
 
@@ -299,7 +327,6 @@ def signup(request):
         pw = request.POST['pw']
         addr = request.POST['addr']
         # print("이름:", name, "아이디(email):", email, "전화번호", phone, "비번", pw, "주소", addr)
-        
         member = Member1(
             name=name,
             email=email,
@@ -314,14 +341,33 @@ def signup(request):
 
 def healthinfo(request):
     template = loader.get_template('healthinfo.html')
-    dr = df_hs[['제목', '월']]
-    dt = dr[dr['월']==1]
-    dy = dt['제목'].to_list()
-    # subhealth = df['제목']
-    # contentshealth = df['내용']
-    # print(dy)
+    dr = df_hs[['제목', '월', '내용']]
+    dr1 = dr[dr['월']==1]
+    dt1 = dr1.to_dict('records')
+    dr2 = dr[dr['월']==2]
+    dt2 = dr2.to_dict('records')
+    dr3 = dr[dr['월']==3]
+    dt3 = dr3.to_dict('records')
+    dr4 = dr[dr['월']==4]
+    dt4 = dr4.to_dict('records')
+    dr5 = dr[dr['월']==5]
+    dt5 = dr5.to_dict('records')
+    dr6 = dr[dr['월']==6]
+    dt6 = dr6.to_dict('records')
+    dr7 = dr[dr['월']==7]
+    dt7 = dr7.to_dict('records')
+    dr8 = dr[dr['월']==8]
+    dt8 = dr8.to_dict('records')
+    dr9 = dr[dr['월']==9]
+    dt9 = dr9.to_dict('records')
+    dr10 = dr[dr['월']==10]
+    dt10 = dr10.to_dict('records')
+    dr11 = dr[dr['월']==11]
+    dt11 = dr11.to_dict('records')
+    dr12 = dr[dr['월']==12]
+    dt12 = dr12.to_dict('records')
     context = {
-        'dy' : dy,
+    'dt1': dt1,'dt2': dt2,'dt3': dt3,'dt4': dt4,'dt5': dt5,'dt6': dt6,'dt7': dt7,'dt8': dt8,'dt9': dt9,'dt10': dt10,'dt11': dt11, 'dt12': dt12,
     }
     return HttpResponse(template.render(context, request))
 
@@ -329,4 +375,11 @@ def event(request):
     return render(request,'event.html')
 
 def mypage(request):
-    return render(request,'mypage.html')
+    template = loader.get_template('mypage.html')
+    user_email = request.session.get('login_ok_user')
+    user_name = Member1.objects.filter(email=user_email).values('name').get()
+    login_name = user_name['name']
+    context={
+        'user_email' : user_email, 'login_name':login_name,
+    }
+    return HttpResponse(template.render(context, request))
