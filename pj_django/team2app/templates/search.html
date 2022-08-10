@@ -108,7 +108,7 @@
                 </thead>
                 <tbody>
                     {% for x in page_obj %}
-                    <tr>
+                    <tr class="tr_visible">
                         <td>{{x.hosname}}</td>
                         {%if today == 0%}
                         <td><a href="" class=opertime>{{x.mon}}
@@ -135,8 +135,22 @@
                         <td>{{x.address}}</td>
                         <td>{{x.telnumber}}</td>
                         <td><a href="">예약</a></td>
-                        <td>보기</td>
+                        <td><a href="" class="look" id="look">보기</a><a href="" class="fold" id="fold" style="display:none">접기</a></td>
                     </tr>
+                    <tr class="detail" id="detail" style="display:none">
+                        <td></td>
+                        <td>{{x.mon}}<br>{{x.tue}}<br>{{x.wed}}<br>{{x.thur}}<br>{{x.fri}}<br>{{x.sat}}</td>
+                        <td colspan="3">
+                            홈페이지: <a href="{{x.url}}">{{x.url}}</a><br>
+                            진료과목: {{x.subject}}<br>
+                            총의사수: {{x.doctors}}명<br>
+                            응급실주간운영: {{x.emgday}}<br>
+                            응급실야간운영: {{x.emgnight}}<br>
+                            공휴일진료안내:<br>
+                            일요일진료안내:
+                        </td>
+                        <td></td>
+                    </tr>  
                     {% endfor %}
                 </tbody>
             </table>
@@ -154,6 +168,21 @@
     <div id="footer">
         <div class="container">footer</div>
     </div>
+    <!--상세보기-->
+    <script language="javascript">
+        $(".look").click(function() {
+            $(this).parent().parent().nextUntil('.tr_visible').toggle();
+            $(this).hide();
+            $(this).next().show();
+            return false;
+        });
+        $(".fold").click(function() {
+            $(this).parent().parent().nextUntil('.tr_visible').toggle();
+            $(this).hide();
+            $(this).prev().show()
+            return false;
+        });
+    </script>
     <!--검색 처리-->
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script language="javascript">

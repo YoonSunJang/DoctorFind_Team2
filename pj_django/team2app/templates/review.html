@@ -52,66 +52,19 @@
                                                     <th>기타</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Salary</th>
-                                                </tr>
-                                            </tfoot>
+
                                             <tbody>
+                                                {% for rev in review %}
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>코로나 의심</td>
-                                                    <td>재준엄마</td>
-                                                    <td>2022-07-11</td>
-                                                    <td>100</td>
-                                                    <td>병원추천</td>
+                                                <td>{{rev.id}}</td>
+                                                <td><a href="../rcontent/{{rev.id}}">{{rev.subject}}</a></td>
+                                                <td>{{rev.writer}}</td>
+                                                <td>{{rev.rdate}}</td>
+                                                <td>{{rev.views}}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>코로나</td>
-                                                    <td>안녕하이</td>
-                                                    <td>2022-07-12</td>
-                                                    <td>1000</td>
-                                                    <td>코로나란</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>확진 의심</td>
-                                                    <td>맘맘</td>
-                                                    <td>2022-07-15</td>
-                                                    <td>10</td>
-                                                    <td>장난감</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>감기몸살</td>
-                                                    <td>감기싫</td>
-                                                    <td>2022-07-27</td>
-                                                    <td>6</td>
-                                                    <td>감기약</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>원숭이두창</td>
-                                                    <td>호이맘</td>
-                                                    <td>2022-07-30</td>
-                                                    <td>30</td>
-                                                    <td>병원근처 카페</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>코로나 확진</td>
-                                                    <td>재재엄마</td>
-                                                    <td>2022-08-1</td>
-                                                    <td>10</td>
-                                                    <td>병원맛집</td>
-                                                </tr>
-        
+                                                {% endfor %}
+
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -130,7 +83,7 @@
     <div id="footer">
         <div class="container">footer</div>
     </div>
-    
+
 {% endblock contents %}
 </body>
-</html>
+</html> 

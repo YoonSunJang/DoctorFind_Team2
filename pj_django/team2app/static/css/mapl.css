@@ -1,0 +1,22 @@
+
+  .area {
+    margin: 10px 0;
+    width: 180px;
+    background: #fff;
+  }
+  
+  
+  /* 텍스트가 영역을 넘치도록 하는 속성 */
+  .white-space {
+    white-space: nowrap;
+  }
+  
+  /* 영역에 넘치는 요소를 숨겨주는 속성 */
+  .overflow {
+    overflow: hidden;
+  }
+  
+  /* 말줄임표 적용 */
+  .ellipsis {
+    text-overflow: ellipsis;
+  }

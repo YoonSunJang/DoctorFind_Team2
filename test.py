@@ -22,7 +22,7 @@ endtime['진료종료시간_목']=endtime['진료종료시간_목'].fillna(0)
 endtime['진료종료시간_금']=endtime['진료종료시간_금'].fillna(0)
 endtime['진료종료시간_토']=endtime['진료종료시간_토'].fillna(0)
 endtime = endtime[(endtime['진료종료시간_월']>1800) |(endtime['진료종료시간_화'] >1800) | (endtime['진료종료시간_수']>1800) |(endtime['진료종료시간_목']>1800) |(endtime['진료종료시간_금']>1800)]
-print(endtime.index)
+# print(endtime.index)
 
 #타입변환(응급실운영여부)
 df.iloc[:,[9,10]]=df.iloc[:,[9,10]].astype(str)

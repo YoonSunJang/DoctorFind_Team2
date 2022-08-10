@@ -8,6 +8,7 @@
      <!--버튼-->
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
      <link rel="stylesheet" href="{% static 'css/searchT.css' %}">
+     <link rel="stylesheet" href="{% static 'css/mapl.css' %}">
      <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +70,7 @@
 </head>
 <body>
     <div id="cont_tit">
-        <h2>지도 찾기 </h2>
+        <h2>지도 찾기{{num}} </h2>
     </div>
     <div id="cont_cont">
         <div class="container">
@@ -77,12 +78,14 @@
             <select name="addressDo" id="addressDo1" onchange="selectitem(this)"></select>
             <select name="addressSiGunGu" id="addressSiGunGu1" onchange="selectitem(this)"></select>
             <div class="search" style="display:inline-block">
-                        <form name="input" method="post" action="map_ok/">
+                        <form name="input" method="post" action="/team2app/map/" >
                             {% csrf_token %}
-                        <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요.">
-                        </form>
-                        <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
+                        <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요."  onKeyPress="if( event.keyCode==13 ){test();}">                        
+            </div>
+                    <div style="display:inline-block; width:50px; height:50px;">
+                        <input type="submit" value="검색"></input>
                     </div>
+                    </form>
                 
                 
            <!-- 이미지 지도를 표시할 div 입니다 -->
@@ -90,8 +93,12 @@
             <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=63420363e3bb2acc6f2ab79aaf0aa176"></script>
               
             <script>
+                function test() {
+                }
+
+
                 var List=[
-                {% for x in df2 %}
+                {% for x in df_m2 %}
                 {
                 'name':"{{x.요양기관명}}",
                 'y':"{{x.y좌표}}",
@@ -104,7 +111,8 @@
                     var mapContainer = document.getElementById('map'), mapOption = {center: new kakao.maps.LatLng(37.57861,126.97722),level:4};
                     var map = new kakao.maps.Map(mapContainer, mapOption);
                 });
-                $(document).ready(function(){
+                $(document).ready(function a123(){
+                    alert("a123실행")
                     var mapContainer = '';
                     var mapOption = {};
                     var map = "";
@@ -134,23 +142,21 @@
                         });
                     }
                 });
+
                 </script>
 
 
-            <div style="display: block;background-color:lightyellow; color:graeen;width:270px;height:600px;float:left;">
-                <ul style="display: block;
-                list-style-type: disc;
-                margin-block-start: 1em;
-                margin-block-end: 1em;
-                margin-inline-start: 0px;
-                margin-inline-end: 0px;
-                padding-inline-start: 40px;">
-               {%for x in mlist %} 
-                 <li>{{x}}</li> 
+            <div style="display: block;background-color:lightgray;width:220px;height:600px;overflow:scroll; width:220px; height:600px;">
+                <ul>
+               {%for x in mlist %}
+               <li class="area white-space overflow ellipsis" onclick="test1()"><a href="#">{{x}}</a></li>
+
                 {% endfor %}
-                
                 </ul>
             </div>
+          
+
+
         </div>
     </div>
     <div id="footer">
@@ -158,6 +164,10 @@
     </div>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script language="javascript">
+       function test1(){
+        alert("sibal")
+       }
+
         function finddoc2(){
             const name = document.getElementById('textfiled').value;
             alert(name);
