@@ -2,16 +2,17 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,500);
 /*레이아웃*/
 #wrap {}
-#header {width: 100%; height: 150px; background: #b8daeb;}
+#header {width: 100%; height: 100px; float:center; margin-top:1rem;}
 #contents{}
-#footer {width: 100%; height: 150px; background: #333;}
+footer {width: 100%; height: 200px; margin-top:8rem;}
+#footer-in{padding:1rem;}
 
 a {text-decoration: none;}
 /* 컨텐츠 레이아웃 */
 #cont_nav {width: 100%; height: 60px;} /*background: #333;}*/
-#cont_tit {width: 100%; height: 200px; background: #444;}
-#cont_ban {background: #dceff7;}
-#cont_cont {background: #dceff7;}
+#cont_tit {margin-top:4rem; margin-bottom:3rem;}
+#cont_ban {}
+#cont_cont {}
 
 /* 컨테이너 */
 /*.container {width: 990px; margin: 0 auto; height: inherit;} background: rgba(255,255,255,0.3);}*/
@@ -25,12 +26,12 @@ a {text-decoration: none;}
 .header .header-title {text-align: center; display: inline-block;} */
 
 .header {position: relative;}
-.header .header-menu {text-align: right;}
-.header .header-menu a {color: #fff; padding: 10px 0px 10px 13px; display: inline-block;}
+.header .header-menu a {color: #fff;}
 .header .header-menu a:hover {color: #666;}
 .header .header-title {text-align:center; position: relative; top:195px;}
-.header .header-title h1{background-color: #4aa8d4; font-size: 30px; padding: 5px 20px 6px 20px; display: inline-block; color: #fff; margin-top: 40px; font-weight: normal; text-transform: uppercase;}
-
+.header .header-title h1{background-color: #80cbc4; font-size: 30px; padding: 5px 20px 6px 20px; display: inline-block; color: #fff; margin-top: 40px; font-weight: normal; text-transform: uppercase;}
+.header .header-logo-img{float:left}
+.header .header-btn{float:right}
 a:link, a:visited, a:hover, a:active {text-decoration: none;}
 
 /*배너*/
@@ -90,7 +91,7 @@ ul.tabs li.current{
 .search_box {
     width: 50%;
     height: 50px;
-    border: 2px solid #2ba0db;
+    border: 2px solid #80cbc4;
     display: flex;
     margin-top: -100px;
     margin-left: auto;
@@ -112,12 +113,12 @@ ul.tabs li.current{
     margin: 0;
     padding: 0;
     border: none;
-    background: #2ba0db;
+    background: #80cbc4;
 }
 
 /* Navigation Styles */
 #cont_nav
-nav { text-align:center; background: #2ba0db; }
+nav { text-align:center; background:  #80cbc4; }
 nav ul {
     font-size: 0;
     margin: 0;
@@ -134,9 +135,9 @@ nav ul li a {
     padding: 15px 50px;
     transition: 0.3s linear;
 }
-nav ul li:hover { background: #2ba0db; }
+nav ul li:hover { background: #80cbc4; }
 nav ul li ul {
-    border-bottom: 5px solid #2ba0db;
+    border-bottom: 5px solid #80cbc4;
     display: none;
     position: absolute;
     width: 250px;
@@ -152,5 +153,13 @@ nav ul li ul li a {
     display: block;
     padding: 10px 14px;
 }
-nav ul li ul li a:hover { background: #2ba0db; }
+nav ul li ul li a:hover { background: #80cbc4; }
 nav .fa.fa-angle-down { margin-left: 6px; }
+
+/* 페이지 공통 */
+.title-box {
+    width:60%;
+    padding:1rem;
+    margin:0px auto;
+    border-left:8px solid #80cbc4;
+}

@@ -6,8 +6,6 @@
     <!--*****BootStrap content*****-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
     <title>FineDoctor</title>
     <!-- Bootstrap css-->
     <link href="css/styles.css" rel="stylesheet" />
@@ -21,8 +19,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     
-    <style>  
-        /*추가 CSS*/
+    <style>
+        #mypage-bg{
+            width:100%;
+            height:350px;
+        }  
         .mypage{
             width:90%;
             padding: 0.5rem;
@@ -31,8 +32,21 @@
             margin-top:1rem;
             margin-bottom:5rem;
         }
+        form{
+            width:50%;
+        }
         .info{
             margin-bottom:3rem;
+        }
+        .info-box{
+            width:80%;
+            border:1px solid #17a2b8;
+            border-radius: 20px;
+            display:flex;
+            justify-content:space-between;
+        }
+        .infoMButton{
+            width:80%;
         }
         .row{
             margin:1rem;
@@ -41,18 +55,14 @@
             margin-bottom:4rem;
         }
         .booking{
-            display:flex;
-            justify-content:space-between;
-            width:80%;
+            width:70%;
             margin-bottom:1rem;
         }
         .event-board{
             margin-bottom:5rem;
         }
         .event{
-            width:80%;
-            display:flex;
-            justify-content:space-between;
+            width:70%;
             margin-bottom:1rem;
         }
         .table{
@@ -62,59 +72,46 @@
             text-align:center;
         }
         a:link, a:visited, a:hover, a:active {text-decoration: none;}
-        /*
-        기존 CSS
-        #contents {width: 100%; height: 80px; background: none; display: flex;}
-        #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
-        #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
-        #footer {width: 100%; height: 150px; background: #333;}
-        h2{padding: 30px 0px 0px 0px;}
-        
-        */
     </style>
 </head>
 <body>
     <section>
-        <div class="container">
-            <div class="input-form-backgroud row">
-            <div class="input-form col-md-12 mx-auto">
-                <div class="mypage">
-                    <h2 class="mb-3"><b>마이페이지</b></h2>
-                </div>
+        <div><img id="mypage-bg" src="\static\img\mypage-bg.png"></div>
+        <div class="title-box">
+            <h2><b>마이페이지</b></h2>
+        </div>
                 <div class="row" align="center">
                 <div class="info">
                     <div>
-                        <!--이미지 삽입<div><img src=""></div>-->
+                        <div><img src="\static\img\profile160.png"></div>
                         <span id="name"><h3><b>{{login_name}}</b></h3></span>
                         <span id="email"><h6>{{user_email}}</h6></span>
                     </div>
-                           
-
-                                <form name="f" action="update_ok/" method="post">
-                                    {%csrf_token%}
-                                    <div class="info-box">
-                                        <div class="info-box-in">
-                                            <div><!--여기부터-->
-                                                <label for="phone"><b>휴대폰번호</b></label>
-                                                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" class="form-control" name="phoneNum" value="{{user_phoneNum.phoneNum}}" >
-                                                <!--위에코드=숫자만 입력됨-->
-                                            </div>
-                                            <div>
-                                                <label for="pw"><b>비밀번호</b></label>
-                                                <input type="password" class="form-control" name="pw" value="{{user_pw.pw}}" minlength="4">
-                                                <!--위에코드=비밀번호 4글자이상-->
-                                            </div> <!--복사-->
-                                            <div>
-                                                <label for="address"><b>주소</b></label>
-                                                <input type="text" class="form-control" name="addr" value="{{user_addr.addr}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-info" type="submit" id="infoMButton">
-                                        회원정보수정</button>
-                                    </div>
-                                </form>
+                    <form name="f" action="update_ok/" method="post">
+                        {%csrf_token%}
+                        <div class="info-box">
+                            <div class="info-box-in">
+                                <div><!--여기부터-->
+                                    <label for="phone"><b>휴대폰번호</b></label>
+                                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" class="form-control" name="phoneNum" value="{{user_phoneNum.phoneNum}}" >
+                                    <!--위에코드=숫자만 입력됨-->
+                                </div>
+                                <div>
+                                    <label for="pw"><b>비밀번호</b></label>
+                                    <input type="password" class="form-control" name="pw" value="{{user_pw.pw}}" minlength="4">
+                                    <!--위에코드=비밀번호 4글자이상-->
+                                </div> <!--복사-->
+                                <div>
+                                    <label for="address"><b>주소</b></label>
+                                    <input type="text" class="form-control" name="addr" value="{{user_addr.addr}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-info" type="submit" id="infoMButton">
+                            회원정보수정</button>
+                        </div>
+                    </form>
         
 
                 </div>
@@ -176,9 +173,5 @@
                 </div>
             </div>
     </section>
-    <div id="footer">
-        <div class="container">footer</div>
-    </div>
-
 {% endblock contents %}
 </body>
