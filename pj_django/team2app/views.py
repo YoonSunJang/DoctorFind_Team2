@@ -93,19 +93,32 @@ def index(request):
     infoheadline = indtdict['제목']
     #infoheadline = ""+str(thismonth)+"월의 건강정보"
     print(infoheadline)
-    review =  Review.objects.all().order_by('-id').values('subject')
-    reviewheadline = review[0]['subject']
-    print(reviewheadline)
-    review1 = review[1]['subject']
-    review2 = review[2]['subject']
-    review3 = review[3]['subject']
-    event = Event.objects.all().order_by('-id').values('content')
-    eventheadline = event[0]['content']
-    event1 = event[1]['content']
-    event2 = event[2]['content']
-    event3 = event[3]['content']
-    eventbanner = Event.objects.filter(content=eventheadline).values('img_address').get()
-    eventbanner = eventbanner['img_address']
+    try:
+        review =  Review.objects.all().order_by('-id').values('subject')
+        reviewheadline = review[0]['subject']
+        print(reviewheadline)
+        review1 = review[1]['subject']
+        review2 = review[2]['subject']
+        review3 = review[3]['subject']
+    except:
+        reviewheadline = "등록된 리뷰가 없습니다"
+        review1 = ""
+        review2 = ""
+        review3 = ""
+    try:
+        event = Event.objects.all().order_by('-id').values('content')
+        eventheadline = event[0]['content']
+        event1 = event[1]['content']
+        event2 = event[2]['content']
+        event3 = event[3]['content']
+        eventbanner = Event.objects.filter(content=eventheadline).values('img_address').get()
+        eventbanner = eventbanner['img_address']
+    except:
+        eventheadline = '등록된 이벤트가 없습니다'
+        event1 = ""
+        event2 = ""
+        event3 = ""
+        eventbanner = ""
     context = {
         'indtdt':indtdt, 'infoheadline' : infoheadline, 'reviewheadline':reviewheadline,
         'review1':review1, 'review2' : review2, 'review3': review3,
