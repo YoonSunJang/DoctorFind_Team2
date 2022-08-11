@@ -41,8 +41,7 @@
     </style>
 </head>
 <body>
-    <!--<div id="cont_tit">
-        <h2>후기 게시판</h2>-->
+
     <div id="cont_cont">
         <div class="container">
             <div class="write"><h2><b>게시물</b></h2></div>
@@ -75,6 +74,8 @@
                         ★★☆☆☆
                         {% elif review.rating == 1%}
                         ★☆☆☆☆
+                        {% else%}
+                        별점이 없어요
                         {% endif %}
                     </td>
                 </tr>

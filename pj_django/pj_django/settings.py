@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+SESSION_COOKIE_AGE = 1800 #10초 뒤 세션만료
+SESSION_SAVE_EVERY_REQUEST = True
+# SESSION_TIMEOUT_REDIRECT = './'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

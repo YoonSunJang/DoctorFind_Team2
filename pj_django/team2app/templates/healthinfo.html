@@ -18,7 +18,6 @@
 		#cont_cont .container {width: 100%; margin: 0 auto; }
 		.cont {height : 100%;}
 		#tab-jan {width:100%; height:100%; margin:0px;}
-
 		.month-content{
 			display: none;
 			background: #ffff;
@@ -32,7 +31,6 @@
             margin-top : 2%;
 			margin-bottom: 2%;
 		}
-
 		summary {
 			cursor: pointer;
 		  }
@@ -44,6 +42,7 @@
         p{
         display:inline-block;
         }
+
         a:link, a:visited, a:hover, a:active {text-decoration: none;}
     </style>
 </head>
@@ -79,27 +78,27 @@
                 </div>
                 <div id="tab-2" class="tab-content">
                     <ul>
-                        <li><a href="https://www.mfds.go.kr/index.do"><img src="https://www.g-health.kr/images/common/symbol02.gif"></a>
+                        <li><a href="https://www.mfds.go.kr/index.do" target="_blank"><img src="https://www.g-health.kr/images/common/symbol02.gif"></a>
                         <p>
-                        <a href="https://www.mfds.go.kr/index.do">식품 의약품 안전처</a><br><br>
+                        <a href="https://www.mfds.go.kr/index.do" target="_blank">식품 의약품 안전처</a><br><br>
                             소비자를 위한 의약품 정보<br>
                             일상 생활에서 약을 복용할 때 주의해야 할 사항과 함께 연령별 / 질환별 의약품 사용정보가 제공됩니다.</p>
                         </li><br>
-                        <li><a href="https://www.nhis.or.kr/nhis/index.do"><img src="https://www.g-health.kr/images/common/symbol03.gif"></a>
-                        <p><a href="https://www.nhis.or.kr/nhis/index.do">건강in</a><br><br>
+                        <li><a href="https://www.nhis.or.kr/nhis/index.do" target="_blank"><img src="https://www.g-health.kr/images/common/symbol03.gif"></a>
+                        <p><a href="https://www.nhis.or.kr/nhis/index.do" target="_blank">건강in</a><br><br>
                                 의약품 정보 검색<br>
                         의약품검색, 제품식별검색, 상호작용 등 개별 약물에 대한 상세 정보를 검색할 수 있습니다.</p>
                         </li><br>
-                        <li><a href="http://www.foodsafetykorea.go.kr/"><img src="https://www.g-health.kr/images/common/symbol04.gif"></a>
-                        <p><a href="http://www.foodsafetykorea.go.kr/">식품나라</a><br><br>
+                        <li><a href="http://www.foodsafetykorea.go.kr/" target="_blank"><img src="https://www.g-health.kr/images/common/symbol04.gif"></a>
+                        <p><a href="http://www.foodsafetykorea.go.kr/" target="_blank">식품나라</a><br><br>
                             (1)식생활 정보<br>
                             임신부, 영유아, 어린이, 청소년, 성인, 노인 등에 대한 맞춤형 식생활정보와 식품안전에 대한 정보가 제공됩니다.<br><br>
                             (2)건강기능식품<br>
                             건강기능식품의 섭취량, 섭취방법, 섭취 시 주의사항, 국내외제품에 대한 검색 등 건강기능식품에 대한 정보를 제공합니다.
                         </p>
                         </li><br>
-                        <li><a href="http://www.nrc.go.kr/nrc/main.do"><img src="https://www.g-health.kr/images/common/symbol05.gif"></a>
-                        <p><a href="http://www.nrc.go.kr/nrc/main.do">국립재활원</a><br><br>
+                        <li><a href="http://www.nrc.go.kr/nrc/main.do" target="_blank"><img src="https://www.g-health.kr/images/common/symbol05.gif"></a>
+                        <p><a href="http://www.nrc.go.kr/nrc/main.do" target="_blank">국립재활원</a><br><br>
                             장애인 재활정보<br>
                             장애인 복지제도, 교육·취업, 재활의학정보, 전국 재활병원 안내 대한 정보를 제공합니다.</p>
                         </li><br>
@@ -235,11 +234,9 @@
         $(document).ready(function(){
             $('.vertical_tab ul li').click(function(){
                 var tab_id = $(this).attr('data-tab');
-
                 $('.vertical_tab ul li').removeClass('active');
                 $('.tab-content').removeClass('current');
                 $('.month-content').removeClass('current');
-
                 $(this).addClass('active');
                 $("#"+tab_id).addClass('current');
             })
@@ -247,10 +244,8 @@
         $(document).ready(function(){
             $('.cont #tab-1 ul li').click(function(){
                 var tab_id = $(this).attr('data-tab');
-
                 $('.cont ul li').removeClass('active');
                 $('.month-content').removeClass('current');
-
                 $(this).addClass('active');
                 $("#"+tab_id).addClass('current');
             })

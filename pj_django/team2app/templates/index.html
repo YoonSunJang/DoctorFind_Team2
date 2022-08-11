@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">  
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     {% load static %}
-    <!--<link rel="stylesheet" href="../static/css/reset.css">-->
-    <!--<link rel="stylesheet" href="../static/css/style.css">-->
-    <!--<link rel="stylesheet" href="{% static 'css/searchT.css' %}">-->
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
@@ -114,10 +111,6 @@
             100% {margin-left: -300%}
           }
     </style>
-
-    <!--CSS STYLE 
-    <link rel="stylesheet" href="css/reset.css">
-     -->
 </head>
 <body>
     <div id="wrap">
@@ -152,7 +145,11 @@
                     <li><a href="review">병원후기</a></li>
                     <li> <a href="healthinfo">건강정보</a></li>
                     <li> <a href="event">이벤트</a></li>
+                    {% if request.session.login_ok_user %}                                
                     <li> <a href="mypage">마이페이지</a></li>
+                    {% else %}
+                    <li> <a href="./" onclick="alert('로그인 회원만 이용가능!')">마이페이지</a></li>
+                    {% endif %}
                     </ul>
                 </div>
                 </nav>
@@ -167,10 +164,13 @@
                     </ul>
                 </div>
             </div>
+            <form name="input" method="post" action="search/">
+                {% csrf_token %}
             <div class="search_box">
-                <input id="search" type ="text">
-                <button>검색</button>
+                <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요.">
+                <button type="button" class="searchB" id="searchB" name="searchB" onClick="refreshPage()">검색</button>
             </div>
+        </form>
             <div id="cont_cont">
                 <div class="container">
                     <div class="cont">
@@ -181,22 +181,35 @@
                                 <li class="tab-link" data-tab="tab-3">최신 리뷰</li>
                                 <li class="tab-link" data-tab="tab-4">최신 이벤트</li>
                             </ul>
-                                <div id="tab-1" class="tab-content current">
-                                    <ul>
-                                        <div class="main-current">
-                                            <img src="/static/img/left3.png" style="width:10%; height:10%">
-                                            가장 처음 나올 큰 목록1.
-
+                            <div id="tab-1" class="tab-content current">
+                                <ul>
+                                    <div class="main-current">
+                                        <img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%">
+                                        <span style = "font-size:0.8em;">
+                                            공지사항
+                                            </span>
                                         </div>
-                                        <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
-                                        <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
-                                        <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
+                                        <details>
+                                            <summary>08월 10일자 공지사항입니다</summary>
+                                            <li>xx수정사항 개선</li>
+                                            <li>xx현상 개선</li>
+                                        </details>
+                                        <details>
+                                            <summary>08월 03일자 공지사항입니다</summary>
+                                            <li>프로젝트 고생하셨습니다</li>
+                                            <li>집에 가고 싶다</li>
+                                        </details>
+                                        <details>
+                                            <summary>07월 27일자 공지사항입니다</summary>
+                                            <li>~~하는 현상 개선</li>
+                                            <li>간헐적으로 ~~하는 현상 개선</li>
+                                        </details>
                                     </ul>
                                 </div>
                                 <div id="tab-2" class="tab-content">
                                     <ul>
                                         <div class="main-current">
-                                            <img src="/static/img/left3.png" style="width:10%; height:10%" id="monthinfo">
+                                            <a href="healthinfo"><img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%" id="monthinfo"></a>
                                             <span style = "font-size:0.8em;">
                                                 {{infoheadline}}
                                                 </span>
@@ -209,7 +222,7 @@
                                 <div id="tab-3" class="tab-content">
                                     <ul>
                                         <div class="main-current">
-                                            <img src="/static/img/left3.png" style="width:10%; height:10%">
+                                            <a href="review"><img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%"></a>
                                             {% if reviewlinkheadline == "-" %}
                                             <span style = "font-size:0.8em;">
                                             {{reviewheadline}}
@@ -241,7 +254,7 @@
                                 <div id="tab-4" class="tab-content">
                                     <ul>
                                         <div class="main-current">
-                                            <img src="/static/img/left3.png" style="width:10%; height:10%">
+                                            <a href="event"><img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%"></a>
                                             <span style = "font-size:0.8em;">
                                                 <a href="econtent/{{eventlinkheadline}}">{{eventheadline}}</a>
                                             </span>
@@ -274,11 +287,12 @@
                             </table>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
         
-        <div id="footer">
-            <div class="container">footer</div>
+            <div id="footer">
+                <div class="container">footer</div>
+            </div>
         </div>
     </div>
 
@@ -350,6 +364,30 @@ function changeActiveBtn(){
             })
 
         });
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {           
+            $("#textfiled").keydown(function(key) {
+                if (key.keyCode == 13) {
+                    var param = {name:$("#textfiled").val()};
+                    $.get("/team2app/", param, function(data) {
+                    });
+                    $(".styled-table").load(window.location.href + ".styled-table");  
+                }
+            });
+        });
+        $("#searchB").click(function() {
+            var param = {name:$("#textfiled").val()};
+            $.get("/team2app/", param, function(data) {
+            });
+            $(".styled-table").load(window.location.href + ".styled-table");      
+        });
+    </script>
+    <script>
+        function refreshPage(){
+            window.location.reload();
+        } 
     </script>
 </body>
 </html>

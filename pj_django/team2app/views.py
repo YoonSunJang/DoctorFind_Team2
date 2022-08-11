@@ -13,7 +13,7 @@ col2 = db['healthinfo'] #재용
 import pandas as pd
 hsdb = col2.find() #재용
 df_hs = pd.DataFrame(list(hsdb)) #재용
-df=col1.find({},{'_id':0})
+df=col1.find({},{})
 df=pd.DataFrame(df)
 #진료종료시간(야간진료 18시이후 기준)
 endtime=df.copy()
@@ -23,15 +23,19 @@ endtime['진료종료시간_수']=endtime['진료종료시간_수'].fillna(0)
 endtime['진료종료시간_목']=endtime['진료종료시간_목'].fillna(0)
 endtime['진료종료시간_금']=endtime['진료종료시간_금'].fillna(0)
 endtime['진료종료시간_토']=endtime['진료종료시간_토'].fillna(0)
-endtime = endtime[(endtime['진료종료시간_월']>1800) |(endtime['진료종료시간_화'] >1800) | (endtime['진료종료시간_수']>1800) |(endtime['진료종료시간_목']>1800) |(endtime['진료종료시간_금']>1800)]
+days=['월','화','수','목','금','토']
+
+# endtime = endtime[(endtime['진료종료시간_월']>1800) |(endtime['진료종료시간_화'] >1800) | (endtime['진료종료시간_수']>1800) |(endtime['진료종료시간_목']>1800) |(endtime['진료종료시간_금']>1800)]
 #타입변환(응급실운영여부)
-df.iloc[:,[9,10]]=df.iloc[:,[9,10]].astype(str)
+df.iloc[:,[10,11]]=df.iloc[:,[10,11]].astype(str)
 # 진료시간
-row=list(range(11,23))
+row=list(range(12,24))
 df.iloc[:,row]=df.iloc[:,row].fillna(0)
 df.iloc[:,row]=df.iloc[:,row].astype(int)
 df.iloc[:,row]=df.iloc[:,row].astype(str)
-days=['월','화','수','목','금','토']
+
+
+
 df2=pd.DataFrame(columns = ['진료시간_월', '진료시간_화', '진료시간_수','진료시간_목','진료시간_금','진료시간_토'])
 for x in df.index:
     for y in days:
@@ -47,6 +51,7 @@ for x in df.index:
             df2.loc[x,'진료시간_{}'.format(y)]=df2.loc[x,'진료시간_{}'.format(y)].replace('-~-','-')
         elif '-~' in df2.loc[x,'진료시간_{}'.format(y)]:
             df2.loc[x,'진료시간_{}'.format(y)]=df2.loc[x,'진료시간_{}'.format(y)].replace('-~','~')
+        
 df=df.drop(df.columns[row],axis=1)
 df=pd.concat([df,df2],axis=1)
 # 데이터정제
@@ -62,6 +67,7 @@ df[['진료과목','전화번호','총의사수','병원홈페이지(URL)','일�
 #     return whattoday,whattime
 
 #df 열이름 변경
+df.set_index('_id')
 df=df.rename(columns={'요양기관명':'hosname'})
 df=df.rename(columns={'주소':'address'})
 df=df.rename(columns={'전화번호':'telnumber'})
@@ -78,21 +84,30 @@ df=df.rename(columns={'진료과목':'subject'})
 df=df.rename(columns={'총의사수':'doctors'})
 df=df.rename(columns={'일요일 휴진안내':'sunDoff'})
 df=df.rename(columns={'공휴일 휴진안내':'holyoff'})
-search_list=df[['hosname','address','telnumber','mon','tue','wed','thur','fri','sat','emgday','emgnight','url','subject','doctors','sunDoff','holyoff']]
+df=df.rename(columns={'_id':'num'})
+search_list=df.copy()
 search_lists=pd.DataFrame()  
 
+from dateutil.relativedelta import relativedelta
 def index(request):
-    global viewplus
+    global viewplus, iname
+    iname=request.GET.get("name")
+    print("검색어",iname)
     template = loader.get_template('index.html')
     now = datetime.now()
     thismonth = now.month
+    # 언젠가 쓸지 모르는 날짜
+    # thisday = now.day
+    # thisyear = now.year
+    # today_date = datetime(year = thisyear, month=thismonth, day=thisday).date()
+    # weekago = today_date + relativedelta(days=-7)
+    # twoweekago = weekago + relativedelta(days=-7)
     dr = df_hs[['제목', '월', '내용']]
     dr = dr[dr['월']==thismonth]
     indt = dr.to_dict('records')
     indtdt = indt[1:4]
     indtdict = indt[0]
     infoheadline = indtdict['제목']
-    
     try:
         review =  Review.objects.all().order_by('-id').values('subject')
         reviewheadline = review[0]['subject']
@@ -162,10 +177,8 @@ def index(request):
     event1link1 = event1link1['id']
     event1link2 = event1link2['id']
     event1link3 = event1link3['id']
-    print(event1link1)
     
     viewplus = request.GET.get("value")
-    print(viewplus) 
     context = {
         'indtdt':indtdt, 'infoheadline' : infoheadline, 'reviewheadline':reviewheadline,
         'review1':review1, 'review2' : review2, 'review3': review3,
@@ -182,7 +195,7 @@ from django.core.paginator import Paginator
 from datetime import datetime,timedelta
 #검색
 def search(request):
-    global search_list, search_lists
+    global search_list, search_lists,endtime, iname
     input1=request.GET.get("input1") #지역권
     input2=request.GET.get("input2") #시/도
     input3=request.GET.get("input3") #시/군/구
@@ -192,67 +205,55 @@ def search(request):
     check3=request.GET.get("check3") #공휴일진료
     check4=request.GET.get("check4") #응급실주간
     check5=request.GET.get("check5") #응급실야간
-
-    print("1")
-    print("input1",input1)
-    print("input2",input2)
-    print("input3",input3)
-    print("name",name)
-    print("c1",check1)
-    print("c2",check2)
-    print("c3",check3)
     
     whattoday = datetime.today().weekday()
-    
-    
-    if(input1==input2==input3==name==check4==check5==None):pass
+    if(input1==input2==input3==name==check4==check5==None):
+        if(iname!=None):
+            search_lists=search_list
+            search_lists=search_lists[search_lists['hosname'].str.contains(iname)]
+            print("이름", iname)
+            iname=None
+        else:
+            pass
     else:
         search_lists=search_list
         if(name!=None):
             search_lists=search_lists[search_lists['hosname'].str.contains(name)]
+            print("이름", name)
         if(input1!='지역권 선택' and input2!='시/도 선택'):
             if(input3!='시/군/구 선택'):
                 search_lists=search_lists[search_lists['address'].str.contains(input3)]
             search_lists=search_lists[search_lists['address'].str.contains(input2)]
-        if(check2=='true'): #야간진료 > 확인필요
-             search_lists=search_lists.loc[endtime.index,:]
+        if(check1=='true'): #진료중
+            ing()
+            search_lists = search_lists[~search_lists["mon"].str.contains("-")]
+            search_lists = search_lists[~search_lists["tue"].str.contains("-")]
+            search_lists = search_lists[~search_lists["wed"].str.contains("-")]
+            search_lists = search_lists[~search_lists["thur"].str.contains("-")]
+            search_lists = search_lists[~search_lists["fri"].str.contains("-")]
+            search_lists = search_lists[~search_lists["sat"].str.contains("-")]
+            endtime=endtime.loc[list(search_lists.index),:]
+            search_lists=search_lists.loc[list(endtime.index),:]
+        # if(check2=='true'): #야간진료 > 확인필요
+        #     search_lists=search_lists.loc[endtime.index,:]
+        #     search_lists=search_lists[(~search_lists['mon'].str.contains("-"))&(~search_lists['tue'].str.contains("-"))&(~search_lists['wed'].str.contains("-"))&(~search_lists['thur'].str.contains("-"))&(~search_lists['fri'].str.contains("-"))&(~search_lists['sat'].str.contains("-"))]
+        if(check3=='true'): #공휴일진료
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("휴진")]
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("휴무")]
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("휴뮤")]
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("-")]
         if(check4=='true'): #응급실주간운영여부
             search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
         if(check5=='true'): #응급실야간운영여부
             search_lists=search_lists[search_lists['emgnight'].str.contains('Y')]
-    # if(input1==input2==input3==check4==check5==None):
-    #     print('모두 none!! 처음 search에 접속시')
-    # elif(input1=='지역권 선택' or input2=='시/도 선택' or input3=='시/군/구 선택'): #지역일부검색 또는 X
-    #     print('지역선택안함, 이름 또는 옵션선택 또는 전체')
-    #     search_lists=search_list
-    #     if(name!=None):
-    #         search_lists=search_lists[search_lists['hosname'].str.contains(name)]
-    #     if(input1!='지역권 선택' and input2!='시/도 선택'):
-    #         if(input3!='시/군/구 선택'):
-    #             search_lists=search_lists[search_lists['address'].str.contains(input3)]
-    #         search_lists=search_lists[search_lists['address'].str.contains(input2)]
-    # elif(input1!=None and input2!=None and input3!=None): #지역검색O
-    #     search_lists=search_list
-    #     if(name!=None):
-    #         search_lists=search_lists[search_lists['hosname'].str.contains(name)]
-    #     if(input1!='지역권 선택' and input2!='시/도 선택'):
-    #         if(input3!='시/군/구 선택'):
-    #             search_lists=search_lists[search_lists['address'].str.contains(input3)]
-    #         search_lists=search_lists[search_lists['address'].str.contains(input2)]
-    #     if(check2=='true'): #야간진료 > 확인필요
-    #          search_lists=search_lists.loc[endtime.index,:]
-    #     if(check4=='true'): #응급실주간운영여부
-    #         search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
-    #     if(check5=='true'): #응급실야간운영여부
-    #         search_lists=search_lists[search_lists['emgnight'].str.contains('Y')]
-    
-    print('search_lists',search_lists)
+
     page=request.GET.get("page",1)
     paginator=Paginator(search_lists.to_dict('records'),10) # 페이지 표시 수
     pagelist=paginator.get_elided_page_range(page,on_each_side=2,on_ends=0)
     page_obj = paginator.get_page(page)
     context={
-        'search_list':search_lists.to_dict('records'),
+        'search_lists':search_lists.to_dict('records'),
+        'search_list':search_list.to_dict('records'),
         'page_obj':page_obj,
         'today':whattoday,
         'pagelist':pagelist
@@ -262,22 +263,22 @@ def search(request):
 def search_ok(request):
     return HttpResponseRedirect(reverse('search'))
 
-from .models import Member, Review, Event
+from .models import Member, Review, Event, Book, Myevent
 from django.utils import timezone
 def review(request):
     global viewplus
-    temlate = loader.get_template('review.html')
+    template = loader.get_template('review.html')
     review =  Review.objects.all().values()
     viewplus = request.GET.get("value")
-    print(viewplus)    
+    # print(viewplus)    
     context = {
         'review': review, 
     }
-    return HttpResponse(temlate.render(context, request))
+    return HttpResponse(template.render(context, request))
 
 def rwrite(request):
     global rating
-    temlate = loader.get_template('rwrite.html')
+    template = loader.get_template('rwrite.html')
     user_email = request.session.get('login_ok_user')
     user_name = Member.objects.filter(email=user_email).values('name').get()
     login_name = user_name['name']
@@ -286,7 +287,7 @@ def rwrite(request):
     context={
         'login_name':login_name,
     }
-    return HttpResponse(temlate.render(context, request))  
+    return HttpResponse(template.render(context, request))  
 
 def rwrite_ok(request):
     user_email = request.session.get('login_ok_user')
@@ -295,7 +296,8 @@ def rwrite_ok(request):
     subject = request.POST['subject']
     content = request.POST['content']
     hosname = request.POST['hosname']
-    #rating = request.POST['rating']
+    nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+    # rating = request.POST['rating']
     # views = request.POST['views']
     user_email = request.session.get('login_ok_user')
     nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -519,12 +521,12 @@ def healthinfo(request):
     return HttpResponse(template.render(context, request))
 
 def event(request):
-    temlate = loader.get_template('event.html')
+    template = loader.get_template('event.html')
     event = Event.objects.all().values()
     context={
         'event':event
     }
-    return HttpResponse(temlate.render(context, request))   
+    return HttpResponse(template.render(context, request))   
 
 from .models import Myevent
 def econtent(request,id):
@@ -536,10 +538,14 @@ def econtent(request,id):
     return HttpResponse(template.render(context,request)) 
 
 def mypage(request):
-    template = loader.get_template('mypage.html')
+    template= loader.get_template('mypage.html')
     user_email = request.session.get('login_ok_user')
     user_name = Member.objects.filter(email=user_email).values('name').get()
     login_name = user_name['name']
+    book_list = Book.objects.filter(email=user_email).values()
+    user_addr = Member.objects.filter(email=user_email).values('addr').get()
+    user_pw = Member.objects.filter(email=user_email).values('pw').get()
+    user_phoneNum = Member.objects.filter(email=user_email).values('phoneNum').get()
     idcount = 1
     try:
         dibsedevent = Myevent.objects.filter(email=user_email).values()    
@@ -548,20 +554,72 @@ def mypage(request):
         print(user_email)
         print(dibsedevent)
         print("딥스가 없는데요")
-    context={
-        'user_email' : user_email, 'login_name':login_name, 'dibsedevent':dibsedevent,
-        'idcount':idcount,
+    context={ 'user_email' : user_email, 'login_name':login_name,
+        'user_email' : user_email, 'dibsedevent':dibsedevent,
+        'idcount':idcount,'book_list' : book_list,'user_addr':user_addr,'user_pw':user_pw,
+        'user_phoneNum':user_phoneNum,
+
     }
     return HttpResponse(template.render(context,request)) 
 
-def book(request):
+def update_ok(request):
+    user_email = request.session.get('login_ok_user')
+    member = Member.objects.get(email=user_email)
+    pw = request.POST['pw']
+    addr = request.POST['addr']
+    phoneNum = request.POST['phoneNum']
+    member.pw = pw
+    member.addr = addr
+    member.phoneNum = phoneNum
+    member.save()
+    print("주소:",addr,"휴대폰번호:",phoneNum,"주소:",addr)
+    return HttpResponseRedirect(reverse('mypage'))
+
+hospital=pd.DataFrame()
+def book(request,num):
+    global search_lists,hospital
+    hospital = search_lists[search_lists['num']==num]
+    hospital.reset_index()
+    hosname=hospital.iloc[0]['hosname']
+    user_email = request.session.get('login_ok_user')
+    user_name = Member.objects.filter(email=user_email).values('name').get()
+    user_phoneNum = Member.objects.filter(email=user_email).values('phoneNum').get()
     template = loader.get_template('book.html')
     today = datetime.today() + timedelta(1) #내일부터예약가능
     tomorrow=today.strftime("%Y-%m-%d")
     context={
         'tomorrow':tomorrow,
+        'hosname':hosname,
+        'num':num,
+        'name':user_name,
+        'phoneNum':user_phoneNum,
     }
     return HttpResponse(template.render(context, request))
+
+def book_ok(request):
+    user_email = request.session.get('login_ok_user')
+    user_name = Member.objects.filter(email=user_email).values('name').get()
+    bdate=request.GET.get("bdate")
+    btime=request.GET.get("btime")
+    symptom=request.GET.get("symptom")
+    content=request.GET.get("content")
+    hosname=request.GET.get("hosname")
+ 
+    if(bdate!=None and btime!=None):
+        # new_bdate = datetime.strptime(bdate, '%Y-%m-%d')
+        # new_time= datetime.strptime(btime, '%H:%M:%S')
+        # newdate = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+        # newdate = bdate+" "+btime
+        new_bdate = bdate 
+        new_btime = btime
+        # symptom = request.POST.get('symptom','')
+        # content = request.POST.get('content','')
+        # hosname = request.POST.get('hosname','')
+        print("symptom",symptom,"content",content,"hosname",hosname)
+        print("user_email",user_email,"user_name",user_name['name'])
+        book = Book(name=user_name['name'],email=user_email,hosname=hosname,symptom=symptom,content=content,bdate=new_bdate,btime=new_btime)
+        book.save()
+    return HttpResponseRedirect(reverse('search'))
 
 def dibs(request, id):
     user_email = request.session.get('login_ok_user')
@@ -580,3 +638,4 @@ def dibsdelete(request,title):
     print("마이이벤트",myevent)
     myevent.delete()
     return HttpResponseRedirect(reverse('mypage'))
+

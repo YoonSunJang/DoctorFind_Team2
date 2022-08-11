@@ -93,6 +93,33 @@
                         <a href="#"><button type="button" class="btn btn-outline-info" id="infoModi">
                            회원정보수정</button></a>
                     </div>
+                           
+
+                                <form name="f" action="update_ok/" method="post">
+                                    {%csrf_token%}
+                                    <div class="info-box">
+                                        <div class="info-box-in">
+                                            <div>
+                                                <label for="phone"><b>휴대폰번호</b></label>
+                                                <input type="text" class="form-control" name="phoneNum" value="{{user_phoneNum.phoneNum}}" >
+                                            </div>
+                                            <div>
+                                                <label for="pw"><b>비밀번호</b></label>
+                                                <input type="password" class="form-control" name="pw" value="{{user_pw.pw}}" >
+                                            </div>
+                                            <div>
+                                                <label for="address"><b>주소</b></label>
+                                                <input type="text" class="form-control" name="addr" value="{{user_addr.addr}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-info" type="submit" id="infoMButton">
+                                        회원정보수정</button>
+                                    </div>
+                                </form>
+        
+
                 </div>
                     
                     <div class="booking-board">
@@ -102,27 +129,22 @@
                             <table class="table">
                             <thead class="table-light">
                               <tr>
-                                 <th>#</th>
-                                 <th>글제목</th>
-                                 <th>작성일자</th>
+                                <th>#</th>
+                                <th>병원명</th>
+                                <th>예약날짜/시간</th>
+                                <th>취소</th>
                               </tr>
                             </thead>
                             <tbody>
+                                {%for x in book_list%}
                               <tr>
-                                 <td>1</td>
-                                 <td>test1</td>
-                                 <td>22.8.5(SYSDATE)</td>
+                                <td>{{x.id}}</td>
+                                <td>{{x.hosname}}</td>
+                                <td>{{x.bdate}} / {{x.btime}}</td>
+                                <td><center><button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../../team2app/mypage/dibsdelete/{{i.title}}'">
+                                    취소</button></center></td>
                               </tr>
-                              <tr>
-                                 <td>2</td>
-                                 <td>test2</td>
-                                 <td>20.2.3(SYSDATE)</td>
-                              </tr>
-                              <tr>
-                                 <td>3</td>
-                                 <td>test3</td>
-                                 <td>16.3.4(SYSDATE)</td>
-                              </tr>
+                              {%endfor%}
                             </tbody> 
                         </table>
                     </div>
@@ -135,14 +157,16 @@
                         <table class="table">
                             <thead class="table-light">
                               <tr>
-                                 <th>이벤트병원</th>
-                                 <th>이벤트개요</th>
+                                 <th>#</th>
+                                 <th>병원명</th>
+                                 <th>이벤트내용</th>
                                  <th>삭제</th>
                               </tr>
                             </thead>
                             <tbody>
                                 {% for i in dibsedevent%}
                               <tr>
+                                <td><center>{{i.id}}</center></td>
                                 <td><center>{{i.hosname}}</center></td>
                                 <td><center>{{i.title}}</center></td>
                                 <td><center><button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../../team2app/mypage/dibsdelete/{{i.title}}'">

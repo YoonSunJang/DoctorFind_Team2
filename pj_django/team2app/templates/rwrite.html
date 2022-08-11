@@ -35,12 +35,12 @@
                 <td>{{login_name}}</td>
             </tr>
             <tr>
-                <td>제목</td>
-                <td><input type="text"  class="form-control" name="subject" placeholder="제목을 입력해 주세요"></td>
+               <td>제목</td>
+               <td><input type="text"  class="form-control" name="subject" placeholder="제목을 입력해 주세요"></td>
             </tr>
             <tr>
-                <td>병원명</td>
-                <td><input type="text"  class="form-control" name="hosname" placeholder="병원명을 입력해 주세요"></td>
+               <td>병원명</td>
+               <td><input type="text"  class="form-control" name="hosname" placeholder="병원명을 입력해 주세요"></td>
             </tr>
             
             <tr>
@@ -68,27 +68,17 @@
          </form>
 		</div>
    </div>
-<scripts>
-   {% comment %} $('.cont #tab-1 ul li').on('click', function(e) {
-      if($(this).parent('#tab-1').length > 0) {
-         console.log("상위 li");
-      } else {
-         var p = {value : $(this).val()};
-         $.get("/team2app/healthinfo/", p, function(data){});
-      }
-   }) {% endcomment %}
-</scripts>
-<script>
-   $("#star").on("change", function(){
-      console.log($(this).val())
-      var p = {value : $(this).val()}
-      $.get("/team2app/rwrite/", p, function(data){});
-      /*$("option:selected", this).attr("value");
-      $("option:selected", this);
-      $("option:selected", this).text();
-      $(this).find("option:selected").text();*/
-  });
-</script>
+   <script>
+      $("#star").on("change", function(){
+         console.log($(this).val())
+         var p = {value : $(this).val()}
+         $.get("/team2app/rwrite/", p, function(data){});
+         /*$("option:selected", this).attr("value");
+         $("option:selected", this);
+         $("option:selected", this).text();
+         $(this).find("option:selected").text();*/
+     });
+   </script>
 {% endblock contents %}
 </body>
 </html>

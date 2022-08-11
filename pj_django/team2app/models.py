@@ -36,5 +36,5 @@ class Book(models.Model):
     hosname = models.TextField()
     symptom = models.TextField()
     content = models.TextField()
-    bdate = models.DateTimeField()
-    btime = models.DateTimeField()
+    bdate = models.TextField()
+    btime = models.TextField()
