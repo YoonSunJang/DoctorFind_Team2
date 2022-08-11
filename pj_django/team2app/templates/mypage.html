@@ -124,17 +124,20 @@
                             <table class="table">
                             <thead class="table-light">
                               <tr>
-                                 <th>#</th>
-                                 <th>병원명</th>
-                                 <th>예약날짜/시간</th>
+                                <th>#</th>
+                                <th>병원명</th>
+                                <th>예약날짜/시간</th>
+                                <th>취소</th>
                               </tr>
                             </thead>
                             <tbody>
                                 {%for x in book_list%}
                               <tr>
-                                 <td>{{x.id}}</td>
-                                 <td>{{x.hosname}}</td>
-                                 <td>{{x.bdate}} / {{x.btime}}</td>
+                                <td>{{x.id}}</td>
+                                <td>{{x.hosname}}</td>
+                                <td>{{x.bdate}} / {{x.btime}}</td>
+                                <td><center><button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../../team2app/mypage/dibsdelete/{{i.title}}'">
+                                    취소</button></center></td>
                               </tr>
                               {%endfor%}
                             </tbody> 

@@ -31,6 +31,13 @@
 </head>
 
 <body>
+{% if user_email == review.email %}
+{% elif user_email != review.email %}
+<script language ="javascript">
+    alert("작성자가 아닙니다!")
+    history.back();
+</script>
+{% endif %}
     <div id="cont_cont">
         <div class="container" role="main">
            <div class="write"><h2><b>게시물 수정</b></h2></div>
@@ -54,12 +61,12 @@
                 <td>평가</td>
                 <td>
                   <select name="star">
-                     <option selected>별점 선택</option>
-                     <option value="5">★★★★★</option>
-                     <option value="4">★★★★☆</option>
-                     <option value="3">★★★☆☆</option>
-                     <option value="2">★★☆☆☆</option>
-                     <option value="1">★☆☆☆☆</option>
+                    <option selected value="0">별점 선택</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="1">★☆☆☆☆</option>
                   </select>
                </td>
             </tr>
@@ -75,6 +82,17 @@
          </form>
 		</div>
    </div>
+   <script>
+    $("#star").on("change", function(){
+       console.log($(this).val())
+       var p = {value : $(this).val()}
+       $.get("/team2app/rupdate/{{review.id}}", p, function(data){});
+       /*$("option:selected", this).attr("value");
+       $("option:selected", this);
+       $("option:selected", this).text();
+       $(this).find("option:selected").text();*/
+   });
+ </script>
    {% endblock contents %}
 </body>
 </html>

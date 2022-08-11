@@ -23,7 +23,9 @@ endtime['진료종료시간_수']=endtime['진료종료시간_수'].fillna(0)
 endtime['진료종료시간_목']=endtime['진료종료시간_목'].fillna(0)
 endtime['진료종료시간_금']=endtime['진료종료시간_금'].fillna(0)
 endtime['진료종료시간_토']=endtime['진료종료시간_토'].fillna(0)
-endtime = endtime[(endtime['진료종료시간_월']>1800) |(endtime['진료종료시간_화'] >1800) | (endtime['진료종료시간_수']>1800) |(endtime['진료종료시간_목']>1800) |(endtime['진료종료시간_금']>1800)]
+days=['월','화','수','목','금','토']
+
+# endtime = endtime[(endtime['진료종료시간_월']>1800) |(endtime['진료종료시간_화'] >1800) | (endtime['진료종료시간_수']>1800) |(endtime['진료종료시간_목']>1800) |(endtime['진료종료시간_금']>1800)]
 #타입변환(응급실운영여부)
 df.iloc[:,[10,11]]=df.iloc[:,[10,11]].astype(str)
 # 진료시간
@@ -31,7 +33,9 @@ row=list(range(12,24))
 df.iloc[:,row]=df.iloc[:,row].fillna(0)
 df.iloc[:,row]=df.iloc[:,row].astype(int)
 df.iloc[:,row]=df.iloc[:,row].astype(str)
-days=['월','화','수','목','금','토']
+
+
+
 df2=pd.DataFrame(columns = ['진료시간_월', '진료시간_화', '진료시간_수','진료시간_목','진료시간_금','진료시간_토'])
 for x in df.index:
     for y in days:
@@ -47,6 +51,7 @@ for x in df.index:
             df2.loc[x,'진료시간_{}'.format(y)]=df2.loc[x,'진료시간_{}'.format(y)].replace('-~-','-')
         elif '-~' in df2.loc[x,'진료시간_{}'.format(y)]:
             df2.loc[x,'진료시간_{}'.format(y)]=df2.loc[x,'진료시간_{}'.format(y)].replace('-~','~')
+        
 df=df.drop(df.columns[row],axis=1)
 df=pd.concat([df,df2],axis=1)
 # 데이터정제
@@ -121,11 +126,20 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
+def ing():
+    global endtime
+    hour=pd.datetime.now().hour
+    minute=pd.datetime.now().minute
+    whattoday = datetime.today().weekday()
+    for x in range(0,7):
+        if(whattoday==x):
+            endtime=endtime[endtime['진료종료시간_{}'.format(days[x])]>int(str(hour)+str(minute))]
+
 from django.core.paginator import Paginator
 from datetime import datetime,timedelta
 #검색
 def search(request):
-    global search_list, search_lists
+    global search_list, search_lists,endtime
     input1=request.GET.get("input1") #지역권
     input2=request.GET.get("input2") #시/도
     input3=request.GET.get("input3") #시/군/구
@@ -138,7 +152,6 @@ def search(request):
 
     whattoday = datetime.today().weekday()
     
- 
     if(input1==input2==input3==name==check4==check5==None):pass
     else:
         search_lists=search_list
@@ -148,8 +161,24 @@ def search(request):
             if(input3!='시/군/구 선택'):
                 search_lists=search_lists[search_lists['address'].str.contains(input3)]
             search_lists=search_lists[search_lists['address'].str.contains(input2)]
-        if(check2=='true'): #야간진료 > 확인필요
-             search_lists=search_lists.loc[endtime.index,:]
+        if(check1=='true'): #진료중
+            ing()
+            search_lists = search_lists[~search_lists["mon"].str.contains("-")]
+            search_lists = search_lists[~search_lists["tue"].str.contains("-")]
+            search_lists = search_lists[~search_lists["wed"].str.contains("-")]
+            search_lists = search_lists[~search_lists["thur"].str.contains("-")]
+            search_lists = search_lists[~search_lists["fri"].str.contains("-")]
+            search_lists = search_lists[~search_lists["sat"].str.contains("-")]
+            endtime=endtime.loc[list(search_lists.index),:]
+            search_lists=search_lists.loc[list(endtime.index),:]
+        # if(check2=='true'): #야간진료 > 확인필요
+        #     search_lists=search_lists.loc[endtime.index,:]
+        #     search_lists=search_lists[(~search_lists['mon'].str.contains("-"))&(~search_lists['tue'].str.contains("-"))&(~search_lists['wed'].str.contains("-"))&(~search_lists['thur'].str.contains("-"))&(~search_lists['fri'].str.contains("-"))&(~search_lists['sat'].str.contains("-"))]
+        if(check3=='true'): #공휴일진료
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("휴진")]
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("휴무")]
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("휴뮤")]
+            search_lists = search_lists[~search_lists["holyoff"].str.contains("-")]
         if(check4=='true'): #응급실주간운영여부
             search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
         if(check5=='true'): #응급실야간운영여부
@@ -160,7 +189,8 @@ def search(request):
     pagelist=paginator.get_elided_page_range(page,on_each_side=2,on_ends=0)
     page_obj = paginator.get_page(page)
     context={
-        'search_list':search_lists.to_dict('records'),
+        'search_lists':search_lists.to_dict('records'),
+        'search_list':search_list.to_dict('records'),
         'page_obj':page_obj,
         'today':whattoday,
         'pagelist':pagelist
@@ -177,7 +207,7 @@ def review(request):
     template = loader.get_template('review.html')
     review =  Review.objects.all().values()
     viewplus = request.GET.get("value")
-    print(viewplus)    
+    # print(viewplus)    
     context = {
         'review': review, 
     }
@@ -190,7 +220,7 @@ def rwrite(request):
     user_name = Member.objects.filter(email=user_email).values('name').get()
     login_name = user_name['name']
     rating = request.GET.get("value")
-    print(rating)
+    # print(rating)
     context={
         'login_name':login_name,
     }
@@ -256,6 +286,7 @@ def rupdate_ok(request,id):
     # review.hosname=hosname
     # review.rating=rating
     review.rdate=nowDatetime
+    review.rating = ratingup
     review.save()
     return HttpResponseRedirect(reverse('review'))
 

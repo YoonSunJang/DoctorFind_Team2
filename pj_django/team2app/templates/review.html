@@ -58,7 +58,7 @@
                                                 <tr>
                                                 <td>{{rev.id}}</td>
                                                 {% if request.session.login_ok_user %}
-                                                <td><a href="../rcontent/{{rev.id}}">{{rev.subject}}</a></td>
+                                                <td><a href="../rcontent/{{rev.id}}" onclick='views()'>{{rev.subject}}</a></td>
                                                 {% else %}
                                                 <td><a href="./" onclick="alert('로그인 회원만 이용가능!')">{{rev.subject}}</a></td>
                                                 {% endif %}
@@ -67,8 +67,6 @@
                                                 <td>{{rev.views}}</td>
                                                 </tr>
                                                 {% endfor %}
-
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -91,7 +89,13 @@
     <div id="footer">
         <div class="container">footer</div>
     </div>
-
+    <script>
+        function views()  {
+            alert('조회수')
+            const viewplus = {value : 1};
+            $.get("/team2app/review/", viewplus, function(data){});
+          }
+    </script>
 {% endblock contents %}
 </body>
 </html> 

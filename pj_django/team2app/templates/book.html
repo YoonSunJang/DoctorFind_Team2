@@ -33,15 +33,15 @@
                <table class="table table-striped table table-bordered">
             <tr>
                 <td>병원명</td>
-                <td><input type="text" id="hosname" name="hosname" value="{{hosname}}"></td>
+                <td id="hosname" name="hosname">{{hosname}}</td>
             </tr>
             <tr>
                 <td>예약자 성함</td>
-                <td><input type="text" value="{{name.name}}"></td>
+                <td>{{name.name}}</td>
             </tr>
             <tr>
                 <td>연락처</td>
-                <td><input type="text" value="{{phoneNum.phoneNum}}"></td>
+                <td>{{phoneNum.phoneNum}}</td>
             </tr>
             
             <tr>
@@ -72,7 +72,7 @@
       $("#saveButton").click(function() {
          var bdate=document.querySelector("#bookdate").value;
          var btime=document.querySelector("#booktime").value;
-         var param = {bdate:bdate,btime:btime,symptom:$("#symptom").val(),content:$("#content").val(),hosname:$("#hosname").val()};
+         var param = {bdate:bdate,btime:btime,symptom:$("#symptom").val(),content:$("#content").val(),hosname:$("#hosname").text()};
          console.log(bdate,btime)
          console.log(param)
          $.get("/team2app/book/book_ok", param, function(data) {
