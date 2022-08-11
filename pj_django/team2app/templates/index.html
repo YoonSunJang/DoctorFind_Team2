@@ -12,6 +12,104 @@
     
     <style>
         a:link, a:visited, a:hover, a:active {text-decoration: none;}
+        .banner-container{
+            width: 200px;
+            height:300px;
+            overflow:hidden;
+          }
+          .banner{
+            width:calc(100vw*4);
+            height:100%;
+            display:flex;
+            animation: animation1 10s infinite;
+            /*기본 전환 animation을 위한 설정*/
+            -webkit-transition: all 0.5s cubic-bezier(1, .01, .32, 1);
+            -moz-transition: all 0.5s cubic-bezier(1, .01, .32, 1);
+            -o-transition: all 0.5s cubic-bezier(1, .01, .32, 1);
+            -ms-transition: all 0.5s cubic-bezier(1, .01, .32, 1);
+            transition: all 0.5s cubic-bezier(1, .01, .32, 1);
+          }
+          .banner>div{
+            width:200px;
+            height:100%;
+          }
+          .banner>div:nth-child(1){
+            background-color:#2E4559;
+          }
+          .banner>div:nth-child(2){
+            background-color:#4A6D8C;
+          }
+          .banner>div:nth-child(3){
+            background-color:#6A8AA6;
+          }
+          .banner>div:nth-child(4){
+            background-color:#A9C6D9;
+          }
+          .list-button{
+            width:100%;
+            height:10px;
+            display:flex;
+            justify-content:center;
+            margin-top:-30px;
+            position:absolute;
+            z-index:2;
+          }
+          .list-button-item{
+            width:10px;
+            height:10px;
+            border-radius:5rem;
+            background-color:black;
+            cursor: pointer;
+            display: inline-block;
+            margin:6px;
+          }
+          .list-button-item.active{
+            background-color:white;
+          }
+          @keyframes animation1 {
+            0% {margin-left: 0}
+            20% {margin-left: 0}
+            25% {margin-left: -100%}
+            45% {margin-left: -100%}
+            50% {margin-left: -200%}
+            70% {margin-left: -200%}
+            75% {margin-left: -300%}
+            95% {margin-left: -300%}
+            100% {margin-left: 0}
+          }
+          @keyframes animation2 {
+            0% {margin-left: -100%}
+            20% {margin-left: -100%}
+            25% {margin-left: -200%}
+            45% {margin-left: -200%}
+            50% {margin-left: -300%}
+            70% {margin-left: -300%}
+            75% {margin-left: 0}
+            95% {margin-left: 0}
+            100% {margin-left: -100%}
+          }
+          @keyframes animation3 {
+            0% {margin-left: -200%}
+            20% {margin-left: -200%}
+            25% {margin-left: -300%}
+            45% {margin-left: -300%}
+            50% {margin-left: 0}
+            70% {margin-left: 0}
+            75% {margin-left: -100%}
+            95% {margin-left: -100%}
+            100% {margin-left: -200%}
+          }
+          @keyframes animation4 {
+            0% {margin-left: -300%}
+            20% {margin-left: -300%}
+            25% {margin-left: 0}
+            45% {margin-left: 0}
+            50% {margin-left: -100%}
+            70% {margin-left: -100%}
+            75% {margin-left: -200%}
+            95% {margin-left: -200%}
+            100% {margin-left: -300%}
+          }
     </style>
 </head>
 <body>
@@ -66,10 +164,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="search_box">
-                <input id="search" type ="text">
-                <button>검색</button>
-            </div>
+            <form name="input" method="post" action="search/">
+                {% csrf_token %}
+                <div class="search_box">
+                    <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요.">
+                    <button type="button" class="searchB" id="searchB" name="searchB" onClick="refreshPage()">검색</button>
+                </div>
+            </form>
             <div id="cont_cont">
                 <div class="container">
                     <div class="cont">
@@ -83,57 +184,106 @@
                             <div id="tab-1" class="tab-content current">
                                 <ul>
                                     <div class="main-current">
-                                        <img src="/static/img/left3.png" style="width:10%; height:10%">
-                                        가장 처음 나올 큰 목록1.
-
-                                    </div>
-                                    <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
-                                    <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
-                                    <li>첫 번째 공지사항 탭 메뉴 테스트 목록입니다. 첫 번째 공지사항 탭 메뉴 테스트 목록입니다.</li>
-                                </ul>
-                            </div>
-                            <div id="tab-2" class="tab-content">
-                                <ul>
-                                    <div class="main-current">
-                                        <img src="/static/img/left3.png" style="width:10%; height:10%" id="monthinfo">
-                                        <span style = "font-size:0.8em;">{{infoheadline}}</span>   
-                                    </div>
-                                    {% for i in indtdt%}
-                                    <li>{{i.제목}}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div id="tab-3" class="tab-content">
-                                <ul>
-                                    <div class="main-current">
-                                        <img src="/static/img/left3.png" style="width:10%; height:10%">
+                                        <img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%">
                                         <span style = "font-size:0.8em;">
-                                        {{reviewheadline}}
-                                    </span>
-                                    </div>
-                                    <li>{{review1}}</li>
-                                    <li>{{review2}}</li>
-                                    <li>{{review3}}</li>
-                                </ul>
-                            </div>
-                            <div id="tab-4" class="tab-content">
-                                <ul>
-                                    <div class="main-current">
-                                        <img src="/static/img/left3.png" style="width:10%; height:10%">
-                                        <span style = "font-size:0.8em;">
-                                            {{eventheadline}}
+                                            공지사항
+                                            </span>
+                                        </div>
+                                        <details>
+                                            <summary>08월 10일자 공지사항입니다</summary>
+                                            <li>xx수정사항 개선</li>
+                                            <li>xx현상 개선</li>
+                                        </details>
+                                        <details>
+                                            <summary>08월 03일자 공지사항입니다</summary>
+                                            <li>프로젝트 고생하셨습니다</li>
+                                            <li>집에 가고 싶다</li>
+                                        </details>
+                                        <details>
+                                            <summary>07월 27일자 공지사항입니다</summary>
+                                            <li>~~하는 현상 개선</li>
+                                            <li>간헐적으로 ~~하는 현상 개선</li>
+                                        </details>
+                                    </ul>
+                                </div>
+                                <div id="tab-2" class="tab-content">
+                                    <ul>
+                                        <div class="main-current">
+                                            <a href="healthinfo"><img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%" id="monthinfo"></a>
+                                            <span style = "font-size:0.8em;">
+                                                {{infoheadline}}
+                                                </span>
+                                        </div>
+                                        {% for i in indtdt%}
+                                        <li>{{i.제목}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div id="tab-3" class="tab-content">
+                                    <ul>
+                                        <div class="main-current">
+                                            <a href="review"><img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%"></a>
+                                            {% if reviewlinkheadline == "-" %}
+                                            <span style = "font-size:0.8em;">
+                                            {{reviewheadline}}
                                         </span>
-                                    </div>
-                                    <li>{{event1}}</li>
-                                    <li>{{event2}}</li>
-                                    <li>{{event3}}</li>
-                                </ul>
-                            </div>
+                                        {% else %}
+                                        <span style = "font-size:0.8em;">
+                                            <a href="rcontent/{{reviewlinkheadline}}" onclick='views()'>{{reviewheadline}}</a>
+                                        </span>
+                                        {% endif %}
+                                        </div>
+                                        {% if reviewlink1 == "-" %}
+                                        <li>{{review1}}</li>
+                                        {% else %}
+                                        <li><a href="rcontent/{{reviewlink1}}" onclick='views()'>{{review1}}</a></li>
+                                        {% endif %}
+                                        {% if reviewlink2 == "-" %}
+                                        <li>{{review2}}</li>
+                                        {% else %}
+                                        <li><a href="rcontent/{{reviewlink2}}" onclick='views()'>{{review2}}</a></li>
+                                        {% endif %}
+                                        {% if reviewlink3 == "-" %}
+                                        <li>{{review3}}</li>
+                                        {% else %}
+                                        <li><a href="rcontent/{{reviewlink3}}" onclick='views()'>{{review3}}</a></li>
+                                        {% endif %}
+                                        
+                                    </ul>
+                                </div>
+                                <div id="tab-4" class="tab-content">
+                                    <ul>
+                                        <div class="main-current">
+                                            <a href="event"><img src="/static/img/free-icon-view-more-6810473.png" style="width:10%; height:10%"></a>
+                                            <span style = "font-size:0.8em;">
+                                                <a href="econtent/{{eventlinkheadline}}">{{eventheadline}}</a>
+                                            </span>
+                                        </div>
+                                        <li><a href="econtent/{{event1link1}}">{{event1}}</a></li>
+                                        <li><a href="econtent/{{event1link2}}">{{event2}}</a></li>
+                                        <li><a href="econtent/{{event1link3}}">{{event3}}</a></li>
+                                    </ul>
+                                </div>
                         </div>
                         <div class="column col2">
                             <table border="1">
-                            <th width="200">고양이</th>
-                            <tr><td height="300"><img src="/static/img/left3.png"></td></tr>
+                                <th width="200"></th>
+                            <tr><td height="300">
+                                <div class="banner-container">
+                                    <div class="banner">
+                                      <div data-index=1><a href="econtent/{{bannerlink1}}"><img src={{eventbanner1}} width=100%; height=100%;></a></div>
+                                      <div data-index=2><a href="econtent/{{bannerlink2}}"><img src={{eventbanner2}} width=100%; height=100%;></a></div>
+                                      <div data-index=3><a href="econtent/{{bannerlink3}}"><img src={{eventbanner3}} width=100%; height=100%;></a></div>
+                                      <div data-index=4><a href="econtent/{{bannerlink4}}"><img src={{eventbanner4}} width=100%; height=100%;></a></div>
+                                    </div>
+                                  </div>
+                                  <div class="list-button">
+                                    <span class="list-button-item active"></span> 
+                                    <span class="list-button-item"></span> 
+                                    <span class="list-button-item"></span> 
+                                    <span class="list-button-item"></span> 
+                                  </div>
+                            </td></tr>
                             </table>
                         </div>
                     </div>
@@ -158,6 +308,49 @@
         );
     </script>
     <script>
+        let interval;
+        let activeIndex = 1;
+
+$(document).ready(function(){
+  interval = setInterval(changeActiveIndex,2500);
+	$('.list-button-item').on('click',function(){
+  	// list button의 색상 변경
+    const index = $(this).index();
+    activeIndex = index;
+    changeActiveIndex();
+    clearInterval(interval);
+    // animation 재설정을 위해 animation을 잠시 제거한다.
+    $('.banner').css('animation','none');
+   	// animation 재설정
+    $('.banner').animate({marginLeft:`${-100*index}%`},1,function(){
+    	//1초의 시간 여유(해당 이미지로 이동하는 animation을 위한 시간)를 두고 다시 animation을 설정한다.
+    	setTimeout(function(){
+    		$('.banner').css('animation',`animation${index+1} 10s infinite`)
+  
+  		interval = setInterval(changeActiveIndex,2500);
+      }, 1000)
+    })
+  })
+})
+function changeActiveIndex(){
+	if(activeIndex>3) {
+  	activeIndex%=4;
+  }
+  changeActiveBtn();
+	activeIndex+=1;
+}
+function changeActiveBtn(){
+  $('.list-button-item').removeClass('active');
+  $(`.list-button span:eq(${activeIndex})`).addClass('active');
+}
+    </script>
+    <script>
+        function views()  {
+            const viewplus = {value : 1};
+            $.get("/team2app/review/", viewplus, function(data){});
+          }
+    </script>
+    <script>
         $(document).ready(function(){
 
             $('ul.tabs li').click(function(){
@@ -171,6 +364,30 @@
             })
 
         });
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {           
+            $("#textfiled").keydown(function(key) {
+                if (key.keyCode == 13) {
+                    var param = {name:$("#textfiled").val()};
+                    $.get("/team2app/", param, function(data) {
+                    });
+                    $(".styled-table").load(window.location.href + ".styled-table");  
+                }
+            });
+        });
+        $("#searchB").click(function() {
+            var param = {name:$("#textfiled").val()};
+            $.get("/team2app/", param, function(data) {
+            });
+            $(".styled-table").load(window.location.href + ".styled-table");      
+        });
+    </script>
+    <script>
+        function refreshPage(){
+            window.location.reload();
+        } 
     </script>
 </body>
 </html>

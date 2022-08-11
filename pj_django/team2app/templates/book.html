@@ -48,7 +48,25 @@
                <td>예약시간</td>
                <td>
                 <input type="date" name="bookdate" id="bookdate" min="{{tomorrow}}">
-                <input type="time" name="booktime" id="booktime" min="09:00" max="18:00" step="1800" required>
+                <select name="booktime" id="booktime">
+                  <option selected value="0">시간 선택</option>
+                  <option value="09:00">AM 09:00</option>
+                  <option value="09:30">AM 09:30</option>
+                  <option value="10:00">AM 10:00</option>
+                  <option value="10:30">AM 10:30</option>
+                  <option value="11:00">AM 11:00</option>
+                  <option value="11:30">AM 11:30</option>
+                  <option value="12:00">PM 12:00</option>
+                  <option value="14:00">PM 14:00</option>
+                  <option value="14:30">PM 14:30</option>
+                  <option value="15:00">PM 15:00</option>
+                  <option value="15:30">PM 15:30</option>
+                  <option value="16:00">PM 16:00</option>
+                  <option value="16:30">PM 16:30</option>
+                  <option value="17:00">PM 17:00</option>
+                  <option value="17:30">PM 17:30</option>
+               </select>
+                {% comment %} <input type="time" name="booktime" id="booktime" min="09:00" max="18:00" step="1800" required> {% endcomment %}
               </td>
             </tr>
             <tr>

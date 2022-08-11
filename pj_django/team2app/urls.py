@@ -7,7 +7,6 @@ urlpatterns = [
     path('search/search_ok/', views.search_ok, name='search_ok'),
     path('review/', views.review, name='review'),  
     path('map/', views.map, name='map'),
-    path('map/map_ok/', views.map_ok, name='map_ok'),
     path('login/', views.login, name='login'),
     path('login/login_ok/', views.login_ok, name='login_ok'),
     path('logout/', views.logout, name='logout'),
@@ -27,5 +26,6 @@ urlpatterns = [
     path('book/<int:num>', views.book, name='book'),
     path('book/<int:num>/book_ok/', views.book_ok, name='book_ok'),
     path('book/book_ok/', views.book_ok, name='book_ok'), 
-    path('mypage/update_ok/', views.update_ok, name='update_ok'),  
+    path('mypage/update_ok/', views.update_ok, name='update_ok'),
+    path('mypage/bookdelete/<int:id>', views.bookdelete, name='bookdelete'),    
 ]

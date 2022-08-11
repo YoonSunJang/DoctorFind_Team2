@@ -63,7 +63,19 @@
                     <td>{{review.hosname}}</td>
                     <td>평가</td>
                     <td>
-                        {{review.rating}}
+                        {% if review.rating == 5%}
+                        ★★★★★
+                        {% elif review.rating == 4%}
+                        ★★★★☆
+                        {% elif review.rating == 3%}
+                        ★★★☆☆
+                        {% elif review.rating == 2%}
+                        ★★☆☆☆
+                        {% elif review.rating == 1%}
+                        ★☆☆☆☆
+                        {% else%}
+                        별점이 없어요
+                        {% endif %}
                     </td>
                 </tr>
                 <tr id="tr-content">

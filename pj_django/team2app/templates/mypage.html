@@ -94,14 +94,16 @@
                                     {%csrf_token%}
                                     <div class="info-box">
                                         <div class="info-box-in">
-                                            <div>
+                                            <div><!--여기부터-->
                                                 <label for="phone"><b>휴대폰번호</b></label>
-                                                <input type="text" class="form-control" name="phoneNum" value="{{user_phoneNum.phoneNum}}" >
+                                                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" class="form-control" name="phoneNum" value="{{user_phoneNum.phoneNum}}" >
+                                                <!--위에코드=숫자만 입력됨-->
                                             </div>
                                             <div>
                                                 <label for="pw"><b>비밀번호</b></label>
-                                                <input type="password" class="form-control" name="pw" value="{{user_pw.pw}}" >
-                                            </div>
+                                                <input type="password" class="form-control" name="pw" value="{{user_pw.pw}}" minlength="4">
+                                                <!--위에코드=비밀번호 4글자이상-->
+                                            </div> <!--복사-->
                                             <div>
                                                 <label for="address"><b>주소</b></label>
                                                 <input type="text" class="form-control" name="addr" value="{{user_addr.addr}}">
@@ -136,7 +138,7 @@
                                 <td>{{x.id}}</td>
                                 <td>{{x.hosname}}</td>
                                 <td>{{x.bdate}} / {{x.btime}}</td>
-                                <td><center><button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../../team2app/mypage/dibsdelete/{{i.title}}'">
+                                <td><center><button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../../team2app/mypage/bookdelete/{{x.id}}'">
                                     취소</button></center></td>
                               </tr>
                               {%endfor%}

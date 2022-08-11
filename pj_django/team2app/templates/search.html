@@ -189,7 +189,7 @@
             <center>
             <div class="detail_check">
                 <div class="option" id="option1">진료중</div>
-                <div class="option" id="option2">야간진료</div>
+                <div class="option" id="option2">야간진료(18시이후)</div>
                 <div class="option" id="option3">공휴일진료</div>
                 <div class="option" id="option4">응급실주간</div>
                 <div class="option" id="option5">응급실야간</div>
@@ -247,7 +247,7 @@
                     <tr class="detail" id="detail" style="display:none">
                         <td></td>
                         <td>✔{{x.mon}}<br>✔{{x.tue}}<br>✔{{x.wed}}<br>✔{{x.thur}}<br>✔{{x.fri}}<br>✔{{x.sat}}</td>
-                        <td colspan="3">
+                        <td>
                             <ul>
                                 <li>◆ 홈페이지: <a href="{{x.url}}">{{x.url}}</a></li>
                                 <li>◆ 진료과목: {{x.subject}}</li>
@@ -270,6 +270,8 @@
                                 <li>◆ 공휴일 진료안내: {{x.holyoff}}
                             </ul>
                         </td>
+                        <td></td>
+                        <td></td>
                         <td></td>
                     </tr>  
                     {% endfor %}

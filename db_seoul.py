@@ -19,22 +19,24 @@ mergedata1=pd.merge(df1,sub_code,how='left',on='암호화요양기호')
 mergedata2=pd.merge(hospital,mergedata1,how='left',on='암호화요양기호')
 mergedata3=pd.merge(pharmacy,mergedata1,how='left',on='암호화요양기호')
 
-mergedata2.append(mergedata3,sort=False)
+result2 = pd.concat([mergedata2,mergedata3], ignore_index=True)
 
-mergedata2.reset_index()
-mergedata2.drop(['암호화요양기호'],axis='columns',inplace=True)
-print(mergedata2)
+# mergedata2.append(mergedata3,sort=False)
+
+result2.reset_index()
+result2.drop(['암호화요양기호'],axis='columns',inplace=True)
+# print(mergedata2)
 
 index_id=[]
-for x in range(1,len(mergedata2)+1):
+for x in range(1,len(result2)+1):
     index_id.append(x)
-mergedata2.insert(0,'_id',index_id)
+result2.insert(0,'_id',index_id)
 
-hospital_list=mergedata2.to_dict('records')
+all_list=result2.to_dict('records')
 
 from pymongo import mongo_client
 url = 'mongodb://localhost:27017/'
 mgClient = mongo_client.MongoClient(url)
 db = mgClient['project5_team2']
-col = db['hospital_list']
-col.insert_many(hospital_list)
+col = db['All_list']
+col.insert_many(all_list)

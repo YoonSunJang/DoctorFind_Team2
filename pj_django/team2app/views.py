@@ -25,7 +25,7 @@ endtime['진료종료시간_금']=endtime['진료종료시간_금'].fillna(0)
 endtime['진료종료시간_토']=endtime['진료종료시간_토'].fillna(0)
 days=['월','화','수','목','금','토']
 
-# endtime = endtime[(endtime['진료종료시간_월']>1800) |(endtime['진료종료시간_화'] >1800) | (endtime['진료종료시간_수']>1800) |(endtime['진료종료시간_목']>1800) |(endtime['진료종료시간_금']>1800)]
+endtime1 = endtime[(endtime['진료종료시간_월']>1800) |(endtime['진료종료시간_화'] >1800) | (endtime['진료종료시간_수']>1800) |(endtime['진료종료시간_목']>1800) |(endtime['진료종료시간_금']>1800)]
 #타입변환(응급실운영여부)
 df.iloc[:,[10,11]]=df.iloc[:,[10,11]].astype(str)
 # 진료시간
@@ -33,8 +33,6 @@ row=list(range(12,24))
 df.iloc[:,row]=df.iloc[:,row].fillna(0)
 df.iloc[:,row]=df.iloc[:,row].astype(int)
 df.iloc[:,row]=df.iloc[:,row].astype(str)
-
-
 
 df2=pd.DataFrame(columns = ['진료시간_월', '진료시간_화', '진료시간_수','진료시간_목','진료시간_금','진료시간_토'])
 for x in df.index:
@@ -89,6 +87,8 @@ search_list=df.copy()
 search_lists=pd.DataFrame()  
 
 def index(request):
+    global viewplus, iname
+    iname=request.GET.get("name")
     template = loader.get_template('index.html')
     now = datetime.now()
     thismonth = now.month
@@ -98,33 +98,115 @@ def index(request):
     indtdt = indt[1:4]
     indtdict = indt[0]
     infoheadline = indtdict['제목']
-    #infoheadline = ""+str(thismonth)+"월의 건강정보"
-    print(infoheadline)
-    review =  Review.objects.all().order_by('-id').values('subject')
-    # reviewheadline = review[0]['subject']
-    # print(reviewheadline)
-    # review1 = review[1]['subject']
-    # review2 = review[2]['subject']
-    # review3 = review[3]['subject']
-    event = Event.objects.all().order_by('-id').values('content')
-    eventheadline = event[0]['content']
-    event1 = event[1]['content']
-    event2 = event[2]['content']
-    event3 = event[3]['content']
-    eventbanner = Event.objects.filter(content=eventheadline).values('img_address').get()
-    eventbanner = eventbanner['img_address']
+    try:
+        review =  Review.objects.all().order_by('-id').values('subject')
+        reviewheadline = review[0]['subject']
+        reviewlinkheadline = Review.objects.filter(subject=reviewheadline).values('id').get()
+        reviewlinkheadline = reviewlinkheadline['id']
+        
+    except:
+        reviewheadline = "등록된 리뷰가 없습니다"
+        reviewlinkheadline = "-"
+    try:
+        review1 = review[1]['subject']
+        reviewlink1 = Review.objects.filter(subject=review1).values('id').get()
+        reviewlink1 = reviewlink1['id']
+    except:
+        review1 = "등록된 리뷰가 없습니다"
+        reviewlink1 = "-"
+    try:
+        review2 = review[2]['subject']
+        reviewlink2 = Review.objects.filter(subject=review2).values('id').get()
+        reviewlink2 = reviewlink2['id']
+    except:
+        review2 = "등록된 리뷰가 없습니다"
+        reviewlink2 = "-"
+    try:
+        review3 = review[3]['subject']
+        reviewlink3 = Review.objects.filter(subject=review3).values('id').get()
+        reviewlink3 = reviewlink3['id']
+    except:
+        review3 = "등록된 리뷰가 없습니다"
+        reviewlink3 = "-"
+    try:
+        event = Event.objects.all().order_by('-id').values('content')
+        eventheadline = event[0]['content']
+        event1 = event[1]['content']
+        event2 = event[2]['content']
+        event3 = event[3]['content']
+        
+        eventbanner = Event.objects.all().order_by('-id').values('img_address')
+        eventbanner1 = eventbanner[0]['img_address']
+        eventbanner2 = eventbanner[1]['img_address']
+        eventbanner3 = eventbanner[2]['img_address']
+        eventbanner4 = eventbanner[3]['img_address']
+        eventbannertext = ""
+        bannerlink1 = Event.objects.filter(img_address=eventbanner1).values('id').get()
+        bannerlink2 = Event.objects.filter(img_address=eventbanner2).values('id').get()
+        bannerlink3 = Event.objects.filter(img_address=eventbanner3).values('id').get()
+        bannerlink4 = Event.objects.filter(img_address=eventbanner4).values('id').get()
+        bannerlink1 = bannerlink1['id']
+        bannerlink2 = bannerlink2['id']
+        bannerlink3 = bannerlink3['id']
+        bannerlink4 = bannerlink4['id']
+    except:
+        eventheadline = '등록된 이벤트가 없습니다'
+        event1 = ""
+        event2 = ""
+        event3 = ""
+        eventbanner1 = ""
+        eventbanner2 = ""
+        eventbanner3 = ""
+        eventbanner4 = ""
+        eventbannertext = "등록된 이벤트가 없습니다"
+    eventlinkheadline = Event.objects.filter(content=eventheadline).values('id').get()
+    event1link1 = Event.objects.filter(content=event1).values('id').get()
+    event1link2 = Event.objects.filter(content=event2).values('id').get()
+    event1link3 = Event.objects.filter(content=event3).values('id').get()
+    eventlinkheadline = eventlinkheadline['id']
+    event1link1 = event1link1['id']
+    event1link2 = event1link2['id']
+    event1link3 = event1link3['id']
+    
+    viewplus = request.GET.get("value")
+    context = {
+        'indtdt':indtdt, 'infoheadline' : infoheadline, 'reviewheadline':reviewheadline,
+        'review1':review1, 'review2' : review2, 'review3': review3,
+        'eventheadline' : eventheadline, 'event1':event1, 'event2':event2, 'event3':event3,
+        'eventbanner1' : eventbanner1, 'eventbanner2' : eventbanner2, 'eventbanner3' : eventbanner3,
+        'eventbanner4' : eventbanner4, 'eventbannertext' : eventbannertext,
+        'bannerlink1': bannerlink1, 'bannerlink2': bannerlink2,'bannerlink3': bannerlink3,
+        'bannerlink4': bannerlink4, 'eventlinkheadline' : eventlinkheadline, 'event1link1':event1link1, 'event1link2' :event1link2, 'event1link3':event1link3,
+        'reviewlink1':reviewlink1,'reviewlink2':reviewlink2, 'reviewlink3':reviewlink3, 'reviewlinkheadline':reviewlinkheadline,
+    }
+    return HttpResponse(template.render(context, request))
+    
+    # 취합부분
+    # review =  Review.objects.all().order_by('-id').values('subject')
+    # # reviewheadline = review[0]['subject']
+    # # print(reviewheadline)
+    # # review1 = review[1]['subject']
+    # # review2 = review[2]['subject']
+    # # review3 = review[3]['subject']
+    # event = Event.objects.all().order_by('-id').values('content')
+    # eventheadline = event[0]['content']
+    # event1 = event[1]['content']
+    # event2 = event[2]['content']
+    # event3 = event[3]['content']
+    # eventbanner = Event.objects.filter(content=eventheadline).values('img_address').get()
+    # eventbanner = eventbanner['img_address']
+    # # context = {
+    # #     'indtdt':indtdt, 'infoheadline' : infoheadline, 'reviewheadline':reviewheadline,
+    # #     'review1':review1, 'review2' : review2, 'review3': review3,
+    # #     'eventheadline' : eventheadline, 'event1':event1, 'event2':event2, 'event3':event3,
+    # #     'eventbanner' : eventbanner,
+    # # }
     # context = {
-    #     'indtdt':indtdt, 'infoheadline' : infoheadline, 'reviewheadline':reviewheadline,
-    #     'review1':review1, 'review2' : review2, 'review3': review3,
+    #     'indtdt':indtdt, 'infoheadline' : infoheadline,
     #     'eventheadline' : eventheadline, 'event1':event1, 'event2':event2, 'event3':event3,
     #     'eventbanner' : eventbanner,
     # }
-    context = {
-        'indtdt':indtdt, 'infoheadline' : infoheadline,
-        'eventheadline' : eventheadline, 'event1':event1, 'event2':event2, 'event3':event3,
-        'eventbanner' : eventbanner,
-    }
-    return HttpResponse(template.render(context, request))
+    # return HttpResponse(template.render(context, request))
 
 def ing():
     global endtime
@@ -139,7 +221,7 @@ from django.core.paginator import Paginator
 from datetime import datetime,timedelta
 #검색
 def search(request):
-    global search_list, search_lists,endtime
+    global search_list, search_lists,endtime,iname
     input1=request.GET.get("input1") #지역권
     input2=request.GET.get("input2") #시/도
     input3=request.GET.get("input3") #시/군/구
@@ -152,11 +234,15 @@ def search(request):
 
     whattoday = datetime.today().weekday()
     
-    if(input1==input2==input3==name==check4==check5==None):pass
+    if(input1==input2==input3==name==check4==check5==None):
+        if(iname!=None):
+            search_lists=search_list
+            search_lists=search_lists[search_lists['hosname'].str.contains(iname)]
+            iname=None
+        else:
+            pass
     else:
-        search_lists=search_list
-        if(name!=None):
-            search_lists=search_lists[search_lists['hosname'].str.contains(name)]
+        search_lists=search_list     
         if(input1!='지역권 선택' and input2!='시/도 선택'):
             if(input3!='시/군/구 선택'):
                 search_lists=search_lists[search_lists['address'].str.contains(input3)]
@@ -169,21 +255,26 @@ def search(request):
             search_lists = search_lists[~search_lists["thur"].str.contains("-")]
             search_lists = search_lists[~search_lists["fri"].str.contains("-")]
             search_lists = search_lists[~search_lists["sat"].str.contains("-")]
-            endtime=endtime.loc[list(search_lists.index),:]
-            search_lists=search_lists.loc[list(endtime.index),:]
-        # if(check2=='true'): #야간진료 > 확인필요
-        #     search_lists=search_lists.loc[endtime.index,:]
-        #     search_lists=search_lists[(~search_lists['mon'].str.contains("-"))&(~search_lists['tue'].str.contains("-"))&(~search_lists['wed'].str.contains("-"))&(~search_lists['thur'].str.contains("-"))&(~search_lists['fri'].str.contains("-"))&(~search_lists['sat'].str.contains("-"))]
+            mergedata=pd.merge(search_lists,endtime,how='inner')
+            search_lists=mergedata
+            print(search_lists)
+        if(check2=='true'): #야간진료 > 확인필요
+            mergedata1=pd.merge(search_lists,endtime1,how='inner')
+            search_lists=mergedata1
         if(check3=='true'): #공휴일진료
             search_lists = search_lists[~search_lists["holyoff"].str.contains("휴진")]
             search_lists = search_lists[~search_lists["holyoff"].str.contains("휴무")]
             search_lists = search_lists[~search_lists["holyoff"].str.contains("휴뮤")]
             search_lists = search_lists[~search_lists["holyoff"].str.contains("-")]
         if(check4=='true'): #응급실주간운영여부
+            search_lists = search_lists[~search_lists["emgday"].str.contains("-")]
             search_lists=search_lists[search_lists['emgday'].str.contains('Y')]
         if(check5=='true'): #응급실야간운영여부
+            search_lists = search_lists[~search_lists["emgnight"].str.contains("-")]
             search_lists=search_lists[search_lists['emgnight'].str.contains('Y')]
-
+        if(name!=None):
+            search_lists=search_lists[search_lists['hosname'].str.contains(name)]
+    
     page=request.GET.get("page",1)
     paginator=Paginator(search_lists.to_dict('records'),10) # 페이지 표시 수
     pagelist=paginator.get_elided_page_range(page,on_each_side=2,on_ends=0)
@@ -274,86 +365,95 @@ def rupdate(request,id):
     return HttpResponse(template.render(context,request))
 
 def rupdate_ok(request,id):
-    template = loader.get_template('rupdate.html')
     review = Review.objects.get(id=id)
     subject = request.POST['subject']
-    # hosname = request.POST['hosname']
-    # rating = request.POST['rating']
     content = request.POST['content']
     nowDatetime = timezone.now().strftime('%Y-%m-%d %H:%M:%S')
     review.subject=subject
     review.content=content
-    # review.hosname=hosname
-    # review.rating=rating
     review.rdate=nowDatetime
-    review.rating = ratingup
+    review.rating=ratingup
     review.save()
     return HttpResponseRedirect(reverse('review'))
 
+mdoc = col1.find()
+df_m4 = pd.DataFrame(list(mdoc))
+df_m4_1 = df_m4.dropna(subset=['y좌표','x좌표'])
+
+df_m4_1 =  df_m4_1[['_id','요양기관명','y좌표','x좌표','주소']]
+df_m4_1.set_index('_id')
+map_list=df_m4_1.copy()
+map_lists=pd.DataFrame()
+print(map_lists)
+
 def map(request):
-    return render(request,'map.html')
-def map_ok(request):
-    mname=request.POST['inputname']
     temlate = loader.get_template('map.html')
-    where = {"요양기관명":{"$regex":""+str(mname)+""}}
-    mdocs = col1.find(where)
-    df_m = pd.DataFrame(list(mdocs))
-    df_m2 = df_m.dropna(subset=['y좌표','x좌표'])
-    mlist = df_m['요양기관명'].to_list()
-    for doc in mlist:  
-        print(doc)
-        
-    df_m2[['요양기관명','y좌표','x좌표']]
-    lat = df_m2['x좌표'].mean()
-    long = df_m2['y좌표'].mean()
-    a=[]
-    b=[]
-    for i in df_m2.index:
-        sub_lat = df_m2.at[i, 'x좌표']
-        sub_long = df_m2.at[i, 'y좌표']
-        title = df_m2.at[i, '요양기관명']
-     # a.append(sub_long)
-        # a.append(sub_lat)
-        # b.append(sl)
-    df_m2 =  df_m2[['요양기관명','y좌표','x좌표']]
-   # df2['latlng'] =df2[cols].apply(lambda row: ', '.join(row.values.astype(str)),axis=1)
-
-    #df2['latlng'] = df2['y좌표'] + ", " + df2['x좌표']
-
-    #df2_2_3 = df2[['y좌표','x좌표']]
-    m1 = df_m2['요양기관명']
-    m2 = df_m2['y좌표']
-    m3 = df_m2['x좌표']
-    num=len(df_m2)
-    #df2_2 = df2[title: '요양기관명', latlng: new kakao.maps.LatLng('y좌표', 'x좌표')]
-    #{title: '카카오', latlng: new kakao.maps.LatLng(33.450705, 126.570677)}
-    #df2_2 = df2
-    #df2_2 = df2.rename(index = {'요양기관명':'title'}, inplace=True)
-    #df2 = (df2['y좌표'],str.cat(df2['x좌표'], sep=', '))
-    # df2_2 = df2[['y좌표','x좌표']]
-    # df2_3 = df2[['요양기관명']]
-    # df2_2_2 = ", ".join(df2_2)
     context = {
-        'mlist': mlist,
-        'sub_lat' : sub_lat,
-        'sub_long' : sub_long,
-        'title' : title,
-        'lat' : lat,
-        'long' : long,
-        'xy' : (sub_lat, sub_long),
-        'df_m2' : df_m2.to_dict('records'),
-        'a' : a,
-        'b' : b,
-        'm1' : m1,
-        'm2' : m2,
-        'm3' : m3,
-        'num':num,
-        # 'df2_2':df2_2,
-        # 'df2_3':df2_3,
-        # 'df2_2_2':df2_2_2,
-        # 'df2_2_3':df2_2_3,
     }
-    print("df_m2.to_dict('records')",df_m2.to_dict('records'))
+    global map_list, map_lists
+    input1=request.GET.get("input1") #지역권
+    input2=request.GET.get("input2") #시/도
+    input3=request.GET.get("input3") #시/군/구
+    name=request.GET.get("name") #병원이름
+    print(input1)
+    print(name)
+    
+    if (request.method == "POST"):        
+        print("post가져옴")
+        if ("inputname" in request.POST):
+            mname=request.POST['inputname']
+            where = {"요양기관명":{"$regex":""+str(mname)+""}}
+            mdocs = col1.find(where)
+            df_m = pd.DataFrame(list(mdocs))
+            df_m2 = df_m.dropna(subset=['y좌표','x좌표'])
+            
+            df_m2 =  df_m2[['_id','요양기관명','y좌표','x좌표','주소']]
+            num=len(df_m2)
+        
+            context = {
+                'df_m2' : df_m2.to_dict('records'),
+                'df_m22' : df_m2,
+                'num':num,
+                }
+    if(request.method == "GET"): 
+        print("ggggggggggggggggggggggggggggg")
+        print("sd",input3)
+        print("sd",name)
+        if (input3 in request.GET):
+            print("input3",input3)
+            where = {"주소":{"$regex":""+str(input3)+""}}
+            mdoc = col.find(where)
+            df_m = pd.DataFrame(list(mdoc))
+            print("dfm2 1 ",df_m2)
+            df_m2 = df_m2.dropna(subset=['y좌표','x좌표'])
+            print("dfm2 2 ",df_m2)
+            df_m2 =  df_m2[['_id','요양기관명','y좌표','x좌표','주소']]
+            print("dfm2 3 ",df_m2)
+            num=len(df_m2)
+            context = {
+                'df_m2' : df_m2.to_dict('records'),
+                'df_m22' : df_m2,
+                'num':num,
+                }
+            # print("get가져옴")
+            # print("hhhhhhhhhhhhhhhhhhhhhhhhhh")
+            # print(input1)
+            # if(input1==input2==input3==name==None):pass
+            # else:
+            #     map_lists=map_list
+            #     if(name!=None):
+            #         map_lists=map_lists[map_lists['요양기관명'].str.contains(name)]
+            #         print("ㅇㅇㅇㅇ",input1)
+            #     if(input1!='지역권 선택' and input2!='시/도 선택'):
+            #         if(input3!='시/군/구 선택'):
+            #             map_lists=map_lists[map_lists['주소'].str.contains(input3)]
+            #         map_lists=map_lists[map_lists['주소'].str.contains(input2)]
+            # context = {
+            #     'map_list':map_list.to_dict('records'),
+            # }
+        
+        
+    
     return HttpResponse(temlate.render(context, request))
 
 def login(request):
@@ -565,6 +665,12 @@ def dibsdelete(request,title):
     myevent = Myevent.objects.filter(title=title).all()
     print("마이이벤트",myevent)
     myevent.delete()
-    return HttpResponseRedirect(reverse('mypage')) 
+    return HttpResponseRedirect(reverse('mypage'))
+
+def bookdelete(request,id):
+    mybook = Book.objects.filter(id=id).all()
+    print("나의예약",mybook)
+    mybook.delete()
+    return HttpResponseRedirect(reverse('mypage'))  
     
 
