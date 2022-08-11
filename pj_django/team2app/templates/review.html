@@ -57,7 +57,11 @@
                                                 {% for rev in review %}
                                                 <tr>
                                                 <td>{{rev.id}}</td>
+                                                {% if request.session.login_ok_user %}
                                                 <td><a href="../rcontent/{{rev.id}}">{{rev.subject}}</a></td>
+                                                {% else %}
+                                                <td><a href="./" onclick="alert('로그인 회원만 이용가능!')">{{rev.subject}}</a></td>
+                                                {% endif %}
                                                 <td>{{rev.writer}}</td>
                                                 <td>{{rev.rdate}}</td>
                                                 <td>{{rev.views}}</td>
@@ -70,7 +74,11 @@
                                     </div>
                                     <center>
                                     <font size="6" color="red">
+                                    {% if request.session.login_ok_user %}
                                     <a href='../rwrite'>글쓰기</a>
+                                    {% else %}
+                                    <a href="./" onclick="alert('로그인 회원만 이용가능!')">글쓰기</a>
+                                    {% endif %}
                                     </font>
                                     </center>
                                 </div>

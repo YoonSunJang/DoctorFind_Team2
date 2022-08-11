@@ -55,7 +55,11 @@
                     <li><a href="review">병원후기</a></li>
                     <li> <a href="healthinfo">건강정보</a></li>
                     <li> <a href="event">이벤트</a></li>
+                    {% if request.session.login_ok_user %}                                
                     <li> <a href="mypage">마이페이지</a></li>
+                    {% else %}
+                    <li> <a href="./" onclick="alert('로그인 회원만 이용가능!')">마이페이지</a></li>
+                    {% endif %}
                     </ul>
                 </div>
                 </nav>

@@ -2,10 +2,8 @@
   .area {
     margin: 10px 0;
     width: 180px;
-    background: #fff;
+    background: rgb(126, 120, 120);
   }
-  
-  
   /* 텍스트가 영역을 넘치도록 하는 속성 */
   .white-space {
     white-space: nowrap;
