@@ -23,6 +23,14 @@
     </style>
 </head>
 <body>
+    {% if messages %}
+    <div><script>
+        {% for message in messages %}
+            alert("작성자만 삭제 가능합니다")
+        {% endfor %}
+    </script>
+    </div>
+    {% endif %}
     <div id="cont_tit">
         <h2>병원 후기</h2>
     </div>
@@ -84,7 +92,6 @@
     </div>
 <script>
     function views()  {
-        alert('조회수')
         const viewplus = {value : 1};
 		$.get("/team2app/review/", viewplus, function(data){});
       }

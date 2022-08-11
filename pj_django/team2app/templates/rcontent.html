@@ -43,7 +43,6 @@
 <body>
     <!--<div id="cont_tit">
         <h2>후기 게시판</h2>-->
-    </div>
     <div id="cont_cont">
         <div class="container">
             <div class="write"><h2><b>게시물</b></h2></div>
@@ -66,7 +65,17 @@
                     <td>{{review.hosname}}</td>
                     <td>평가</td>
                     <td>
-                        {{review.rating}}
+                        {% if review.rating == 5%}
+                        ★★★★★
+                        {% elif review.rating == 4%}
+                        ★★★★☆
+                        {% elif review.rating == 3%}
+                        ★★★☆☆
+                        {% elif review.rating == 2%}
+                        ★★☆☆☆
+                        {% elif review.rating == 1%}
+                        ★☆☆☆☆
+                        {% endif %}
                     </td>
                 </tr>
                 <tr id="tr-content">
@@ -76,9 +85,10 @@
                 </table>
                 <div class="btn">
                     <button type="button" class="btn btn-outline-info btn-lg" id="listButton" onclick="location.href='../review'">
-                        목록</button>	
+                        목록</button>
                     <button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../rdelete/{{review.id}}'">
-                        삭제</button>
+                        삭제
+                    </button>
                     <button type="button" class="btn btn-info btn-lg" id="updateButton" onclick="location.href='../rupdate/{{review.id}}'">
                         수정</button>	
                 </div>

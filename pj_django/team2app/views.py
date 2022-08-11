@@ -82,6 +82,7 @@ search_list=df[['hosname','address','telnumber','mon','tue','wed','thur','fri','
 search_lists=pd.DataFrame()  
 
 def index(request):
+    global viewplus
     template = loader.get_template('index.html')
     now = datetime.now()
     thismonth = now.month
@@ -91,39 +92,89 @@ def index(request):
     indtdt = indt[1:4]
     indtdict = indt[0]
     infoheadline = indtdict['제목']
-    #infoheadline = ""+str(thismonth)+"월의 건강정보"
-    print(infoheadline)
+    
     try:
         review =  Review.objects.all().order_by('-id').values('subject')
         reviewheadline = review[0]['subject']
-        print(reviewheadline)
-        review1 = review[1]['subject']
-        review2 = review[2]['subject']
-        review3 = review[3]['subject']
+        reviewlinkheadline = Review.objects.filter(subject=reviewheadline).values('id').get()
+        reviewlinkheadline = reviewlinkheadline['id']
+        
     except:
         reviewheadline = "등록된 리뷰가 없습니다"
-        review1 = ""
-        review2 = ""
-        review3 = ""
+        reviewlinkheadline = "-"
+    try:
+        review1 = review[1]['subject']
+        reviewlink1 = Review.objects.filter(subject=review1).values('id').get()
+        reviewlink1 = reviewlink1['id']
+    except:
+        review1 = "등록된 리뷰가 없습니다"
+        reviewlink1 = "-"
+    try:
+        review2 = review[2]['subject']
+        reviewlink2 = Review.objects.filter(subject=review2).values('id').get()
+        reviewlink2 = reviewlink2['id']
+    except:
+        review2 = "등록된 리뷰가 없습니다"
+        reviewlink2 = "-"
+    try:
+        review3 = review[3]['subject']
+        reviewlink3 = Review.objects.filter(subject=review3).values('id').get()
+        reviewlink3 = reviewlink3['id']
+    except:
+        review3 = "등록된 리뷰가 없습니다"
+        reviewlink3 = "-"
     try:
         event = Event.objects.all().order_by('-id').values('content')
         eventheadline = event[0]['content']
         event1 = event[1]['content']
         event2 = event[2]['content']
         event3 = event[3]['content']
-        eventbanner = Event.objects.filter(content=eventheadline).values('img_address').get()
-        eventbanner = eventbanner['img_address']
+        
+        eventbanner = Event.objects.all().order_by('-id').values('img_address')
+        eventbanner1 = eventbanner[0]['img_address']
+        eventbanner2 = eventbanner[1]['img_address']
+        eventbanner3 = eventbanner[2]['img_address']
+        eventbanner4 = eventbanner[3]['img_address']
+        eventbannertext = ""
+        bannerlink1 = Event.objects.filter(img_address=eventbanner1).values('id').get()
+        bannerlink2 = Event.objects.filter(img_address=eventbanner2).values('id').get()
+        bannerlink3 = Event.objects.filter(img_address=eventbanner3).values('id').get()
+        bannerlink4 = Event.objects.filter(img_address=eventbanner4).values('id').get()
+        bannerlink1 = bannerlink1['id']
+        bannerlink2 = bannerlink2['id']
+        bannerlink3 = bannerlink3['id']
+        bannerlink4 = bannerlink4['id']
     except:
         eventheadline = '등록된 이벤트가 없습니다'
         event1 = ""
         event2 = ""
         event3 = ""
-        eventbanner = ""
+        eventbanner1 = ""
+        eventbanner2 = ""
+        eventbanner3 = ""
+        eventbanner4 = ""
+        eventbannertext = "등록된 이벤트가 없습니다"
+    eventlinkheadline = Event.objects.filter(content=eventheadline).values('id').get()
+    event1link1 = Event.objects.filter(content=event1).values('id').get()
+    event1link2 = Event.objects.filter(content=event2).values('id').get()
+    event1link3 = Event.objects.filter(content=event3).values('id').get()
+    eventlinkheadline = eventlinkheadline['id']
+    event1link1 = event1link1['id']
+    event1link2 = event1link2['id']
+    event1link3 = event1link3['id']
+    print(event1link1)
+    
+    viewplus = request.GET.get("value")
+    print(viewplus) 
     context = {
         'indtdt':indtdt, 'infoheadline' : infoheadline, 'reviewheadline':reviewheadline,
         'review1':review1, 'review2' : review2, 'review3': review3,
         'eventheadline' : eventheadline, 'event1':event1, 'event2':event2, 'event3':event3,
-        'eventbanner' : eventbanner,
+        'eventbanner1' : eventbanner1, 'eventbanner2' : eventbanner2, 'eventbanner3' : eventbanner3,
+        'eventbanner4' : eventbanner4, 'eventbannertext' : eventbannertext,
+        'bannerlink1': bannerlink1, 'bannerlink2': bannerlink2,'bannerlink3': bannerlink3,
+        'bannerlink4': bannerlink4, 'eventlinkheadline' : eventlinkheadline, 'event1link1':event1link1, 'event1link2' :event1link2, 'event1link3':event1link3,
+        'reviewlink1':reviewlink1,'reviewlink2':reviewlink2, 'reviewlink3':reviewlink3, 'reviewlinkheadline':reviewlinkheadline,
     }
     return HttpResponse(template.render(context, request))
 
@@ -260,16 +311,25 @@ def rcontent(request,id):
         review.views = review.views+1
         review.save()
     else:
-        pass
+        return HttpResponseRedirect(reverse('review'))
     context = {
         'review' : review, 'user_email': user_email,
     }
     return HttpResponse(template.render(context,request))
 
+from django.contrib import messages
 def rdelete(request,id):
     review = Review.objects.get(id=id)
-    review.delete()
-    return HttpResponseRedirect(reverse('review'))
+    user_email = request.session.get('login_ok_user')
+    rid = Review.objects.filter(id=id).values('email').get()
+    rid = rid['email']
+    print(rid)
+    if user_email==rid:
+        review.delete()
+        return HttpResponseRedirect(reverse('review'))
+    else:
+        messages.warning(request, "권한이 없습니다")
+        return HttpResponseRedirect(reverse('review'))
 
 def rupdate(request,id):
     global ratingup
@@ -286,7 +346,6 @@ def rupdate(request,id):
     return HttpResponse(template.render(context,request))
 
 def rupdate_ok(request,id):
-    template = loader.get_template('rupdate.html')
     review = Review.objects.get(id=id)
     subject = request.POST['subject']
     # hosname = request.POST['hosname']
