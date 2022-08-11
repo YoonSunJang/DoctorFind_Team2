@@ -35,7 +35,11 @@
             <a><img id="a" src="{{event.img_address}}"></a>
             <!--<a><img src="{{event.img_address}}"></a>-->
             <br><br><br>
+            {% if request.session.login_ok_user %}
             <a href="dibs/{{event.id}}"><button type="button" onclick="alert('마이페이지에서 확인하세요!')">😘찜하기!💘</button></a>
+            {% else %}
+            <a href="../event"><button type="button" onclick="alert('로그인 회원만 이용가능!')">😘찜하기!💘</button></a>
+            {% endif %}   
             <a href="../event">
                 <br>
                 <style type="text/css">
