@@ -5,8 +5,14 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  
     <style>
+        tbody{
+            width:80%;
+        }
         td{
-            width:5rem;
+            width:3rem;
+        }
+        .td-color.{
+            background-color:#e3e3e3;
         }
         #tr-content{
             height:10rem;
@@ -43,25 +49,25 @@
 <body>
     <div id="cont_cont">
         <div class="container">
-            <div class="write"><h2><b>게시물</b></h2></div>
+            <div class="title-boxlong"><h2><b>게시물</b></h2></div>
             <form class="form-horizontal" name="f" action="" method="post">
                 {% csrf_token %}
                 <div class="table table-responsive">
                     <table class="table table-striped">
                 <tr>
-                    <td>제목</td>
+                    <td class="td-color">제목</td>
                     <td colspan="3">{{review.subject}}</td>
                 </tr>
                 <tr>
-                    <td>작성자</td>
+                    <td class="td-color">작성자</td>
                     <td>{{review.writer}}</td>
-                    <td>작성시간</td>
+                    <td class="td-color">작성시간</td>
                     <td>{{review.rdate}}</td>
                 </tr>
                 <tr>
-                    <td>병원명</td>
+                    <td class="td-color">병원명</td>
                     <td>{{review.hosname}}</td>
-                    <td>평가</td>
+                    <td class="td-color">평가</td>
                     <td>
                         {% if review.rating == 5%}
                         ★★★★★
@@ -79,7 +85,7 @@
                     </td>
                 </tr>
                 <tr id="tr-content">
-                    <td>글내용</td>
+                    <td class="td-color">글내용</td>
                     <td colspan="3">{{review.content}}</td>
                 </tr>
                 </table>
@@ -94,9 +100,6 @@
             </form>
             </div>
         </div>
-    <div id="footer">
-        <div class="container">footer</div>
-    </div>
   </div>
 {% endblock contents %}
 </body>

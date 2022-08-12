@@ -19,12 +19,12 @@
                         </div>
                         <div class="header-btn">
                             {% if request.session.login_ok_user %}
-                            <button class="btn btn-outline-secondary btn-sm" type="submit" id="infoMButton" onclick="location.href = '../logout' ">
+                            <button class="btn btn-outline-info btn-sm" type="submit" id="infoMButton" onclick="location.href = '../logout' ">
                                 로그아웃</button>
 		                    {% else %}
-                            <button class="btn btn-outline-secondary btn-sm" type="submit" id="loginButton" onclick="location.href = '../login' ">
+                            <button class="btn btn-outline-info btn-sm" type="submit" id="loginButton" onclick="location.href = '../login' ">
                                 로그인</button>
-                            <button class="btn btn-outline-secondary btn-sm" type="submit" id="signupButton" onclick="location.href = '../signup' ">
+                            <button class="btn btn-outline-info btn-sm" type="submit" id="signupButton" onclick="location.href = '../signup' ">
                                 회원가입</button>
                             {% endif %}
                         </div>
@@ -37,7 +37,7 @@
                 <nav>
                 <div class="container">
                     <ul>
-                    <li><a href="">병원/약국<i class='fa fa-angle-down'></i></a>
+                    <li><a href="../search">병원찾기<i class='fa fa-angle-down'></i></a>
                         <ul>
                             <li><a href="../search">세부 조건별 찾기</a></li>
                             <li><a href="../map">지도에서 찾기</a></li>
@@ -73,7 +73,7 @@
         <footer class="footer bg-dark">
             <div id="footer_logo"><img src="\static\img\fd_logo_gray200.png"></div>
             <div class="text-white" id="footer_text">
-                   <span class="copyright"><b></b>2022-08-22 | PROJECT Doctor Fine Made by Team2 </span><br/>
+                   <span class="copyright"><b></b>2022-08-22 | PROJECT Find Doctor Made by Team2 </span><br/>
                 <span class="teamLeader"><b>조장</b> | 장윤선</span>
                 <span class="teamLeader2"><b>부조장</b> | 이재용</span>
                 <span class="teamMem"><b>조원</b> | 송찬호 박상익 김지수</span><br/>

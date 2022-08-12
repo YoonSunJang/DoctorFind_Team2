@@ -39,11 +39,10 @@
             margin-bottom:3rem;
         }
         .info-box{
-            width:80%;
+            width:60%;
             border:1px solid #17a2b8;
             border-radius: 20px;
-            display:flex;
-            justify-content:space-between;
+            padding:1rem;
         }
         .infoMButton{
             width:80%;
@@ -52,6 +51,7 @@
             margin:1rem;
         }
         .booking-board{
+            margin-top:2rem;
             margin-bottom:4rem;
         }
         .booking{
@@ -71,15 +71,16 @@
         th{
             text-align:center;
         }
+        .modiBtn{
+            width:60%;
+            margin-top:1rem;
+        }
         a:link, a:visited, a:hover, a:active {text-decoration: none;}
     </style>
 </head>
 <body>
     <section>
-        <div><img id="mypage-bg" src="\static\img\mypage-bg.png"></div>
-        <div class="title-box">
-            <h2><b>마이페이지</b></h2>
-        </div>
+        <div class="title-box"><h2><b>마이페이지</b></h2></div>
                 <div class="row" align="center">
                 <div class="info">
                     <div>
@@ -98,7 +99,7 @@
                                 </div>
                                 <div>
                                     <label for="pw"><b>비밀번호</b></label>
-                                    <input type="password" class="form-control" name="pw" value="{{user_pw.pw}}" minlength="4">
+                                    <input type="password" class="form-control" name="pw" value="{{user_pw.pw}}" minlength="6">
                                     <!--위에코드=비밀번호 4글자이상-->
                                 </div> <!--복사-->
                                 <div>
@@ -107,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div class="modiBtn" align="right">
                             <button class="btn btn-info" type="submit" id="infoMButton">
                             회원정보수정</button>
                         </div>
@@ -126,16 +127,20 @@
                                 <th>#</th>
                                 <th>병원명</th>
                                 <th>예약날짜/시간</th>
+                                <th>증상</th>
+                                <th>내용</th>
                                 <th>취소</th>
                               </tr>
                             </thead>
                             <tbody>
                                 {%for x in book_list%}
-                              <tr>
+                              <tr style="text-align: center;">
                                 <td>{{x.id}}</td>
                                 <td>{{x.hosname}}</td>
                                 <td>{{x.bdate}} / {{x.btime}}</td>
-                                <td><center><button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../../team2app/mypage/bookdelete/{{x.id}}'">
+                                <td>{{x.symptom}}</td>
+                                <td>{{x.content}}</td>
+                                <td><center><button type="button" class="btn btn-outline-info btn-sm" id="deleteButton" onclick="location.href='../../team2app/mypage/bookdelete/{{x.id}}'">
                                     취소</button></center></td>
                               </tr>
                               {%endfor%}
@@ -146,7 +151,6 @@
                     <div class="event-board">
                         <div class="event">
                             <label for="event"><h3>찜한 이벤트</h3></label>
-                            <a href="#"><button class="btn btn-outline-info">이벤트 확인</button></a>
                         </div>
                         <table class="table">
                             <thead class="table-light">
@@ -163,7 +167,7 @@
                                 <td><center>{{i.id}}</center></td>
                                 <td><center>{{i.hosname}}</center></td>
                                 <td><center>{{i.title}}</center></td>
-                                <td><center><button type="button" class="btn btn-info btn-lg" id="deleteButton" onclick="location.href='../../team2app/mypage/dibsdelete/{{i.title}}'">
+                                <td><center><button type="button" class="btn btn-outline-info btn-sm" id="deleteButton" onclick="location.href='../../team2app/mypage/dibsdelete/{{i.title}}'">
                                     삭제</button></center></td>
                               </tr>
                               {% endfor %}

@@ -12,6 +12,15 @@
     
     <style>
         a:link, a:visited, a:hover, a:active {text-decoration: none;}
+        #cont_cont{
+           padding-top:3rem;
+        }
+        .column.col1{
+            padding-top:3rem;
+        }
+        .img-tb{
+            border: 1px solid #80cbc4;
+        }
         .banner-container{
             width: 200px;
             height:300px;
@@ -119,17 +128,19 @@
                 <div class="header">
                     <div class="header-menu">
                         <div class="header-logo-img">
-                            <a href='../'><img src="/static/img/fd_logo200.png"></a>
+                            <a href='./'><img src="/static/img/fd_logo200.png"></a>
                          </div>
-                        {% if request.session.login_ok_user %}
-                        <button class="btn btn-outline-info btn-sm" type="submit" id="infoMButton" onclick="location.href = '../logout' ">
-                            로그아웃</button>
-                        {% else %}
-                        <button class="btn btn-outline-info btn-sm" type="submit" id="loginButton" onclick="location.href = '../login' ">
-                            로그인</button>
-                        <button class="btn btn-outline-info btn-sm" type="submit" id="signupButton" onclick="location.href = '../signup' ">
-                            회원가입</button>
-		                {% endif %}
+                        <div align="right">
+                            {% if request.session.login_ok_user %}
+                            <button class="btn btn-outline-info btn-sm" type="submit" id="infoMButton" onclick="location.href = 'logout' ">
+                                로그아웃</button>
+                            {% else %}
+                            <button class="btn btn-outline-info btn-sm" type="submit" id="loginButton" onclick="location.href = 'login' ">
+                                로그인</button>
+                            <button class="btn btn-outline-info btn-sm" type="submit" id="signupButton" onclick="location.href = 'signup' ">
+                                회원가입</button>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,7 +151,7 @@
                 <nav>
                 <div class="container">
                     <ul>
-                    <li><a href="search">병원/약국<i class='fa fa-angle-down'></i></a>
+                    <li><a href="search">병원찾기<i class='fa fa-angle-down'></i></a>
                         <ul>
                             <li><a href="search">세부 조건별 찾기</a></li>
                             <li><a href="map">지도에서 찾기</a></li>
@@ -162,7 +173,7 @@
                 <div class="ban">
                     <ul>
                     {% comment %} <li class="ban_img1"><a href="#"><img src="/static/img/buttonl.png" alt="샘플 이미지1"></a></li> {% endcomment %}
-                    <li class="ban_img2"><img src="/static/img/sunsetcity.gif" alt="샘플 이미지2" style="width: 100%; height:400px;"></li>
+                    <li class="ban_img2"><img src="/static/img/index-bg.jpg" alt="샘플 이미지2" style="width: 100%; height:600px;"></li>
                     {% comment %} <li class="ban_img3"><a href="#"><img src="/static/img/buttonr.png" alt="샘플 이미지3"></a></li> {% endcomment %}
                     </ul>
                 </div>
@@ -170,7 +181,7 @@
             <form name="input" method="post" action="search/">
                 {% csrf_token %}
                 <div class="search_box">
-                    <input type="text" id="textfiled" name="inputname" placeholder="병원명 또는 약국명을 입력하세요.">
+                    <input type="text" id="textfiled" name="inputname" placeholder="병원명을 입력하세요.">
                     <button type="button" class="searchB" id="searchB" name="searchB" onClick="refreshPage()">검색</button>
                 </div>
             </form>
@@ -199,13 +210,13 @@
                                         </details>
                                         <details>
                                             <summary>08월 03일자 공지사항입니다</summary>
-                                            <li>프로젝트 고생하셨습니다</li>
-                                            <li>집에 가고 싶다</li>
+                                            <li>후기 게시판 기능 추가</li>
+                                            <li>솔직한 후기 공유 부탁드립니다.</li>
                                         </details>
                                         <details>
                                             <summary>07월 27일자 공지사항입니다</summary>
-                                            <li>~~하는 현상 개선</li>
-                                            <li>간헐적으로 ~~하는 현상 개선</li>
+                                            <li>파인닥터 홈페이지 개설</li>
+                                            <li>많은 관심과 이용 부탁드립니다.</li>
                                         </details>
                                     </ul>
                                 </div>
@@ -269,7 +280,7 @@
                                 </div>
                         </div>
                         <div class="column col2">
-                            <table border="1">
+                            <table class="img-tb">
                                 <th width="200"></th>
                             <tr><td height="300">
                                 <div class="banner-container">
@@ -292,13 +303,18 @@
                     </div>
                 </div>
             </div>
-        
-            <div id="footer">
-                <div class="container">footer</div>
-            </div>
         </div>
     </div>
-
+    <footer class="footer bg-dark">
+        <div id="footer_logo"><img src="\static\img\fd_logo_gray200.png"></div>
+        <div class="text-white" id="footer_text">
+               <span class="copyright"><b></b>2022-08-22 | PROJECT Doctor Fine Made by Team2 </span><br/>
+            <span class="teamLeader"><b>조장</b> | 장윤선</span>
+            <span class="teamLeader2"><b>부조장</b> | 이재용</span>
+            <span class="teamMem"><b>조원</b> | 송찬호 박상익 김지수</span><br/>
+            <span class="copyright">Copyright©.2022.Team2.All Rights Reserved.</span>
+        </div>
+    </footer>
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script>
         $('nav li').hover(
@@ -376,7 +392,7 @@ function changeActiveBtn(){
                     var param = {name:$("#textfiled").val()};
                     $.get("/team2app/", param, function(data) {
                     });
-                    $(".styled-table").load(window.location.href + ".styled-table");  
+                    $(".styled-table").load(window.location.href + ".styled-table");
                 }
             });
         });

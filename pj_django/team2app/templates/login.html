@@ -21,7 +21,7 @@
         }
         #login-form{
             width:70%;
-            background-color:#f5f5f5;
+            background-color:#E7E7E7;
             padding:3rem;
             margin:0px auto;
             margin-bottom:5rem;
@@ -32,26 +32,13 @@
         div.container{
             margin-bottom:4rem;
         }
-        a:link {
-            text-decoration-line:none;
-            color:#0dcaf0;
-        }
-        a:visited{
-            text-decoration-line:none;
-            color:#0dcaf0;
-        }
-        .footer.container {
-            padding-top:3rem;
-            padding-bottom:7rem;
-        }
-
+        a:link, a:visited, a:hover, a:active {text-decoration: none;}
         /*
         기존 CSS
         #contents {width: 100%; height: 80px; background: none; display: flex;}
-        #cont_cont {width: 80%; height: 1000px; background: #d0e2f7;margin:0 auto;}
-        #cont_tit {width: 100%; height: 100px; background: #d0e2f7;margin:0 auto;text-align: center}
+        #cont_cont {width: 80%; height: 1000px; margin:0 auto;}
+        #cont_tit {width: 100%; height: 100px; margin:0 auto;}
         #footer {width: 100%; height: 150px; background: #333;}
-        h2{padding: 30px 0px 0px 0px;}
         a:link, a:visited, a:hover, a:active {text-decoration: none;}
         */
     </style>
@@ -62,7 +49,7 @@
     <!-- Login Form -->
     <section>
         <div class="container">
-            <div class="login">
+            <div class="title-box">
                 <h2><b>로그인</b></h2>
                 <h6>DoctorFine에 오신것을 환영합니다!</h6>
             </div>
@@ -75,7 +62,7 @@
                             <input type="text" class="form-control" id="email" name="email" placeholder="ex)DoctorFine@example.com"/>
                             <div class="invalid-feedback">ID를 입력해주세요.</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div id="password-box">
                             <label for="pw">비밀번호</label> 
                             <input type="password" class="form-control" name="pw" id="pw" />
                             <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
@@ -90,10 +77,6 @@
             </form>
         </div>
     </section>
-    <div id="footer">
-        <div class="container">footer</div>
-    </div>
-
 {% endblock contents %}
 </body>
 </html>

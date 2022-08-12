@@ -259,6 +259,12 @@ def search(request):
             search_lists=mergedata
             print(search_lists)
         if(check2=='true'): #야간진료 > 확인필요
+            search_lists = search_lists[~search_lists["mon"].str.contains("-")]
+            search_lists = search_lists[~search_lists["tue"].str.contains("-")]
+            search_lists = search_lists[~search_lists["wed"].str.contains("-")]
+            search_lists = search_lists[~search_lists["thur"].str.contains("-")]
+            search_lists = search_lists[~search_lists["fri"].str.contains("-")]
+            search_lists = search_lists[~search_lists["sat"].str.contains("-")]
             mergedata1=pd.merge(search_lists,endtime1,how='inner')
             search_lists=mergedata1
         if(check3=='true'): #공휴일진료
@@ -346,10 +352,19 @@ def rcontent(request,id):
     }
     return HttpResponse(template.render(context,request))
 
+from django.contrib import messages
 def rdelete(request,id):
     review = Review.objects.get(id=id)
-    review.delete()
-    return HttpResponseRedirect(reverse('review'))
+    user_email = request.session.get('login_ok_user')
+    rid = Review.objects.filter(id=id).values('email').get()
+    rid = rid['email']
+    print(rid)
+    if user_email==rid:
+        review.delete()
+        return HttpResponseRedirect(reverse('review'))
+    else:
+        messages.warning(request, "권한이 없습니다")
+        return HttpResponseRedirect(reverse('review'))
 
 def rupdate(request,id):
     global ratingup
@@ -659,7 +674,14 @@ def dibs(request, id):
     print(eventname)
     myevent = Myevent(email=user_email, title=eventname, hosname=eventhosname)
     myevent.save()
-    return HttpResponseRedirect(reverse('event'))
+    try:
+        checkcheck = Myevent.objects.filter(title=eventname).values('title').get()
+        print(checkcheck['title'])
+        return redirect('../../econtent/'+str(id)+'')
+    except:
+        myevent = Myevent.objects.filter(title=eventname).all()
+        myevent.delete()
+        return redirect('../../econtent/'+str(id)+'')
 
 def dibsdelete(request,title):
     myevent = Myevent.objects.filter(title=title).all()

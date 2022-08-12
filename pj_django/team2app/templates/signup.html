@@ -21,22 +21,12 @@
     <style>
         /*추가 CSS*/
         #signup-form {
-            width:80%;
-            background-color:#f5f5f5;
+            width:40%;
+            background-color:#E7E7E7;
             padding:4rem;
-            margin:2rem;
             margin:0px auto;
+            margin-bottom:5rem;
         }
-        .signup{
-            width:90%;
-            padding:1rem;
-            margin:2rem;
-            border-left:8px solid #0dcaf0;
-            margin:0px auto;
-            margin-top:5rem;
-            margin-bottom:2rem;
-        }
-
         div.container{
             margin-bottom:4rem;
         }
@@ -82,61 +72,49 @@
     <!-- Section-->
     <!-- SiginUp Form -->
     <section>
-        <div class="container">
-            <div class="input-form-backgroud row">
-            <div class="input-form col-md-12 mx-auto">
-                <div class="signup">
-                    <h2 class="mb-3"><b>회원가입</b></h2>
-                    <h6>DoctorFine과 함께 해보세요!</h6>
-                </div>
-                <form class="validation-form" method="post" action="../signup/" novalidate id="signup-form">
-                {%csrf_token%}
-                <div class="row">
-                    <div id="nameBox">
-                        <label for="name">이름</label>
-                        <input type="text" class="form-control" placeholder="ex)홍길동" name="name" required>
-                        <div class="invalid-feedback">이름을 입력해주세요.</div>
-                    </div>
-                    <div id="idbox">
-                        <div class="idBox">
-                            <label for="email">ID (e-mail)</label>
-                            <input type="email" class="form-control" placeholder="ex) DoctorFine@example.com" name="email" required>
-                        </div>
-                        <button type="button" class="btn btn-outline-info btn-sm" id="check">중복확인</button>
-                        <div class="invalid-feedback">ID(아이디)를 입력해주세요.</div>
-                    </div>
-                </div>
-                <div id="phoneBox">휴대폰번호</label>
-                    <input type="text" class="form-control" placeholder="-는 제외해주세요. ex) 01012345678" name="phoneNum" required>
-                    <div class="invalid-feedback">휴대폰번호를 입력해주세요.</div>
-                </div>
-                <div id="pwBox">
-                    <label for="pw">비밀번호</label>
-                    <input type="password" class="form-control" placeholder="6자 이상" name="pw" minlength="4" required>
-                    <div class="invalid-feedback">비밀번호를 입력해주세요(6자이상)</div>
-                </div>
-        
-                <div id="addrBox">
-                    <label for="addr">주소</label>
-                    <input type="text" class="form-control" placeholder="ex)서울특별시 금천구 가산동" name="addr" required>
-                    <div class="invalid-feedback">주소를 입력해주세요.</div>
-                </div>
-                <div class="mb-4" id="signupBtn">
-                <button class="btn btn-info btn-lg btn-block text-white" type="submit" formmethod="post">
-                회원가입</button>
-                </div>
-                </form>
+        <div class="input-form-backgroud row">
+        <div class="input-form col-md-12 mx-auto">
+            <div class="title-box">
+                <h2 class="mb-3"><b>회원가입</b></h2>
+                <h6>DoctorFine과 함께 해보세요!</h6>
             </div>
-    <!-- Footer-->
-    <footer class="footer bg-dark">
-        <div id="footer_logo"><img src="assets\img\logo_g180.png"></div>
-        <div class="text-white" id="footer_text">
-               <span class="copyright"><b></b>2022-08-22 | PROJECT Doctor Fine Made by Team2 </span><br/>
-            <span class="teamLeader"><b>조장</b> | 장윤선</span>
-            <span class="teamLeader2"><b>부조장</b> | 이재용</span>
-            <span class="teamMem"><b>조원</b> | 송찬호 박상익 김지수</span><br/>
-            <span class="copyright">Copyright©.2022.Team2.All Rights Reserved.</span>
+            <form class="validation-form" method="post" action="../signup/" novalidate id="signup-form">
+            {%csrf_token%}
+            <div class="row">
+                <div id="nameBox">
+                    <label for="name">이름</label>
+                    <input type="text" class="form-control" placeholder="ex)홍길동" name="name" required>
+                    <div class="invalid-feedback">이름을 입력해주세요.</div>
+                </div>
+                <div id="idbox">
+                    <div class="idBox">
+                        <label for="email">ID (e-mail)</label>
+                        <input type="email" class="form-control" placeholder="ex) DoctorFine@example.com" name="email" required>
+                        <div class="invalid-feedback">e-mail을 입력해주세요(@포함)</div>
+                    </div>
+                </div>
+            </div>
+            <div id="phoneBox">휴대폰번호</label>
+                <input type="text" placeholder="-는 제외해주세요. ex) 01012345678" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" class="form-control" name="phoneNum" value="{{user_phoneNum.phoneNum}}" required>
+
+                <div class="invalid-feedback">휴대폰번호를 입력해주세요.</div>
+            </div>
+            <div id="pwBox">
+                <label for="pw">비밀번호</label>
+                <input type="password" class="form-control" placeholder="6자 이상" name="pw" minlength="6" required>
+                <div class="invalid-feedback">비밀번호를 입력해주세요(6자이상)</div>
+            </div>
+    
+            <div id="addrBox">
+                <label for="addr">주소</label>
+                <input type="text" class="form-control" placeholder="ex)서울특별시 금천구 가산동" name="addr" required>
+                <div class="invalid-feedback">주소를 입력해주세요.</div>
+            </div>
+            <div class="mb-4" id="signupBtn">
+            <button class="btn btn-info btn-lg btn-block text-white" type="submit" formmethod="post">
+            회원가입</button>
+            </div>
+            </form>
         </div>
-    </footer>
 {% endblock contents %}
 </body>
